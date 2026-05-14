@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2025-05-14
+
+### Added
+
+- **Remote Computer Support**: Added comprehensive support for remote computer scenarios
+  - SSH remote server configuration
+  - Docker container configuration (Dockerfile and runtime)
+  - CI/CD environment configuration (GitHub Actions, GitLab CI, Jenkins, Azure Pipelines)
+  - Cloud server configuration (Alibaba Cloud, Tencent Cloud, Huawei Cloud)
+- **Environment Detection**: Added automatic detection of execution environment
+  - Docker container detection
+  - CI/CD environment detection
+  - SSH connection detection
+  - Cloud provider detection
+- **New Documentation**: Added `references/remote-scenarios.md` with detailed configuration guides
+- **Environment Variable Priority**: Documented configuration priority across different scenarios
+- **Quick Setup Script**: Added one-click configuration script for Linux/Mac
+
+### Changed
+
+- **SKILL.md**: Enhanced with remote computer scenarios
+  - Added remote computer Gotchas section
+  - Added environment identification step in workflow
+  - Added execution environment adaptation table
+- **Description**: Updated to include remote computer support
+- **Metadata**: Added `version_date` and `version_changelog` fields
+- **Keywords**: Added `remote`, `docker`, `ci-cd` keywords
+
 ## [2.2.0] - 2026-04-11
 
 ### Changed
@@ -79,6 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Release Date | Key Changes |
 |---------|-------------|-------------|
+| **2.4.0** | 2025-05-14 | Added remote computer support (SSH, Docker, CI/CD, Cloud) |
 | **2.2.0** | 2026-04-11 | Project structure optimization, added CHANGELOG.md and .gitignore |
 | **2.1.1** | 2026-04-09 | Optimized description text |
 | **2.1.0** | 2026-04-09 | Enhanced specification compliance and functionality |
@@ -110,7 +139,7 @@ git pull origin master
 
 ## Roadmap
 
-### Planned for v2.3.0
+### Planned for v2.5.0
 
 - [ ] Add automated testing for SKILL.md format validation
 - [ ] Add mirror availability detection
@@ -126,6 +155,7 @@ git pull origin master
 
 ---
 
+[2.4.0]: https://github.com/normdist-ai/china-mirrors/compare/v2.2.0...v2.4.0
 [2.2.0]: https://github.com/normdist-ai/china-mirrors/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/normdist-ai/china-mirrors/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/normdist-ai/china-mirrors/compare/v2.0.0...v2.1.0

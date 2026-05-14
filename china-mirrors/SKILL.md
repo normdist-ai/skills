@@ -1,14 +1,16 @@
 ---
 name: china-mirrors
-description: 使用中国国内镜像自动配置 Python pip、npm、yarn、pnpm、cargo、go mod、NuGet、RubyGems、Conda、Homebrew、Gradle 等包管理器的镜像源。当用户提到下载慢、安装依赖、配置镜像、加速包下载、设置国内源，或在中国大陆开发需要加速依赖安装时使用。支持阿里云、腾讯云、清华大学、中科大、华为云等主流镜像。检测到 package.json、requirements.txt、Cargo.toml、go.mod、Gemfile、.nuspec、environment.yml 等文件时主动建议使用此技能。
+description: 使用中国国内镜像自动配置 Python pip、npm、yarn、pnpm、cargo、go mod、NuGet、RubyGems、Conda、Homebrew、Gradle 等包管理器的镜像源。当用户提到下载慢、安装依赖、配置镜像、加速包下载、设置国内源，或在中国大陆开发需要加速依赖安装时使用。支持阿里云、腾讯云、清华大学、中科大、华为云等主流镜像。检测到 package.json、requirements.txt、Cargo.toml、go.mod、Gemfile、.nuspec、environment.yml 等文件时主动建议使用此技能。支持本地计算机、SSH远程服务器、Docker容器、CI/CD环境、云服务器等多种场景。
 license: MIT
 compatibility: Requires Python, Node.js, Rust, Go, .NET, Ruby, Conda, or Homebrew. Supports Windows, Linux, and macOS. No additional dependencies required.
 metadata:
   author: normdist-ai
-  version: "2.3.0"
+  version: "2.4.0"
+  version_date: "2025-05-14"
+  version_changelog: "新增远程计算机场景支持（SSH、Docker、CI/CD、云服务器）"
   repository: https://github.com/normdist-ai/china-mirrors
   homepage: https://github.com/normdist-ai/china-mirrors#readme
-  keywords: mirror, china, pip, npm, cargo, goproxy, nuget, rubygems, conda, homebrew
+  keywords: mirror, china, pip, npm, cargo, goproxy, nuget, rubygems, conda, homebrew, remote, docker, ci-cd
 ---
 
 # 中国国内镜像源配置技能
@@ -19,6 +21,8 @@ metadata:
 
 ## Gotchas
 
+### 本地计算机
+
 - **Windows PowerShell 与 Bash 命令不同** — 必须根据操作系统选择正确的命令格式
 - **npm/yarn/pnpm 使用同一镜像源** — 配置 npm 后，yarn 和 pnpm 需要单独配置
 - **Go GOPROXY 需要环境变量** — 配置后需要重启终端或重新加载配置文件
@@ -26,6 +30,15 @@ metadata:
 - **Conda 配置是追加模式** — 多次执行会添加多个 channel，注意去重
 - **Homebrew 仅限 macOS** — Linux 用户使用 Linuxbrew，配置略有不同
 - **项目级配置优先级高于全局配置** — 检测到项目级配置文件时应优先使用
+
+### 远程计算机
+
+- **SSH 远程连接时需检测目标系统** — 远程服务器可能是 Linux/Windows，需使用对应命令
+- **Docker 容器镜像配置是临时的** — 容器重启后配置丢失，需在 Dockerfile 中固化
+- **CI/CD 环境变量优先级最高** — 应使用环境变量方式配置，而非修改配置文件
+- **云服务器可能已有镜像配置** — 阿里云、腾讯云等可能预配置了镜像，需先检查
+- **远程服务器网络环境不同** — 某些镜像源可能在海外服务器上更慢，需根据地理位置选择
+- **SSH 会话环境变量不持久** — 需要写入 ~/.bashrc 或 ~/.zshrc 才能持久化
 
 ---
 
@@ -35,7 +48,8 @@ Progress:
 - [ ] 1. 需求检测与环境分析
   - [ ] 1.1 识别触发条件
   - [ ] 1.2 检测已安装工具
-  - [ ] 1.3 与用户确认配置范围
+  - [ ] 1.3 识别执行环境（本地/远程/Docker/CI-CD）
+  - [ ] 1.4 与用户确认配置范围
 - [ ] 2. 选择镜像源
 - [ ] 3. 执行配置命令
 - [ ] 4. 验证配置结果
@@ -66,12 +80,40 @@ for cmd in python node npm cargo go dotnet ruby conda gradle brew; do
 done
 ```
 
-### 1.3 与用户确认
+### 1.3 执行环境识别
+
+**识别当前执行环境：**
+
+| 环境类型 | 检测方法 | 配置策略 |
+|---------|---------|---------|
+| **本地计算机** | 默认场景 | 全局配置或项目级配置 |
+| **SSH 远程服务器** | 检测 `$SSH_CONNECTION` 或 `who am i` | 在远程服务器上执行配置命令 |
+| **Docker 容器** | 检测 `/.dockerenv` 文件 | 在 Dockerfile 中固化配置 |
+| **CI/CD 环境** | 检测 `CI=true`、`GITHUB_ACTIONS`、`GITLAB_CI` 等环境变量 | 使用环境变量方式配置 |
+| **云服务器** | 检测云厂商元数据服务 | 优先使用同厂商镜像源 |
+
+**检测命令：**
+```bash
+# 检测是否在 Docker 容器中
+[ -f /.dockerenv ] && echo "Docker环境"
+
+# 检测是否在 CI/CD 环境
+[ "$CI" = "true" ] && echo "CI环境: $CI_SERVER_NAME"
+
+# 检测是否为 SSH 远程连接
+[ -n "$SSH_CONNECTION" ] && echo "SSH远程连接"
+
+# 检测云服务器（阿里云）
+curl -s http://100.100.100.200/latest/meta-data/region-id 2>/dev/null && echo "阿里云服务器"
+```
+
+### 1.4 与用户确认
 
 询问内容：
 1. 需要配置哪些包管理器？（如未指定，根据项目依赖文件自动判断）
 2. 有偏好的镜像源吗？（默认推荐阿里云或华为云）
 3. 配置范围：全局配置 or 项目级配置？
+4. **执行环境确认**：是否需要在远程服务器/Docker容器/CI环境中配置？
 
 ---
 
@@ -102,6 +144,20 @@ done
 > **重要**：Agent 根据用户选择的包管理器和镜像，直接在终端执行对应命令。不要创建临时脚本文件。
 
 > 📖 完整配置命令见 [references/mirror-configs.md](references/mirror-configs.md)
+
+### 执行环境适配
+
+根据识别的执行环境，选择对应的配置方式：
+
+| 执行环境 | 配置方式 | 说明 |
+|---------|---------|------|
+| **本地计算机** | 直接执行配置命令 | 修改全局或项目级配置文件 |
+| **SSH 远程服务器** | 通过 SSH 在远程服务器执行 | 需先连接到远程服务器 |
+| **Docker 容器** | 在 Dockerfile 中添加配置 | 或在容器运行时执行（临时） |
+| **CI/CD 环境** | 使用环境变量配置 | 在 CI 配置文件中设置环境变量 |
+| **云服务器** | 优先使用同厂商镜像 | 阿里云服务器用阿里云镜像，腾讯云用腾讯云镜像 |
+
+> 📖 远程计算机场景详细配置见 [references/remote-scenarios.md](references/remote-scenarios.md)
 
 ### 配置命令速查
 
@@ -175,6 +231,7 @@ china-mirrors/
 |------|------|------|
 | 镜像源配置命令详解 | 所有包管理器的详细配置命令 | [references/mirror-configs.md](references/mirror-configs.md) |
 | 镜像源选择指南 | 镜像源对比、选择建议、常见问题 | [references/mirror-sources.md](references/mirror-sources.md) |
+| 远程计算机场景配置 | SSH、Docker、CI/CD、云服务器配置详解 | [references/remote-scenarios.md](references/remote-scenarios.md) |
 
 ---
 
