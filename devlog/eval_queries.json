@@ -1,0 +1,42 @@
+[
+  {
+    "query": "帮我写今天的工作日志",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集对话上下文", "提取Git提交", "生成log.md", "更新index.md"]
+  },
+  {
+    "query": "记录一下今天做了什么",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集对话上下文", "生成log.md"]
+  },
+  {
+    "query": "生成今日工作日报",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集数据源", "生成log.md", "生成stats.json"]
+  },
+  {
+    "query": "写周报",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集本周数据", "生成周统计", "生成stats.md"]
+  },
+  {
+    "query": "今天修了几个bug，帮我记录一下",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集对话上下文", "提取问题信息", "生成log.md", "生成issues.md"]
+  },
+  {
+    "query": "devlog",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集数据源", "生成log.md"]
+  },
+  {
+    "query": "帮我生成工作量统计",
+    "expected_skill": "devlog",
+    "expected_actions": ["运行stats.py", "生成stats.json", "生成stats.md"]
+  },
+  {
+    "query": "今日总结",
+    "expected_skill": "devlog",
+    "expected_actions": ["收集数据源", "生成log.md"]
+  }
+]

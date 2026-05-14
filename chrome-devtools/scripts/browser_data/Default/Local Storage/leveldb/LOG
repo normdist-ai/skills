@@ -1,0 +1,4 @@
+2026/05/04-18:53:05.212 47ec Creating DB d:\TRAE\workspace-skills\.trae\skills\chrome-devtools\scripts\browser_data\Default\Local Storage\leveldb since it was missing.
+2026/05/04-18:53:05.316 47ec Reusing MANIFEST d:\TRAE\workspace-skills\.trae\skills\chrome-devtools\scripts\browser_data\Default\Local Storage\leveldb/MANIFEST-000001
+2026/05/04-18:55:10.358 1704 Level-0 table #5: started
+2026/05/04-18:55:10.388 1704 Level-0 table #5: 44509 bytes OK

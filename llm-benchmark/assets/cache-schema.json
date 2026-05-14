@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://trae.ai/schemas/llm-benchmark-cache-v1.json",
+  "title": "LLM Benchmark Cache Schema",
+  "description": "缓存模型评测数据的 JSON Schema，用于 llm-benchmark 技能",
+  "type": "object",
+  "required": ["cache_version", "model", "provider", "benchmarks", "source", "retrieved_at"],
+  "additionalProperties": true,
+  "properties": {
+    "cache_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "缓存格式版本号"
+    },
+    "model": {
+      "type": "string",
+      "description": "模型名称，如 Qwen3.6-27B",
+      "examples": ["Qwen3.6-27B", "GLM-5", "DeepSeek-V4-Pro"]
+    },
+    "provider": {
+      "type": "string",
+      "description": "模型厂商",
+      "examples": ["Alibaba", "智谱AI", "DeepSeek", "OpenAI", "Anthropic"]
+    },
+    "architecture": {
+      "type": "string",
+      "description": "模型架构描述",
+      "examples": ["27B Dense, Hybrid Gated DeltaNet + Gated Attention", "MoE (384 experts)"]
+    },
+    "parameters": {
+      "type": "string",
+      "description": "总参数量",
+      "examples": ["27B", "744B", "1.6T"]
+    },
+    "active_parameters": {
+      "type": "string",
+      "description": "激活参数量 (MoE模型)",
+      "examples": ["27B", "40B", "49B", "3B"]
+    },
+    "context_length": {
+      "type": "string",
+      "description": "上下文长度",
+      "examples": ["262K (1M YaRN)", "200K", "1M"]
+    },
+    "release_date": {
+      "type": "string",
+      "format": "date",
+      "description": "发布日期",
+      "examples": ["2026-04-22"]
+    },
+    "license": {
+      "type": "string",
+      "description": "开源协议",
+      "examples": ["Apache 2.0", "MIT", "Proprietary"]
+    },
+    "multimodal": {
+      "type": "boolean",
+      "description": "是否支持多模态"
+    },
+    "price": {
+      "type": "object",
+      "description": "API 定价",
+      "properties": {
+        "input_per_1m": {
+          "type": "number",
+          "description": "输入价格 ($/1M tokens)"
+        },
+        "output_per_1m": {
+          "type": "number",
+          "description": "输出价格 ($/1M tokens)"
+        },
+        "currency": {
+          "type": "string",
+          "default": "USD"
+        },
+        "note": {
+          "type": "string",
+          "description": "价格说明"
+        }
+      }
+    },
+    "deploy": {
+      "type": "object",
+      "description": "部署信息",
+      "properties": {
+        "self_hosted": {
+          "type": "boolean",
+          "description": "是否支持本地部署"
+        },
+        "bf16_size": {
+          "type": "string",
+          "description": "BF16 权重大小",
+          "examples": ["55.6 GB", "~120 GB"]
+        },
+        "q4_size": {
+          "type": "string",
+          "description": "Q4 量化大小",
+          "examples": ["16.8 GB", "~250 GB"]
+        },
+        "min_gpu": {
+          "type": "string",
+          "description": "最低 GPU 要求",
+          "examples": ["RTX 4090 (24GB)", "多GPU集群"]
+        },
+        "rec_gpu": {
+          "type": "string",
+          "description": "推荐 GPU",
+          "examples": ["RTX 5090", "8x H100"]
+        },
+        "frameworks": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "支持的推理框架",
+          "examples": [["vLLM", "SGLang", "llama.cpp"]]
+        },
+        "quantization": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "支持的量化方案",
+          "examples": [["FP8", "Q4_K_M", "NVFP4"]]
+        },
+        "speed_h20": {
+          "type": "string",
+          "description": "H20 GPU 上的推理速度",
+          "examples": ["340 tok/s"]
+        },
+        "note": {
+          "type": "string",
+          "description": "部署说明"
+        }
+      }
+    },
+    "benchmarks": {
+      "type": "object",
+      "description": "评测基准得分",
+      "properties": {
+        "coding_agent": {
+          "type": "object",
+          "description": "代码能力",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "SWE-bench Verified": {"type": ["number", "null"]},
+            "SWE-bench Pro": {"type": ["number", "null"]},
+            "SWE-bench Multilingual": {"type": ["number", "null"]},
+            "Terminal-Bench 2.0": {"type": ["number", "null"]},
+            "LiveCodeBench": {"type": ["number", "null"]},
+            "HumanEval": {"type": ["number", "null"]},
+            "SkillsBench Avg5": {"type": ["number", "null"]},
+            "Claw-Eval Avg": {"type": ["number", "null"]},
+            "NL2Repo": {"type": ["number", "null"]},
+            "QwenWebBench": {"type": ["number", "null"]},
+            "PinchBench": {"type": ["number", "null"]}
+          }
+        },
+        "knowledge": {
+          "type": "object",
+          "description": "知识理解",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "MMLU-Pro": {"type": ["number", "null"]},
+            "MMLU-Redux": {"type": ["number", "null"]},
+            "SuperGPQA": {"type": ["number", "null"]},
+            "C-Eval": {"type": ["number", "null"]}
+          }
+        },
+        "reasoning": {
+          "type": "object",
+          "description": "推理能力",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "GPQA-Diamond": {"type": ["number", "null"]},
+            "HLE": {"type": ["number", "null"]}
+          }
+        },
+        "math": {
+          "type": "object",
+          "description": "数学能力",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "HMMT Feb 25": {"type": ["number", "null"]},
+            "AIME26": {"type": ["number", "null"]}
+          }
+        },
+        "vision": {
+          "type": "object",
+          "description": "视觉能力",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "MMMU": {"type": ["number", "null"]},
+            "MMStar": {"type": ["number", "null"]},
+            "RefCOCO avg": {"type": ["number", "null"]},
+            "RealWorldQA": {"type": ["number", "null"]}
+          }
+        },
+        "function_calling": {
+          "type": "object",
+          "description": "函数调用",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "BFCL Multi-Turn": {"type": ["number", "null"]},
+            "tau2-Bench Telecom": {"type": ["number", "null"]}
+          }
+        },
+        "agentic": {
+          "type": "object",
+          "description": "智能体能力",
+          "additionalProperties": {"type": ["number", "null"]},
+          "properties": {
+            "BrowseComp": {"type": ["number", "null"]},
+            "MCPMark": {"type": ["number", "null"]},
+            "MCP-Atlas": {"type": ["number", "null"]},
+            "WideSearch": {"type": ["number", "null"]}
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "description": "数据置信度标注",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["verified", "claimed", "undisclosed"],
+        "description": "verified=已验证, claimed=官方声称, undisclosed=未披露"
+      }
+    },
+    "benchlm": {
+      "type": "object",
+      "description": "BenchLM 平台数据",
+      "additionalProperties": {"type": ["number", "null"]}
+    },
+    "artificial_analysis": {
+      "type": "object",
+      "description": "Artificial Analysis 平台数据",
+      "additionalProperties": {"type": ["number", "string", "null"]}
+    },
+    "chatbot_arena": {
+      "type": "object",
+      "description": "Chatbot Arena Elo 分数",
+      "additionalProperties": {"type": ["number", "null"]}
+    },
+    "user_reports": {
+      "type": "object",
+      "description": "用户反馈报告",
+      "properties": {
+        "strengths": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "comparison": {
+          "type": "string"
+        }
+      }
+    },
+    "key_features": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "关键特性列表"
+    },
+    "source": {
+      "type": "string",
+      "description": "数据来源 URL",
+      "examples": ["https://qwen.ai/blog?id=qwen3.6-27b"]
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date",
+      "description": "数据获取日期",
+      "examples": ["2026-05-01"]
+    }
+  }
+}
