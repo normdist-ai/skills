@@ -1,0 +1,16 @@
+{
+  "season": "冬 (12-2月)",
+  "outfit": "灰色羊毛大衣，红色羊绒围巾",
+  "scene": "雪中公园，雪花纷飞",
+  "weather": "冬日阴天柔光",
+  "prompt_hint": "grey wool coat, red cashmere scarf, snowy park, snowflakes",
+  "file": "winter.png",
+  "size_kb": 1845,
+  "faceid_params": {
+    "preset": "FACEID PLUS V2",
+    "weight": 1.2,
+    "weight_faceidv2": 0.8,
+    "lora_strength": 0.8,
+    "embeds_scaling": "K+V"
+  }
+}

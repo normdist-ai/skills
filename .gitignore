@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Outputs (generated images)
+outputs/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+{
+  "season": "夏 (6-8月)",
+  "outfit": "白色细吊带背心，露肩锁骨",
+  "scene": "海边栈道，海浪，明亮阳光",
+  "weather": "夏日晴天",
+  "prompt_hint": "white spaghetti strap camisole top, seaside boardwalk, ocean waves",
+  "file": "summer.png",
+  "size_kb": 1684,
+  "faceid_params": {
+    "preset": "FACEID PLUS V2",
+    "weight": 1.2,
+    "weight_faceidv2": 0.8,
+    "lora_strength": 0.8,
+    "embeds_scaling": "K+V"
+  }
+}

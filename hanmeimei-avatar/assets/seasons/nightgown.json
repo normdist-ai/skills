@@ -1,0 +1,16 @@
+{
+  "season": "室内/四季",
+  "outfit": "白色丝绸吊带睡裙，薄纱外套半褪",
+  "scene": "卧室，白色丝绸床单，窗边逆光",
+  "weather": "室内暖光",
+  "prompt_hint": "white silk nightgown, sheer robe, bedroom, white silk sheets",
+  "file": "nightgown.png",
+  "size_kb": 1686,
+  "faceid_params": {
+    "preset": "FACEID PLUS V2",
+    "weight": 1.2,
+    "weight_faceidv2": 0.8,
+    "lora_strength": 0.8,
+    "embeds_scaling": "K+V"
+  }
+}

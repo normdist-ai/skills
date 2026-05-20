@@ -1,0 +1,24 @@
+{
+  "file": "photo_007.png",
+  "size_kb": 1588,
+  "date": "2026-05-16 21:10",
+  "description": "卧室白色蕾丝内衣，坐姿，温柔注视镜头，中性表情，窗边自然光+床头暖灯",
+  "seed": 31954920,
+  "model": "chilloutmix-Ni",
+  "faceid": {
+    "preset": "FACEID PLUS V2",
+    "weight": 1.2,
+    "weight_faceidv2": 0.8,
+    "lora_strength": 0.8,
+    "combine_embeds": "average",
+    "embeds_scaling": "K+V",
+    "refs": ["face_ref_1.png", "face_ref_2.png", "face_ref_3.png"]
+  },
+  "cfg": 3.5,
+  "sampler": "Euler",
+  "steps": "30+20",
+  "base_size": "512x768",
+  "hires": "2x -> 1024x1536",
+  "user_rating": "⭐⭐⭐ 最喜欢",
+  "note": "用户当前最喜欢的照片。温柔注视，身体比例自然，光线柔美。以后可作为参考基准。"
+}

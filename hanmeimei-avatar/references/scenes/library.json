@@ -1,0 +1,10 @@
+{
+  "name": "图书馆书架",
+  "scene": "in a vintage library, surrounded by tall wooden bookshelves filled with books",
+  "clothing": "wearing a plaid shirt, glasses on nose bridge",
+  "expression": "gentle thoughtful expression, looking at camera with intellectual eyes",
+  "lighting": "soft warm reading lamp light, ambient library atmosphere",
+  "composition": "waist up",
+  "faceid_overrides": {},
+  "neg_extras": []
+}

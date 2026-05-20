@@ -1,0 +1,10 @@
+{
+  "name": "天台夕阳",
+  "scene": "on a rooftop terrace at golden hour sunset, city skyline in the background, warm breeze",
+  "clothing": "wearing a white button-down shirt with rolled-up sleeves, top buttons undone, collar open, collarbone visible",
+  "expression": "(gentle smile:1.3), wind-blown hair, looking at camera with dreamy eyes",
+  "lighting": "golden hour sunset lighting, warm orange and pink sky, backlit rim light",
+  "composition": "waist up",
+  "faceid_overrides": {"weight": 0.8, "weight_faceidv2": 0.6, "end_at": 0.8},
+  "neg_extras": ["(nude:1.5)", "(topless:1.5)", "(naked:1.5)"]
+}

@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "name": "cloth_swap",
+    "description": "换衣工作流：基于 Inpaint + CLIPSeg，对已生成的图片替换服装",
+    "usage": "先上传基础图到 ComfyUI input，修改节点2的image和节点5的text（目标服装描述），提交执行",
+    "params": {
+      "node_2_image": "基础图文件名（ComfyUI input目录）",
+      "node_5_text": "目标服装提示词",
+      "node_8_denoise": "重绘强度 0.5-0.85，越高越自由但越可能丢失原图结构",
+      "node_8_seed": "随机种子",
+      "node_8_cfg": "CFG值，建议5.0-7.0",
+      "node_3_prompt": "CLIPSeg 检测词，用于定位衣服区域",
+      "node_4_expand": "Mask扩展像素，确保完全覆盖衣服边缘"
+    }
+  },
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "chilloutmix-Ni.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "{{BASE_IMAGE}}"
+    }
+  },
+  "3": {
+    "class_type": "CLIPSeg",
+    "inputs": {
+      "image": ["2", 0],
+      "prompt": "clothing, dress, shirt, outfit, garment",
+      "blur": 7.0,
+      "threshold": 0.3,
+      "dilation_factor": 4
+    }
+  },
+  "4": {
+    "class_type": "GrowMask",
+    "inputs": {
+      "mask": ["3", 0],
+      "expand": 20,
+      "tapered_corners": true
+    }
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "{{CLOTHING_PROMPT}}",
+      "clip": ["1", 1]
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "(worst quality:2),(low quality:2),lowres,illustration,anime,painting,drawing,art,deformed clothing,bad anatomy,missing limbs,nude",
+      "clip": ["1", 1]
+    }
+  },
+  "7": {
+    "class_type": "InpaintModelConditioning",
+    "inputs": {
+      "positive": ["5", 0],
+      "negative": ["6", 0],
+      "vae": ["1", 2],
+      "pixels": ["2", 0],
+      "mask": ["4", 0],
+      "noise_mask": true
+    }
+  },
+  "8": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": "{{SEED}}",
+      "steps": 30,
+      "cfg": 5.5,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.75,
+      "model": ["1", 0],
+      "positive": ["7", 0],
+      "negative": ["7", 1],
+      "latent_image": ["7", 2]
+    }
+  },
+  "9": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["8", 0],
+      "vae": ["1", 2]
+    }
+  },
+  "10": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "hm_cloth_swap",
+      "images": ["9", 0]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "season": "春 (3-5月)",
+  "outfit": "浅粉色碎花连衣裙，泡泡短袖，蕾丝边",
+  "scene": "樱花花园，粉色花瓣飘落",
+  "weather": "晴朗春日",
+  "prompt_hint": "light pink floral print dress, short puff sleeves, cherry blossom garden",
+  "file": "spring.png",
+  "size_kb": 1892,
+  "faceid_params": {
+    "preset": "FACEID PLUS V2",
+    "weight": 1.2,
+    "weight_faceidv2": 0.8,
+    "lora_strength": 0.8,
+    "embeds_scaling": "K+V"
+  }
+}

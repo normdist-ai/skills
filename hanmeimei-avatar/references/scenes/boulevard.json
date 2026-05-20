@@ -1,0 +1,10 @@
+{
+  "name": "林荫道散步",
+  "scene": "walking along a tree-lined boulevard, dappled sunlight through green leaves, peaceful morning",
+  "clothing": "wearing a light summer dress, straw hat",
+  "expression": "bright natural smile, looking ahead with happy eyes",
+  "lighting": "soft dappled sunlight through tree canopy, natural morning light",
+  "composition": "waist up",
+  "faceid_overrides": {"weight": 0.8, "weight_faceidv2": 0.6, "end_at": 0.8},
+  "neg_extras": []
+}

@@ -1,0 +1,10 @@
+{
+  "name": "卧室暖光",
+  "scene": "in a cozy bedroom with warm bedside lamp light, soft curtains",
+  "clothing": "wearing a white silk camisole nightgown with thin spaghetti straps, sheer lace trim",
+  "expression": "(gentle soft smile:1.3), looking directly at camera with warm affectionate eyes",
+  "lighting": "warm golden bedside lamp light, soft diffused ambient glow",
+  "composition": "waist up",
+  "faceid_overrides": {},
+  "neg_extras": []
+}
