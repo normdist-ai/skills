@@ -1,0 +1,147 @@
+# 林荫道 — 场景提示词
+# 每个 [季节.时段] 段落包含：穿搭、表情、光线、背景
+# 留空则使用 base.txt 的默认值
+
+[spring.morning]
+outfit: light spring dress, pastel cardigan
+expression: peaceful smile
+lighting: fresh spring morning sunlight through cherry blossom branches
+background: outdoor street with trees and buildings
+
+[spring.forenoon]
+outfit: stylish casual clothes
+expression: relaxed expression
+lighting: natural daylight on tree-lined street
+background: outdoor street with trees and buildings
+
+[spring.noon]
+outfit: casual blouse, light jeans
+expression: happy smile
+lighting: bright spring noon sunlight
+background: outdoor street with trees and buildings
+
+[spring.afternoon]
+outfit: stylish casual clothes
+expression: natural expression
+lighting: warm afternoon light through trees
+background: outdoor street with trees and buildings
+
+[spring.evening]
+outfit: stylish casual outfit
+expression: relaxed expression
+lighting: golden hour, warm spring sunset glow
+background: outdoor street with trees and buildings
+
+[spring.night]
+outfit: stylish casual clothes with jacket
+expression: gentle smile
+lighting: soft street lamp light, spring night
+background: outdoor street with trees and buildings
+
+[summer.morning]
+outfit: white sundress, straw hat
+expression: cheerful smile
+lighting: bright morning light, summer heat haze
+background: outdoor street with trees and buildings
+
+[summer.forenoon]
+outfit: casual summer outfit, sunglasses
+expression: happy smile
+lighting: bright summer morning light
+background: outdoor street with trees and buildings
+
+[summer.noon]
+outfit: light summer dress
+expression: natural expression
+lighting: harsh bright noon sunlight
+background: outdoor street with trees and buildings
+
+[summer.afternoon]
+outfit: casual summer clothes, sunglasses
+expression: relaxed expression
+lighting: bright afternoon light
+background: outdoor street with trees and buildings
+
+[summer.evening]
+outfit: stylish casual outfit
+expression: happy smile
+lighting: warm summer sunset, long golden light
+background: outdoor street with trees and buildings
+
+[summer.night]
+outfit: stylish casual clothes with light jacket
+expression: peaceful smile
+lighting: warm night street lights, summer evening
+background: outdoor street with trees and buildings
+
+[autumn.morning]
+outfit: autumn coat, scarf
+expression: peaceful smile
+lighting: crisp morning light, golden autumn atmosphere
+background: outdoor street with trees and golden leaves
+
+[autumn.forenoon]
+outfit: autumn sweater, casual pants
+expression: relaxed expression
+lighting: soft autumn morning light
+background: outdoor street with trees and golden leaves
+
+[autumn.noon]
+outfit: autumn casual outfit
+expression: happy smile
+lighting: bright autumn noon light, golden ginkgo leaves
+background: outdoor street with trees and golden leaves
+
+[autumn.afternoon]
+outfit: autumn sweater, casual pants
+expression: natural expression
+lighting: warm afternoon golden light
+background: outdoor street with trees and golden leaves
+
+[autumn.evening]
+outfit: autumn coat, scarf
+expression: relaxed expression
+lighting: golden hour, warm autumn glow, long shadows
+background: outdoor street with trees and golden leaves
+
+[autumn.night]
+outfit: autumn coat, warm scarf
+expression: gentle smile
+lighting: warm street lights, autumn night
+background: outdoor street with trees and buildings
+
+[winter.morning]
+outfit: winter coat, knit scarf, gloves
+expression: gentle smile
+lighting: cold morning with frost
+background: outdoor street with trees and buildings
+
+[winter.forenoon]
+outfit: winter coat, warm sweater
+expression: natural expression
+lighting: pale winter morning light
+background: outdoor street with trees and buildings
+
+[winter.noon]
+outfit: winter coat, scarf
+expression: happy smile
+lighting: bright but cold winter noon sunlight
+background: outdoor street with trees and buildings
+
+[winter.afternoon]
+outfit: winter coat, warm sweater
+expression: relaxed expression
+lighting: pale winter afternoon light
+background: outdoor street with trees and buildings
+
+[winter.evening]
+outfit: winter coat, knit scarf, gloves
+expression: peaceful expression
+lighting: warm street lights, cold winter evening, breath mist
+background: outdoor street with trees and buildings
+
+[winter.night]
+outfit: winter coat, warm scarf, knit hat
+expression: gentle smile
+lighting: warm street lamp light, winter night, snowflakes
+background: outdoor street with trees and buildings

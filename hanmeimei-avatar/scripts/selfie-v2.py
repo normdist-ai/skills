@@ -449,21 +449,28 @@ def apply_weather_mod(scene_config, lighting, weather, temp):
     return scene_config, lighting
 
 
-def update_prompt(workflow, clothing=None, expression=None, lighting=None, background=None, expression_weight=1.5):
+def update_prompt(workflow, clothing=None, expression=None, lighting=None, background=None, expression_weight=1.5, nude=False):
     for node_id, node in workflow.get("prompt", {}).items():
         if node.get("class_type") == "CLIPTextEncode" and "text" in node.get("inputs", {}):
             text = node["inputs"]["text"]
             
-            # 判断是否是正向提示词（包含正向关键词）
             is_positive = "best quality" in text.lower() or "masterpiece" in text.lower()
             
             print(f"[DEBUG] 节点{node_id} - 原始提示词: {text[:200]}...", file=sys.stderr)
             
             if is_positive:
-                # 正向提示词处理 - 首先添加 1girl, solo 约束到最前面
-                if 'solo' not in text.lower():
-                    text = f'1girl, (solo:1.5), {text}'
-                    print(f"[DEBUG] 节点{node_id} - 添加 1girl, (solo:1.5) 到最前面", file=sys.stderr)
+                # nude 模式：添加 nude 关键词
+                if nude:
+                    if 'solo' not in text.lower():
+                        text = f'1girl, solo, nude, {text}'
+                        print(f"[DEBUG] 节点{node_id} - 添加 1girl, solo, nude 到最前面", file=sys.stderr)
+                    # 清除所有 wearing 穿搭词
+                    text = re.sub(r',?\s*wearing [^,]+', '', text)
+                    print(f"[DEBUG] 节点{node_id} - nude模式: 移除穿搭词", file=sys.stderr)
+                else:
+                    if 'solo' not in text.lower():
+                        text = f'1girl, (solo:1.5), {text}'
+                        print(f"[DEBUG] 节点{node_id} - 添加 1girl, (solo:1.5) 到最前面", file=sys.stderr)
                 
                 if clothing:
                     text = re.sub(r'wearing [^,]+', f'wearing {clothing}', text)
@@ -488,9 +495,21 @@ def update_prompt(workflow, clothing=None, expression=None, lighting=None, backg
                     print(f"[DEBUG] 节点{node_id} - 添加背景: {background}", file=sys.stderr)
                     
             else:
-                # 反向提示词处理 - 添加强力多人脸约束和 nsfw 约束
+                # 反向提示词处理 - 先确保关键负面嵌入存在
+                negative_embeddings = [
+                    'EasyNegative',
+                    'bad_prompt_version2'
+                ]
+                added_emb = 0
+                for embedding in negative_embeddings:
+                    if embedding.lower() not in text.lower():
+                        text = text + f', {embedding}'
+                        added_emb += 1
+                if added_emb > 0:
+                    print(f"[DEBUG] 节点{node_id} - 添加 {added_emb} 个负面嵌入", file=sys.stderr)
+                
+                # 添加强力多人脸约束
                 negative_constraints = [
-                    '(nsfw:1.8)',
                     '(multiple people:2.0)',
                     '(multiple faces:2.0)',
                     '(two people:1.9)',
@@ -504,6 +523,9 @@ def update_prompt(workflow, clothing=None, expression=None, lighting=None, backg
                     '(3girls:1.8)',
                     '(multiple girls:1.8)'
                 ]
+                # 正常模式额外添加 nsfw 约束
+                if not nude:
+                    negative_constraints.insert(0, '(nsfw:1.8)')
                 
                 # 检查是否已添加，避免重复
                 added_count = 0
@@ -566,6 +588,7 @@ def main():
     parser.add_argument("--cfg", "-c", type=float, default=4.0, help="CFG值（默认: 4.0）")
     parser.add_argument("--start-at", "-sa", type=float, default=0.0, help="FaceID开始介入点（默认: 0.0）")
     parser.add_argument("--seed", "-s", type=int, help="指定种子（省略则随机生成）")
+    parser.add_argument("--nude", "-n", action="store_true", help="nude模式（移除穿搭，去掉nsfw反向约束）")
     parser.add_argument("--verbose", "-v", action="store_true", help="详细输出模式")
     
     args = parser.parse_args()
@@ -616,14 +639,17 @@ def main():
 
     seed = args.seed if args.seed else random.randint(1, 999999999)
 
-    clothing = get_outfit(scene_config, period)
+    clothing = None if args.nude else get_outfit(scene_config, period)
     # 如果没有指定表情，使用场景表情
     if not expression:
         expression = get_expression(scene_config)
     
     background = get_background(scene_config)
     
-    print(f"[INFO] 穿搭: {clothing}", file=sys.stderr)
+    if clothing:
+        print(f"[INFO] 穿搭: {clothing}", file=sys.stderr)
+    else:
+        print(f"[INFO] 模式: nude", file=sys.stderr)
     print(f"[INFO] 表情: {expression} (权重: {expression_weight})", file=sys.stderr)
     print(f"[INFO] 背景: {background}", file=sys.stderr)
     print(f"[INFO] 种子: {seed}", file=sys.stderr)
@@ -638,7 +664,7 @@ def main():
 
     print(f"[INFO] 读取工作流: {workflow_path}", file=sys.stderr)
 
-    workflow = update_prompt(workflow, clothing=clothing, expression=expression, lighting=lighting, background=background, expression_weight=expression_weight)
+    workflow = update_prompt(workflow, clothing=clothing, expression=expression, lighting=lighting, background=background, expression_weight=expression_weight, nude=args.nude)
     
     if args.verbose:
         print(f"[INFO] 应用工作流参数（基于文章经验）...", file=sys.stderr)

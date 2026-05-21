@@ -496,11 +496,15 @@ def update_prompt(workflow, clothing=None, expression=None, lighting=None, backg
             if is_positive:
                 if 'solo' not in text.lower():
                     text = f'1girl, solo, nude, {text}'
-                    print(f"[DEBUG] 节点{node_id} - 添加 1girl, (solo:{WEIGHT_SOLO}) 到最前面", file=sys.stderr)
+                    print(f"[DEBUG] 节点{node_id} - 添加 1girl, solo, nude 到最前面", file=sys.stderr)
                 
+                # nude 模式: 无论是否传 clothing，都清除所有 wearing 穿搭词
+                text = re.sub(r',?\s*wearing [^,]+', '', text)
                 if clothing:
-                    text = re.sub(r'wearing [^,]+', f'wearing {clothing}', text)
+                    text = text + f', wearing {clothing}'
                     print(f"[DEBUG] 节点{node_id} - 替换穿搭: {clothing}", file=sys.stderr)
+                else:
+                    print(f"[DEBUG] 节点{node_id} - nude模式: 移除穿搭词", file=sys.stderr)
                 
                 if expression:
                     expression_weighted = f"({expression}:{expression_weight})"
@@ -660,13 +664,11 @@ def main():
 
     seed = args.seed if args.seed else random.randint(1, 999999999)
 
-    clothing = get_outfit(scene_config, period)
+    # nude 模式不需要穿搭
     if not expression:
         expression = get_expression(scene_config)
     
     background = get_background(scene_config)
-    
-    print(f"[INFO] 穿搭: {clothing}", file=sys.stderr)
     print(f"[INFO] 表情: {expression} (权重: {expression_weight})", file=sys.stderr)
     print(f"[INFO] 背景: {background}", file=sys.stderr)
     print(f"[INFO] 种子: {seed}", file=sys.stderr)
@@ -681,7 +683,8 @@ def main():
 
     print(f"[INFO] 读取工作流: {workflow_path}", file=sys.stderr)
 
-    workflow = update_prompt(workflow, clothing=clothing, expression=expression, lighting=lighting, background=background, expression_weight=expression_weight)
+    # nude 模式: 传入 clothing=None 仍会清理残留穿搭词
+    workflow = update_prompt(workflow, clothing=None, expression=expression, lighting=lighting, background=background, expression_weight=expression_weight)
     
     if args.verbose:
         print(f"[INFO] 应用工作流参数（基于文章经验）...", file=sys.stderr)

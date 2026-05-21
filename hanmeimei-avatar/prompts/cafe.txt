@@ -1,0 +1,145 @@
+# 咖啡馆 — 场景提示词
+
+[spring.morning]
+outfit: casual outfit, light cardigan
+expression: warm smile
+lighting: bright morning light
+background: cozy cafe interior background
+
+[spring.forenoon]
+outfit: white blouse, long skirt, bra
+expression: friendly smile
+lighting: soft natural light through cafe window
+background: cozy cafe interior background
+
+[spring.noon]
+outfit: white blouse, long skirt, bra
+expression: happy expression
+lighting: bright canteen lighting, lunchtime bustle
+background: cozy cafe interior background
+
+[spring.afternoon]
+outfit: white blouse, long skirt, bra
+expression: delighted expression
+lighting: warm afternoon cafe light through window
+background: cozy cafe interior background
+
+[spring.evening]
+outfit: casual outfit, light jacket
+expression: relaxed smile
+lighting: warm evening cafe light
+background: cozy cafe interior background
+
+[spring.night]
+outfit: white blouse, long skirt, bra
+expression: gentle smile
+lighting: warm cafe interior light, night outside window
+background: cozy cafe interior background
+
+[summer.morning]
+outfit: light summer outfit, sunglasses
+expression: cheerful smile
+lighting: bright morning light, summer heat haze
+background: cozy cafe interior background
+
+[summer.forenoon]
+outfit: light summer outfit
+expression: happy smile
+lighting: bright morning light
+background: cozy cafe interior background
+
+[summer.noon]
+outfit: light summer outfit
+expression: natural expression
+lighting: indoor canteen lighting, relief from heat
+background: cozy cafe interior background
+
+[summer.afternoon]
+outfit: light summer outfit
+expression: relaxed expression
+lighting: bright afternoon light
+background: cozy cafe interior background
+
+[summer.evening]
+outfit: casual summer outfit
+expression: happy smile
+lighting: warm cafe light
+background: cozy cafe interior background
+
+[summer.night]
+outfit: casual summer outfit
+expression: peaceful smile
+lighting: night cafe atmosphere
+background: cozy cafe interior background
+
+[autumn.morning]
+outfit: autumn sweater, casual pants
+expression: warm smile
+lighting: warm morning light
+background: cozy cafe interior background
+
+[autumn.forenoon]
+outfit: autumn sweater
+expression: friendly smile
+lighting: warm morning light
+background: cozy cafe interior background
+
+[autumn.noon]
+outfit: autumn casual outfit
+expression: happy expression
+lighting: warm canteen lighting, steam rising from bowl
+background: cozy cafe interior background
+
+[autumn.afternoon]
+outfit: autumn sweater
+expression: delighted expression
+lighting: warm afternoon light
+background: cozy cafe interior background
+
+[autumn.evening]
+outfit: autumn sweater, scarf
+expression: relaxed smile
+lighting: warm evening light
+background: cozy cafe interior background
+
+[autumn.night]
+outfit: autumn sweater, scarf
+expression: gentle smile
+lighting: warm night cafe
+background: cozy cafe interior background
+
+[winter.morning]
+outfit: winter coat, warm sweater
+expression: gentle smile
+lighting: cold winter morning light, breath mist
+background: cozy cafe interior background
+
+[winter.forenoon]
+outfit: winter coat, sweater
+expression: warm smile
+lighting: warm morning light
+background: cozy cafe interior background
+
+[winter.noon]
+outfit: winter coat, scarf
+expression: happy smile
+lighting: warm canteen light, steam and warmth
+background: cozy cafe interior background
+
+[winter.afternoon]
+outfit: winter coat, sweater
+expression: relaxed expression
+lighting: warm afternoon light
+background: cozy cafe interior background
+
+[winter.evening]
+outfit: winter coat, scarf
+expression: peaceful expression
+lighting: warm evening light
+background: cozy cafe interior background
+
+[winter.night]
+outfit: winter coat, warm scarf
+expression: gentle smile
+lighting: warm night cafe with steam
+background: cozy cafe interior background

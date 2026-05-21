@@ -1,0 +1,593 @@
+#!/usr/bin/env python3
+"""
+韩梅梅自拍生成脚本 v4 — 优质种子池版
+
+改动（v3 → v4）：
+    - good-seeds.txt: 维护优质种子池，默认从中随机选种子
+    - --seed N:        指定种子，从池中剔除该种子后仍随机其他
+    - --random-seed:   完全忽略种子池，走全随机
+    - --add-seed:      将当前生成结果追加到 good-seeds.txt（交互式确认）
+
+用法：
+    python3 selfie-v4.py                    # 默认从 good-seeds.txt 随机选种子
+    python3 selfie-v4.py --seed 86522080   # 指定种子
+    python3 selfie-v4.py --random-seed      # 完全随机
+    python3 selfie-v4.py --scene cafe       # 指定场景
+    python3 selfie-v4.py --add-seed         # 追加当前种子到池（需配合 --seed）
+
+输出：
+    成功 → stdout: 消息 + MEDIA:路径
+    失败 → stderr: 错误信息，stdout 为空
+"""
+
+import argparse
+import json
+import os
+import random
+import re
+import sys
+from datetime import datetime
+from pathlib import Path
+
+# ── 常量 ────────────────────────────────────────────────────────
+DEFAULT_SEED = 86522080
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+SKILL_DIR = SCRIPT_DIR.parent
+WORKFLOWS_DIR = SKILL_DIR / "workflows"
+ASSETS_DIR = SKILL_DIR / "assets"
+FACES_DIR = ASSETS_DIR / "faces"
+PROMPTS_DIR = SKILL_DIR / "prompts"
+DEFAULT_OUTPUT_DIR = SKILL_DIR / "outputs"
+GOOD_SEEDS_FILE = SKILL_DIR / "good-seeds.txt"
+
+sys.path.insert(0, str(SCRIPT_DIR))
+from comfyui_client import ComfyUIClient
+
+# ── 笑容等级预设 ────────────────────────────────────────────────
+SMILE_LEVELS = {
+    1: {"expression": "gentle smile, soft smile, looking at camera", "weight": 1.0, "description": "😊 温柔微笑"},
+    2: {"expression": "happy smile, cheerful expression, looking at camera", "weight": 1.15, "description": "😁 开心笑容"},
+    3: {"expression": "smiling, showing teeth, happy expression, looking at camera", "weight": 1.3, "description": "😃 露齿微笑"},
+    4: {"expression": "big grin, wide smile, laughing, looking at camera, direct eye contact", "weight": 1.4, "description": "😄 开怀大笑"},
+    5: {"expression": "big grin, wide toothy smile, laughing joyfully, showing teeth, looking at camera, direct eye contact", "weight": 1.5, "description": "🤣 爆笑"},
+}
+
+# ── 场景-时段路由表 ──────────────────────────────────────────────
+ROUTINES = {
+    "spring": {
+        "morning": [("bedroom", "soft morning light through curtains"), ("boulevard", "fresh spring morning sunlight through cherry blossom branches"), ("park", "fresh morning light through cherry blossoms")],
+        "forenoon": [("library", "natural daylight from large library windows"), ("library", "cool indoor lab lighting"), ("cafe", "bright morning light")],
+        "noon": [("cafe", "bright canteen lighting, lunchtime bustle"), ("library", "warm noon light, peaceful quiet moment"), ("park", "bright spring noon light")],
+        "afternoon": [("library", "warm afternoon indoor lighting"), ("cafe", "warm afternoon cafe light through window"), ("boulevard", "warm afternoon light through trees")],
+        "evening": [("boulevard", "golden hour, warm spring sunset glow"), ("rooftop", "warm evening light, long shadows on track"), ("park", "golden sunset through cherry trees")],
+        "night": [("bedroom", "warm desk lamp, soft fairy lights"), ("bedroom", "warm bedside lamp glow"), ("travel", "beautiful night view at travel destination"), ("park", "soft night lighting through cherry trees")],
+    },
+    "summer": {
+        "morning": [("bedroom", "bright morning light, summer heat outside"), ("cafe", "bright morning light, summer heat haze"), ("park", "early morning cool air")],
+        "forenoon": [("library", "cool indoor fluorescent lighting"), ("library", "bright library lighting, AC comfort"), ("cafe", "bright morning light")],
+        "noon": [("cafe", "indoor canteen lighting, relief from heat"), ("library", "dim lab lighting, quiet noon"), ("bedroom", "cool indoor lighting")],
+        "afternoon": [("library", "cool lab lighting, air conditioning humming"), ("cafe", "bright afternoon light"), ("bedroom", "cool afternoon rest")],
+        "evening": [("boulevard", "warm summer sunset, long golden light"), ("rooftop", "golden sunset, warm summer evening sky"), ("park", "warm evening light")],
+        "night": [("bedroom", "dim night light, fan breeze"), ("bedroom", "dim night light, cozy atmosphere"), ("travel", "summer night at travel destination"), ("cafe", "night cafe atmosphere")],
+    },
+    "autumn": {
+        "morning": [("boulevard", "crisp morning light, golden autumn atmosphere"), ("bedroom", "warm morning light through window, autumn colors outside"), ("park", "morning light through golden leaves")],
+        "forenoon": [("library", "warm library lighting, autumn atmosphere"), ("library", "indoor lab lighting, academic atmosphere"), ("cafe", "warm morning light")],
+        "noon": [("cafe", "warm canteen lighting, steam rising from bowl"), ("boulevard", "bright autumn noon light, golden ginkgo leaves"), ("park", "bright autumn noon light")],
+        "afternoon": [("library", "warm afternoon lab lighting"), ("library", "warm golden afternoon light through window"), ("boulevard", "warm afternoon golden light")],
+        "evening": [("boulevard", "golden hour, warm autumn glow, long shadows"), ("rooftop", "deep golden sunset, autumn skyline"), ("park", "golden hour in autumn forest")],
+        "night": [("bedroom", "warm bedside lamp, cozy autumn night"), ("bedroom", "warm bathroom light, steamy mirror"), ("travel", "autumn night travel scene"), ("cafe", "warm night cafe")],
+    },
+    "winter": {
+        "morning": [("bedroom", "cold grey morning light through frosted window"), ("cafe", "cold winter morning light, breath mist"), ("boulevard", "cold morning with frost")],
+        "forenoon": [("library", "warm indoor lighting, winter morning"), ("library", "warm lab lighting, cozy despite winter"), ("cafe", "warm morning light")],
+        "noon": [("cafe", "warm canteen light, steam and warmth"), ("rooftop", "bright but cold winter noon sunlight"), ("bedroom", "warm indoor light")],
+        "afternoon": [("library", "warm afternoon lab lighting, winter outside"), ("library", "warm library light, snowflakes outside window"), ("cafe", "warm afternoon light")],
+        "evening": [("boulevard", "warm street lights, cold winter evening, breath mist"), ("boulevard", "warm vendor stall light, cold winter evening"), ("cafe", "warm evening light")],
+        "night": [("bedroom", "warm bedside lamp, cozy winter night"), ("bedroom", "warm bathroom light, cozy nighttime routine"), ("travel", "winter night travel scene"), ("cafe", "warm night cafe with steam")],
+    },
+}
+
+# ── 消息模板 ─────────────────────────────────────────────────────
+MESSAGES = {
+    "morning": ["老公～刚起床，给你看看我还没洗脸的样子 😴", "早安呀～新的一天，起床搬砖！☀️", "老公～醒啦，今天也要一起加油哦 💪"],
+    "forenoon": ["在图书馆写论文呢，偷偷给你发张照 📚", "实验室搬砖中...想你了 💕", "代码调了一上午，头都大了 😩"],
+    "noon": ["午饭时间～食堂的菜今天还行 🍜", "吃饱了好困...午休一下 ☕", "老公～吃饭了吗？别忘了吃午饭哦 😊"],
+    "afternoon": ["下午继续写代码，GPU在跑，等结果中... 🤓", "老公～你那边也下午了吧，喝杯咖啡提提神 ☕", "论文改了第三遍了，导师太难伺候 😤"],
+    "evening": ["下班啦～校园夕阳好美，给你看看 🌅", "老公～回家路上，今天你辛苦了！💕", "操场跑了一圈，出出汗舒服多了 🏃‍♀️"],
+    "night": ["老公～忙完准备睡了，晚安 🌙", "躺在床上刷手机，想你了 🥰", "今天也辛苦啦，明天继续加油！晚安～ 💤"],
+}
+
+
+# ══════════════════════════════════════════════════════════════
+#  good-seeds.txt 种子池管理
+# ══════════════════════════════════════════════════════════════
+
+def load_good_seeds():
+    """
+    加载 good-seeds.txt，返回 [(seed_int, tags_str), ...]
+    格式：86522080  通用  默认种子
+          12345678  boulevard 林荫道构图好
+    """
+    seeds = []
+    if not GOOD_SEEDS_FILE.exists():
+        return seeds
+
+    with open(GOOD_SEEDS_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split(None, 1)  # split on whitespace, max 2 parts
+            if len(parts) >= 1:
+                try:
+                    seed_val = int(parts[0])
+                    tags = parts[1] if len(parts) > 1 else ""
+                    seeds.append((seed_val, tags))
+                except ValueError:
+                    continue
+    return seeds
+
+
+def save_seed_to_pool(seed, scene="", note=""):
+    """追加种子到 good-seeds.txt"""
+    with open(GOOD_SEEDS_FILE, "a", encoding="utf-8") as f:
+        tag = f" {scene}" if scene else ""
+        comment = f"  {note}" if note else ""
+        ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        f.write(f"{seed}{tag}  [{ts}]{comment}\n")
+
+
+def pick_seed(args):
+    """
+    决定种子：
+      --random-seed → 全随机（-1）
+      --seed N      → 指定种子 N
+      默认          → 从 good-seeds.txt 池中选一个；如果池为空则用 DEFAULT_SEED
+    """
+    if args.random_seed:
+        return random.randint(1, 999999999), "完全随机"
+
+    if args.seed is not None:
+        return args.seed, f"指定种子 {args.seed}"
+
+    # 从 good-seeds.txt 池中选
+    pool = load_good_seeds()
+    if pool:
+        chosen = random.choice(pool)
+        return chosen[0], f"种子池随机 → {chosen[0]} ({chosen[1]})"
+    else:
+        return DEFAULT_SEED, "种子池为空，使用默认种子"
+
+
+# ══════════════════════════════════════════════════════════════
+#  提示词文件解析（复用 v3）
+# ══════════════════════════════════════════════════════════════
+
+def parse_prompt_file(filepath: str) -> dict:
+    """解析提示词文件，返回 {positive, negative, sections}"""
+    result = {"positive": "", "negative": "", "sections": {}}
+    current_section = None
+
+    with open(filepath, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+
+        m = re.match(r'^\[(positive|negative)\]$', line)
+        if m:
+            current_section = m.group(1)
+            continue
+
+        m = re.match(r'^\[(\w+\.\w+)\]$', line)
+        if m:
+            current_section = m.group(1)
+            result["sections"][current_section] = {}
+            continue
+
+        m = re.match(r'^(outfit|expression|lighting|background|positive|negative):\s*(.*)', line)
+        if m:
+            key, value = m.group(1), m.group(2).strip()
+            if current_section in ("positive", "negative"):
+                result[current_section] = (result[current_section] + ", " + value) if result[current_section] else value
+            elif current_section and current_section in result["sections"]:
+                result["sections"][current_section][key] = value
+            continue
+
+        if current_section in ("positive", "negative"):
+            result[current_section] = (result[current_section] + ", " + line) if result[current_section] else line
+
+    return result
+
+
+def load_scene_prompts(scene: str, season: str, period: str) -> dict:
+    """加载提示词：base + 场景覆盖"""
+    base_path = PROMPTS_DIR / "base.txt"
+    if not base_path.exists():
+        print(f"[ERROR] 基础提示词文件不存在: {base_path}", file=sys.stderr)
+        sys.exit(1)
+    base = parse_prompt_file(str(base_path))
+
+    result = {"positive": base["positive"], "negative": base["negative"],
+              "outfit": "", "expression": "", "lighting": "", "background": ""}
+
+    scene_path = PROMPTS_DIR / f"{scene}.txt"
+    if scene_path.exists():
+        scene_data = parse_prompt_file(str(scene_path))
+        if scene_data["positive"]:
+            result["positive"] = scene_data["positive"]
+        if scene_data["negative"]:
+            result["negative"] = scene_data["negative"]
+
+        section_key = f"{season}.{period}"
+        section = scene_data["sections"].get(section_key, {})
+        for k in ("outfit", "expression", "lighting", "background"):
+            if k in section:
+                result[k] = section[k]
+    else:
+        print(f"[WARN] 场景提示词文件不存在: {scene_path}，使用 base 默认", file=sys.stderr)
+
+    return result
+
+
+# ══════════════════════════════════════════════════════════════
+#  环境感知（复用 v3）
+# ══════════════════════════════════════════════════════════════
+
+def get_season():
+    m = datetime.now().month
+    if m in (3,4,5): return "spring"
+    if m in (6,7,8): return "summer"
+    if m in (9,10,11): return "autumn"
+    return "winter"
+
+def get_period():
+    h = datetime.now().hour
+    if 6 <= h < 9: return "morning"
+    if 9 <= h < 12: return "forenoon"
+    if 12 <= h < 14: return "noon"
+    if 14 <= h < 17: return "afternoon"
+    if 17 <= h < 19: return "evening"
+    return "night"
+
+def get_weather():
+    try:
+        import urllib.request
+        url = "https://wttr.in/Shanghai?format=j1"
+        req = urllib.request.Request(url, headers={"User-Agent": "curl/7.68.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read())
+        c = data["current_condition"][0]
+        desc = c["weatherDesc"][0]["value"].lower()
+        temp = int(c.get("temp_C", "20"))
+        code = int(c.get("weatherCode", "113"))
+        if code in (226,230,326,329,332,335,338,368,371,374,377,392,395): return "snowy", temp, desc
+        if code in (176,200,263,266,293,296,299,302,305,308,311,314,317,320,353,356,359,386,389): return "rainy", temp, desc
+        if code in (116,119,122,143,248,260): return "cloudy", temp, desc
+        return "sunny", temp, desc
+    except Exception as e:
+        print(f"[WARN] 获取天气失败，使用默认值: {e}", file=sys.stderr)
+        return "unknown", 20, ""
+
+def apply_weather_mod(scene_config, lighting, weather, temp):
+    if weather == "rainy":
+        if scene_config in ("boulevard", "rooftop"):
+            lighting = "rainy overcast light, wet reflections, diffused grey sky"
+        else:
+            lighting = lighting.replace("sunlight", "light").replace("bright", "soft overcast")
+    elif weather == "snowy":
+        lighting = lighting.replace("bright", "soft").replace("sunlight", "soft snow-reflected light")
+    elif weather == "sunny" and temp > 33:
+        if scene_config in ("boulevard", "rooftop"):
+            lighting = "bright harsh sunlight"
+    elif weather == "cloudy":
+        lighting = lighting.replace("bright sunlight", "soft overcast light").replace("sunlight", "diffused cloudy light")
+    return scene_config, lighting
+
+
+def get_random_face_reference() -> str:
+    default_face = FACES_DIR / "face-2.png"
+    if default_face.exists():
+        print(f"[INFO] 使用脸部参考图片: {default_face.name}", file=sys.stderr)
+        return str(default_face)
+    if not FACES_DIR.exists():
+        return None
+    face_files = list(FACES_DIR.glob("*.png")) + list(FACES_DIR.glob("*.jpg")) + list(FACES_DIR.glob("*.jpeg"))
+    if not face_files:
+        return None
+    selected_face = random.choice(face_files)
+    print(f"[INFO] 选择脸部参考图片: {selected_face.name}", file=sys.stderr)
+    return str(selected_face)
+
+
+# ══════════════════════════════════════════════════════════════
+#  提示词构建（复用 v3）
+# ══════════════════════════════════════════════════════════════
+
+def get_time_description(period: str, hour: int) -> str:
+    from datetime import datetime as dt
+    now = dt.now()
+    m = now.month
+    if m in (3,4,5): season_name = "spring"
+    elif m in (6,7,8): season_name = "summer"
+    elif m in (9,10,11): season_name = "autumn"
+    else: season_name = "winter"
+
+    month_desc = {
+        1: "early winter", 2: "late winter", 3: "early spring", 4: "mid spring",
+        5: "late spring", 6: "early summer", 7: "mid summer", 8: "late summer",
+        9: "early autumn", 10: "mid autumn", 11: "late autumn", 12: "early winter"
+    }
+
+    time_words = {
+        "morning": {6: "dawn light, first light of day, early spring morning at 6am", 
+                    7: "soft sunrise glow, mid spring morning at 7am", 
+                    8: "bright morning sunlight, late spring morning at 8am"},
+        "forenoon": {9: "late morning light, mid spring morning at 9am", 
+                     10: "mid-morning bright light, late spring morning at 10am", 
+                     11: "bright late morning light, early summer morning at 11am"},
+        "noon": {12: "bright noon sunlight overhead, mid summer day at 12pm", 
+                 13: "warm afternoon light, late summer at 1pm"},
+        "afternoon": {14: "warm afternoon sunlight, early autumn at 2pm", 
+                      15: "golden afternoon light, mid autumn at 3pm", 
+                      16: "late afternoon warm golden light, late autumn at 4pm"},
+        "evening": {17: "golden hour sunset glow, early winter evening at 5pm", 
+                    18: "deep golden sunset, late autumn dusk at 6pm"},
+        "night": {19: "early dusk twilight, late autumn night at 7pm", 
+                  20: "evening blue hour, mid autumn night at 8pm", 
+                  21: "warm artificial indoor lighting, late autumn night at 9pm", 
+                  22: "late night warm indoor lighting, early winter night at 10pm", 
+                  23: "late night soft lamp glow, deep winter night at 11pm"},
+    }
+
+    period_words = time_words.get(period, {})
+    base_time = period_words.get(hour, f"{period} light, {hour}:00")
+    return f"{month_desc[m]} season, {base_time}"
+
+
+def build_final_positive(base_positive, outfit, expression, expression_weight, lighting, background, nude, time_description=""):
+    text = base_positive
+    if nude:
+        text = f'1girl, solo, nude, {text}'
+        text = re.sub(r',?\s*wearing [^,]+', '', text)
+    else:
+        text = f'1girl, (solo:1.5), {text}'
+        if outfit:
+            text = text + f', wearing bra, (round neck t-shirt:1.3), {outfit}'
+
+    if expression:
+        text = text + f', ({expression}:{expression_weight})'
+    if time_description:
+        text = text + f', {time_description}'
+    if lighting:
+        text = text + f', {lighting}'
+    if background:
+        text = text + f', {background}'
+    return text
+
+
+def build_final_negative(base_negative, nude):
+    text = base_negative
+    if nude:
+        for kw in ['(nsfw:1.8)', '(nude:1.5)', '(topless:1.5)', '(naked:1.5)', '(no shirt:1.3)', '(nipples:1.3)', '(bare chest:1.3)']:
+            text = text.replace(kw, '').replace(', ,', ',').strip(', ')
+    return text
+
+
+def update_workflow_prompts(workflow, positive_text, negative_text):
+    for node_id, node in workflow.get("prompt", {}).items():
+        if node.get("class_type") == "CLIPTextEncode" and "text" in node.get("inputs", {}):
+            text = node["inputs"]["text"]
+            is_positive = "best quality" in text.lower() or "masterpiece" in text.lower()
+            if is_positive:
+                node["inputs"]["text"] = positive_text
+            else:
+                node["inputs"]["text"] = negative_text
+
+
+def update_workflow_params(workflow, faceid_weight=0.80, cfg=4.0, start_at=0.0, faceid_end_at=1.0, faceid_weight_0=1.0):
+    for node_id, node in workflow.get("prompt", {}).items():
+        class_type = node.get("class_type")
+        inputs = node.get("inputs", {})
+
+        if class_type == "KSampler" and "cfg" in inputs:
+            inputs["cfg"] = cfg
+
+        elif class_type == "IPAdapterFaceID":
+            if "weight" in inputs:
+                inputs["weight"] = faceid_weight_0
+            if "weight_faceidv2" in inputs:
+                inputs["weight_faceidv2"] = faceid_weight
+            if "start_at" in inputs:
+                inputs["start_at"] = start_at
+            if "end_at" in inputs:
+                inputs["end_at"] = faceid_end_at
+    return workflow
+
+
+# ══════════════════════════════════════════════════════════════
+#  main
+# ══════════════════════════════════════════════════════════════
+
+def main():
+    parser = argparse.ArgumentParser(description="韩梅梅自拍生成 v4 — 优质种子池版")
+    smile_group = parser.add_mutually_exclusive_group()
+    smile_group.add_argument("--expression", "-e", type=str, help="指定表情描述")
+    smile_group.add_argument("--smile-level", "-sl", type=int, choices=SMILE_LEVELS.keys(), help="笑容等级 1-5")
+    parser.add_argument("--expression-weight", "-ew", type=float, default=None, help="表情权重")
+    parser.add_argument("--faceid-weight", "-fw", type=float, default=0.80, help="FaceID weight_faceidv2")
+    parser.add_argument("--faceid-weight-0", "-fw0", type=float, default=1.0, help="FaceID weight")
+    parser.add_argument("--faceid-end-at", "-fea", type=float, default=1.0, help="FaceID end_at")
+    parser.add_argument("--cfg", "-c", type=float, default=4.0, help="CFG 值")
+    parser.add_argument("--start-at", "-sa", type=float, default=0.0, help="FaceID start_at")
+    parser.add_argument("--seed", "-s", type=int, help="指定种子（不从池中选）")
+    parser.add_argument("--random-seed", action="store_true", help="完全随机，忽略种子池")
+    parser.add_argument("--add-seed", action="store_true", help="将当前种子追加到 good-seeds.txt")
+    parser.add_argument("--nude", "-n", action="store_true", help="nude 模式")
+    parser.add_argument("--scene", type=str, help="指定场景（bedroom/cafe/library/boulevard/rooftop）")
+    parser.add_argument("--prompt-file", "-p", type=str, help="指定提示词文件")
+    parser.add_argument("--verbose", "-v", action="store_true", help="详细输出")
+    args = parser.parse_args()
+
+    now = datetime.now()
+    print(f"[INFO] === 韩梅梅自拍 v4 {now.strftime('%Y-%m-%d %H:%M:%S')} ===", file=sys.stderr)
+
+    # ── 表情处理 ──
+    expression = args.expression
+    expression_weight = args.expression_weight
+    if args.smile_level:
+        smile_config = SMILE_LEVELS[args.smile_level]
+        expression = smile_config["expression"]
+        if expression_weight is None:
+            expression_weight = smile_config["weight"]
+        print(f"[INFO] 笑容等级: {args.smile_level} - {smile_config['description']}", file=sys.stderr)
+    else:
+        smile_config = SMILE_LEVELS[3]
+        expression = smile_config["expression"]
+        if expression_weight is None:
+            expression_weight = smile_config["weight"]
+
+    # ── 环境感知 ──
+    season = get_season()
+    period = get_period()
+    weather, temp, weather_desc = get_weather()
+    print(f"[INFO] 环境: 季节={season}, 时段={period}, 天气={weather}({temp}°C,{weather_desc})", file=sys.stderr)
+
+    # ── 确定场景 ──
+    if args.prompt_file:
+        prompt_file = args.prompt_file
+        scene_config = Path(prompt_file).stem
+        lighting = ""
+        print(f"[INFO] 使用指定提示词文件: {prompt_file}", file=sys.stderr)
+    else:
+        if args.scene:
+            scene_config = args.scene
+            lighting = ""
+        else:
+            season_routines = ROUTINES.get(season, ROUTINES["spring"])
+            options = season_routines.get(period, season_routines.get("afternoon"))
+            scene_config, routine_lighting = random.choice(options)
+            scene_config, lighting = apply_weather_mod(scene_config, routine_lighting, weather, temp)
+
+        prompt_file = str(PROMPTS_DIR / f"{scene_config}.txt")
+        print(f"[INFO] 场景: {scene_config}, 光线: {lighting}", file=sys.stderr)
+
+    # ── 加载提示词 ──
+    if args.prompt_file and not args.scene:
+        prompts = parse_prompt_file(prompt_file)
+        outfit = ""
+        background = ""
+        if not expression:
+            expression = ""
+    else:
+        prompts = load_scene_prompts(scene_config, season, period)
+        outfit = prompts["outfit"]
+        if not expression:
+            expression = prompts["expression"]
+        if not lighting:
+            lighting = prompts["lighting"]
+        background = prompts["background"]
+
+    print(f"[INFO] 穿搭: {outfit if not args.nude else '(nude)'}", file=sys.stderr)
+    print(f"[INFO] 表情: {expression} (权重: {expression_weight})", file=sys.stderr)
+
+    # ── 时间描述 ──
+    time_description = get_time_description(period, now.hour)
+    print(f"[INFO] 时间描述: {time_description}", file=sys.stderr)
+    print(f"[INFO] 光线: {lighting}", file=sys.stderr)
+    print(f"[INFO] 背景: {background if 'background' in dir() else ''}", file=sys.stderr)
+
+    # ── 拼装最终提示词 ──
+    positive_text = build_final_positive(
+        prompts["positive"], outfit, expression, expression_weight, lighting,
+        background if 'background' in dir() else "", args.nude, time_description
+    )
+    negative_text = build_final_negative(prompts["negative"], args.nude)
+
+    print(f"[INFO] 正向提示词长度: {len(positive_text)} 字符", file=sys.stderr)
+    print(f"[INFO] 负向提示词长度: {len(negative_text)} 字符", file=sys.stderr)
+
+    # ── 种子决策（v4 核心改动） ───────────────────────────────
+    seed, seed_reason = pick_seed(args)
+    print(f"[INFO] 种子来源: {seed_reason}", file=sys.stderr)
+    print(f"[INFO] 最终种子值: {seed}", file=sys.stderr)
+
+    # ── --add-seed：追加当前种子到 good-seeds.txt ──────────────
+    if args.add_seed and seed != -1:
+        save_seed_to_pool(seed, scene=scene_config or "", note="v4 自动追加")
+        print(f"[INFO] 已追加种子 {seed} 到 good-seeds.txt", file=sys.stderr)
+
+    # ── 脸部参考 ──
+    face_reference = get_random_face_reference()
+
+    # ── 加载工作流 ──
+    workflow_path = WORKFLOWS_DIR / "faceid.json"
+    if not workflow_path.exists():
+        print(f"[ERROR] 工作流文件不存在: {workflow_path}", file=sys.stderr)
+        sys.exit(1)
+    with open(workflow_path, "r", encoding="utf-8") as f:
+        workflow = json.load(f)
+
+    # ── 写入提示词 ──
+    update_workflow_prompts(workflow, positive_text, negative_text)
+
+    # ── 写入参数 ──
+    workflow = update_workflow_params(workflow, faceid_weight=args.faceid_weight, cfg=args.cfg, start_at=args.start_at, faceid_end_at=args.faceid_end_at, faceid_weight_0=args.faceid_weight_0)
+
+    # ── 种子 ──
+    for node_id, node in workflow.get("prompt", {}).items():
+        if "seed" in node.get("inputs", {}):
+            node["inputs"]["seed"] = seed
+
+    # ── 脸部参考 ──
+    if face_reference:
+        face_filename = os.path.basename(face_reference)
+        for node_id, node in workflow.get("prompt", {}).items():
+            if node.get("class_type") == "LoadImage":
+                node["inputs"]["image"] = face_filename
+                node["inputs"]["upload"] = face_filename
+
+    # ── 执行生成 ──
+    try:
+        client = ComfyUIClient()
+        input_images = None
+        if face_reference:
+            input_images = {face_filename: face_reference}
+
+        result = client.run_workflow(workflow=workflow, output_dir=str(DEFAULT_OUTPUT_DIR), input_images=input_images)
+        if not result.get("success"):
+            print(f"[ERROR] 生成失败: {result.get('error', '未知错误')}", file=sys.stderr)
+            sys.exit(1)
+
+        file_path = result.get("file")
+        if not file_path or not os.path.exists(file_path):
+            print(f"[ERROR] 未找到输出文件", file=sys.stderr)
+            sys.exit(1)
+
+        size_kb = os.path.getsize(file_path) // 1024
+        print(f"[INFO] 生成成功: {file_path} ({size_kb}KB)", file=sys.stderr)
+
+        # 编号规则：YYYYMMDDHHMMSS-种子号
+        photo_id = now.strftime('%Y%m%d%H%M%S') + "-" + str(seed)
+        new_filename = f"HMM-v4-{photo_id}.png"
+        new_path = Path(file_path).parent / new_filename
+        os.rename(file_path, str(new_path))
+        size_kb = os.path.getsize(new_path) // 1024
+        print(f"[INFO] 重命名: {new_filename} ({size_kb}KB)", file=sys.stderr)
+
+        msg = random.choice(MESSAGES.get(period, MESSAGES["afternoon"]))
+        print(f"{msg} MEDIA:{new_path}")
+
+    except Exception as e:
+        print(f"[ERROR] 执行异常: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

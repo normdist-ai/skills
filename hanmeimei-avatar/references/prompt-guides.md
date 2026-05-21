@@ -69,6 +69,38 @@ RAW photo, realistic photo, a beautiful young Chinese woman, {穿搭描述}, (ve
 
 负面：`(camisole:1.3),(tank top:1.3),(sleeveless:1.3),(crop top:1.2),(sports bra:1.2),(nude:1.5),(topless:1.5),(naked:1.5),(no shirt:1.3)`
 
+## 手部控制提示词
+
+### 策略：引导好手 + 防止坏手（selfie-v3.py 已内置）
+
+正向引导（加在正向提示词末尾）：
+```
+perfect hands, five fingers per hand
+```
+
+反向防错（v3 精简版，4个维度各保留一个）：
+```
+(mutated hands:1.3), (extra fingers:1.3), (missing fingers:1.2), (poorly drawn hands:1.2)
+```
+
+> ⚠️ 手部负面词必须是4个不同维度：mutated（变异）、extra（多指）、missing（少指）、poorly drawn（画得差）。砍掉任何一个维度都会导致该类手部问题回升。
+
+## 防裸体负面词（v3.6 当前配方 — 2026-05-21 验证通过）
+
+```
+(nsfw:2.0), (nude:1.8), (naked:1.5), (nipples:1.5)
+```
+
+> 每个词管不同维度：内容分级/全裸/裸露/乳头。肩部和乳沟可以露，不加 `(bare shoulders)` 和 `(cleavage)` 负面词。三层防御：① base.txt 正向 `fully clothed` ② wearing 子句 `wearing bra, (round neck t-shirt:1.3)` ③ 负向四维度词。30张稳定性测试验证通过。
+
+## 皮肤正向提示词（已验证最佳配方，不要合并）
+
+```
+(very pale porcelain white skin:1.3), (fair snow white body:1.2), rosy undertone, natural skin texture with slight visible pores, fine skin details, natural lip color, flawless face, perfect skin
+```
+
+> ⚠️ 两个独立带权重的白肤词不可合并成一个。实测合并后皮肤不够真实。这8个词是工作流原始配方，经过验证的最佳组合。
+
 ## 闭眼控制技巧
 
 正面：`(eyes gently closed:1.5),(softly closed eyelids:1.3)`

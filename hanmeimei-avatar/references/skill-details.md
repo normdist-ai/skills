@@ -7,14 +7,14 @@
 | 参数 | 值 | 说明 |
 |------|-----|------|
 | 模型 | ChilloutMix-Ni | SD1.5 写实模型 |
-| CFG | **3.5** | 低 CFG 保证皮肤自然质感 |
+| CFG | **4.0** | 表情控制最佳值（FaceID模式下） |
 | 采样器 | **euler** + normal | 避免塑料感 |
 | 步数 | 30 (基础) + 20 (Hi-Res) | |
 | 分辨率 | 512×768 → 1024×1536 | |
 | batch_size | 1 | |
-| 基准 Seed | 98994781 | |
+| 默认 Seed | 86522080 | v3 默认种子（不指定 --seed 时使用） |
 
-> ⚠️ **皮肤质感关键**：CFG 过高会导致塑料感，建议保持 3.5
+> ⚠️ **CFG=4.0 + euler+normal + weight_faceidv2=0.80 是表情控制最佳平衡组合**
 
 ### FaceID 参数
 
@@ -23,7 +23,7 @@
 | preset | FACEID PLUS V2 | IPAdapter 预设 |
 | lora_strength | 0.6 | LoRA 强度 |
 | weight | 1 | IPAdapter 权重 |
-| weight_faceidv2 | **0.85** | FaceID v2 权重 |
+| weight_faceidv2 | **0.80** | FaceID v2 权重（表情控制最佳平衡点） |
 | weight_type | linear | 权重类型 |
 | combine_embeds | concat | 嵌入组合方式 |
 | embeds_scaling | V only | 嵌入缩放方式 |

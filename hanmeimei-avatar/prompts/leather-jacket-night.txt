@@ -1,0 +1,24 @@
+# 皮夹克夜巷场景
+[positive]
+masterpiece, best quality, ultra detailed, realistic photo,
+1girl, solo, hanmeimei,
+wearing a black leather jacket over white t-shirt,
+dark skinny jeans, ankle boots,
+walking down a narrow city street at night,
+neon lights reflecting on wet pavement,
+cool confident expression, slight smirk,
+hands in jacket pockets,
+moody urban night atmosphere,
+soft neon light on face, rain mist in air,
+cowboy shot, 35mm lens, cinematic lighting
+
+[negative]
+worst quality, low quality, normal quality,
+(lowres:1.4), (blurry:1.3), (grain:1.2),
+(deformed iris:1.3), (deformed pupils:1.3), (cross-eyed:1.2),
+(bad anatomy:1.3), (bad proportions:1.2), (bad hands:1.3),
+(mutated hands:1.3), (extra fingers:1.3), (missing fingers:1.2),
+(fused fingers:1.2), (too many fingers:1.3), (poorly drawn hands:1.2),
+(ugly face:1.3), (distorted face:1.3), (asymmetric eyes:1.2),
+multiple people, extra limbs, watermark, text, logo,
+(nsfw:1.8), (nude:1.5), nipples

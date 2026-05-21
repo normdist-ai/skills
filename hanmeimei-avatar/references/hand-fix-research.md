@@ -3,6 +3,33 @@
 > 调研日期：2026-05-17
 > 目标：提升韩梅梅AI写真照片中手部细节质量
 
+## 〇、前置方案：提示词级别手部引导（已实施）
+
+> 实施日期：2026-05-21
+> 状态：✅ 已集成到 selfie.py
+
+在上述工作流修复方案之前，selfie.py 已采用提示词级别双层控制：
+
+| 层 | 内容 | 目的 |
+|------|------|------|
+| 正向 | `perfect hands, five fingers per hand` | 引导模型生成结构正确的手 |
+| 反向 | `(mutated hands:1.3), (extra fingers:1.3), (missing fingers:1.2), (fused fingers:1.2), (too many fingers:1.3), (poorly drawn hands:1.2)` | 权重惩罚畸形手 |
+
+**关键设计决策**：
+- 正向引导词来自 SD 社区验证的 best practice（`perfect hands` 比 `good hands` 更有效）
+- 反向权重 1.2-1.3 是经验值，太高会影响整体画面质量
+- 旧版反向词 `(hands:1.4), (exposed hands:1.3)` 是"藏手"策略，与正面引导矛盾——露手构图时应去掉
+
+**效果评估**：提示词级别改善明显但非100%，仍建议构图优先用 waist up。当必须露手时（如 full body），此策略可将手部畸形率从约80%降至约40-50%。若需更高修复率，叠加方案B（CLIPSeg + DetailerForEach）。
+
+### 验证记录（2026-05-21）
+
+**验证方法**：selfie.py 默认 faceid.json 模板用 `85mm portrait lens` 生成近身特写，手不在画面内。临时修改模板为 `cowboy shot, from thighs up, standing pose, hands visible` + `35mm lens`（广角拉远），出图后肉眼确认手部。
+
+**结果**：用户确认"有改善"（对比之前的图）。提示词级优化有效，但 selfie.py 日常出图默认近身构图看不到手，所以手部优化对默认自拍流程无可见影响，仅在 wide composition 时有意义。
+
+**验证技巧**：selfie.py 无 `--composition` 参数，验证宽构图需要直接改 faceid.json 模板，验证完改回。generate.py 有 `--composition mid-thigh up` 可直接用，但其提示词处理逻辑不含 selfie.py 的手部优化。
+
 ## 一、环境现状
 
 ### 已有工具
@@ -20,7 +47,10 @@
 |------|------|------|
 | `control_sd15_inpaint_depth_hand_fp16.safetensors` | ❌ 缺失 | MeshGraphormer深度图方案需要 |
 | HandDetailer 节点 | ❌ 不存在 | Impact Pack无专门手部Detailer |
-| hand_yolov8n.pt | ❓ 未确认 | UltralyticsDetectorProvider未装，但MeshGraphormer自带检测 |
+| hand_yolov8n.pt | ✅ 可用 | `/mnt/sdb1/ComfyUI/models/ultralytics/` 下，YOLOv8n Hand Detector，配合 UltralyticsDetectorProvider 使用 |
+| GoodHands-vanilla.safetensors | ✅ 可用 | `/mnt/sdb1/ComfyUI/models/loras/` 下，手部专用 LoRA，重绘时引导手部结构 |
+| BboxDetectorSEGS | ✅ 可用 | Impact-Pack 节点，用 YOLOv8n 检测结果生成 SEGS |
+| DetailerForEachAutoRetry | ✅ 可用 | Impact-Pack 节点，自动重试的局部修复器 |
 | ControlNet Inpaint (SD1.5) | ❌ 缺失 | `control_v11p_sd15_inpaint` 不存在 |
 | DWPose | ❓ 未确认 | 草凡方案需 `dw_openpose_full` |
 
@@ -92,13 +122,25 @@
 
 ## 三、推荐实施路线
 
-### 首选：方案B（CLIPSeg + DetailerForEach）
-理由：零下载，立即可用，已在环境中验证过CLIPSeg检测能力。
+### 首选：方案E（YOLOv8n + BboxDetectorSEGS + DetailerForEach）✅ 当前实施中（2026-05-21）
+理由：hand_yolov8n.pt + GoodHands LoRA 已确认可用，Impact-Pack 的 BboxDetectorSEGS + DetailerForEachAutoRetry 节点齐备。比 CLIPSeg 方案检测更精准（YOLOv8n 是专门训练的手部检测器），且无需下载任何新模型。
 
-### 提升路线：方案C（MeshGraphormer + DetailerForEach）
-如果方案B的手部检测不够精准，升级到MeshGraphormer检测。
+**流程**：
+1. 加载原图 → UltralyticsDetectorProvider(model_name="hand_yolov8n.pt") → BBOX_DETECTOR
+2. BBOX_DETECTOR → BboxDetectorForEach → SEGS（手部区域）
+3. SEGS → DetailerForEachAutoRetry（加载 GoodHands LoRA） → 局部重绘手部
+4. 手部重绘 prompt 包含 `perfect hands, five fingers per hand`，配合 GoodHands LoRA 引导
 
-### 终极方案：方案A（MeshGraphormer + ControlNet深度图）
+**关键参数**（待实测调优）：
+- denoise: 0.5-0.7（手部需要较高重构力度）
+- cfg: 4.0（与主图一致，避免塑料感）
+- GoodHands LoRA weight: 待测
+- cycle: 1-2（手部修复通常 1 次足够，2 次可能过度）
+
+### 备选：方案B（CLIPSeg + DetailerForEach）
+如果方案E的 YOLOv8n 检测不准，降级到 CLIPSeg 方案。
+
+### 提升路线：方案A（MeshGraphormer + ControlNet深度图）
 需要下载 `control_sd15_inpaint_depth_hand_fp16.safetensors`，可通过看板任务让小美处理。
 
 ---

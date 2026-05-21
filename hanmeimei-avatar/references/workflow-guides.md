@@ -45,6 +45,7 @@ Step 2: 面部局部重绘（CLIPSeg + FaceID）
 | 模板 | Seed | 模型 |
 |------|------|------|
 | photo_009（白瓷肌标杆） | 98994781 | chilloutmix-Ni |
+| v3 默认种子（推荐） | 86522080 | chilloutmix-Ni |
 
 ## 表情控制方案对比
 

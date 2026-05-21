@@ -1,0 +1,145 @@
+# 天台 — 场景提示词
+
+[spring.morning]
+outfit: sporty tank top under jacket, long pants, bra
+expression: energetic expression
+lighting: fresh morning light, spring breeze
+background: rooftop with city skyline view
+
+[spring.forenoon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: happy smile
+lighting: bright morning sunlight on rooftop
+background: rooftop with city skyline view
+
+[spring.noon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: confident smile
+lighting: bright noon light, spring sky
+background: rooftop with city skyline view
+
+[spring.afternoon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: excited look
+lighting: warm afternoon rooftop light
+background: rooftop with city skyline view
+
+[spring.evening]
+outfit: sporty tank top under jacket, long pants, bra
+expression: happy smile
+lighting: warm evening light, long shadows on track
+background: rooftop with city skyline view
+
+[spring.night]
+outfit: sporty casual clothes with jacket
+expression: peaceful smile
+lighting: city night lights from rooftop
+background: rooftop with city skyline view
+
+[summer.morning]
+outfit: sporty casual clothes, cap
+expression: energetic expression
+lighting: early morning cool air on rooftop
+background: rooftop with city skyline view
+
+[summer.forenoon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: confident smile
+lighting: bright summer morning light
+background: rooftop with city skyline view
+
+[summer.noon]
+outfit: sporty workout clothes
+expression: determined expression
+lighting: bright harsh noon sunlight
+background: rooftop with city skyline view
+
+[summer.afternoon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: happy smile
+lighting: bright afternoon rooftop light
+background: rooftop with city skyline view
+
+[summer.evening]
+outfit: sporty tank top under jacket, long pants, bra
+expression: excited look
+lighting: golden sunset, warm summer evening sky
+background: rooftop with city skyline view
+
+[summer.night]
+outfit: sporty casual clothes with jacket
+expression: peaceful smile
+lighting: warm summer night, city lights below
+background: rooftop with city skyline view
+
+[autumn.morning]
+outfit: sporty casual clothes, light jacket
+expression: energetic expression
+lighting: crisp autumn morning light on rooftop
+background: rooftop with city skyline view
+
+[autumn.forenoon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: happy smile
+lighting: clear autumn morning light
+background: rooftop with city skyline view
+
+[autumn.noon]
+outfit: sporty tank top under jacket, long pants, bra
+expression: confident smile
+lighting: bright autumn noon light
+background: rooftop with city skyline view
+
+[autumn.afternoon]
+outfit: sporty casual clothes, light jacket
+expression: excited look
+lighting: warm golden afternoon light on rooftop
+background: rooftop with city skyline view
+
+[autumn.evening]
+outfit: sporty casual clothes, jacket
+expression: happy smile
+lighting: deep golden sunset, autumn skyline
+background: rooftop with city skyline view
+
+[autumn.night]
+outfit: sporty casual clothes with jacket
+expression: peaceful smile
+lighting: cool autumn night, city lights
+background: rooftop with city skyline view
+
+[winter.morning]
+outfit: sporty casual clothes, warm jacket, beanie
+expression: energetic expression
+lighting: cold winter morning light on rooftop
+background: rooftop with city skyline view
+
+[winter.forenoon]
+outfit: sporty casual clothes, warm jacket
+expression: happy smile
+lighting: pale winter morning light
+background: rooftop with city skyline view
+
+[winter.noon]
+outfit: sporty casual clothes, jacket
+expression: confident smile
+lighting: bright but cold winter noon sunlight
+background: rooftop with city skyline view
+
+[winter.afternoon]
+outfit: sporty casual clothes, warm jacket
+expression: excited look
+lighting: pale winter afternoon light
+background: rooftop with city skyline view
+
+[winter.evening]
+outfit: sporty casual clothes, warm jacket, beanie
+expression: happy smile
+lighting: cold winter evening, city lights
+background: rooftop with city skyline view
+
+[winter.night]
+outfit: sporty casual clothes with warm jacket, scarf
+expression: peaceful smile
+lighting: cold winter night, city lights below
+background: rooftop with city skyline view

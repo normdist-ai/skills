@@ -459,6 +459,12 @@ def update_prompt(workflow, clothing=None, expression=None, lighting=None, backg
             print(f"[DEBUG] 节点{node_id} - 原始提示词: {text[:200]}...", file=sys.stderr)
             
             if is_positive:
+                # 手部正面引导词（社区验证，改善手部生成质量）
+                hand_positive = 'perfect hands, five fingers per hand'
+                if hand_positive not in text:
+                    text = text + f', {hand_positive}'
+                    print(f"[DEBUG] 节点{node_id} - 添加手部正面引导词", file=sys.stderr)
+
                 # nude 模式：添加 nude 关键词
                 if nude:
                     if 'solo' not in text.lower():
@@ -508,6 +514,20 @@ def update_prompt(workflow, clothing=None, expression=None, lighting=None, backg
                 if added_emb > 0:
                     print(f"[DEBUG] 节点{node_id} - 添加 {added_emb} 个负面嵌入", file=sys.stderr)
                 
+                # 手部负面词（社区验证，权重1.2-1.3）
+                hand_negative = [
+                    '(mutated hands:1.3)',
+                    '(extra fingers:1.3)',
+                    '(missing fingers:1.2)',
+                    '(fused fingers:1.2)',
+                    '(too many fingers:1.3)',
+                    '(poorly drawn hands:1.2)',
+                ]
+                for hn in hand_negative:
+                    if hn.lower() not in text.lower():
+                        text = text + f', {hn}'
+                print(f"[DEBUG] 节点{node_id} - 添加手部负面词", file=sys.stderr)
+
                 # 添加强力多人脸约束
                 negative_constraints = [
                     '(multiple people:2.0)',
@@ -523,9 +543,17 @@ def update_prompt(workflow, clothing=None, expression=None, lighting=None, backg
                     '(3girls:1.8)',
                     '(multiple girls:1.8)'
                 ]
-                # 正常模式额外添加 nsfw 约束
+                # 正常模式：强力防裸体
                 if not nude:
-                    negative_constraints.insert(0, '(nsfw:1.8)')
+                    negative_constraints = [
+                        '(nsfw:1.8)',
+                        '(nude:1.5)',
+                        '(topless:1.5)',
+                        '(naked:1.5)',
+                        '(no shirt:1.3)',
+                        '(nipples:1.3)',
+                        '(bare chest:1.3)',
+                    ] + negative_constraints
                 
                 # 检查是否已添加，避免重复
                 added_count = 0
