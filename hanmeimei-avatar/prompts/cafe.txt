@@ -1,145 +1,145 @@
 # 咖啡馆 — 场景提示词
 
 [spring.morning]
-outfit: casual outfit, light cardigan
+outfit: soft white cotton blouse with delicate lace collar, flowing floral midi skirt, nude bra, light pastel pink cardigan
 expression: warm smile
 lighting: bright morning light
 background: cozy cafe interior background
 
 [spring.forenoon]
-outfit: white blouse, long skirt, bra
+outfit: crisp white cotton blouse with small floral embroidery, flowing cream midi skirt, nude bra
 expression: friendly smile
 lighting: soft natural light through cafe window
 background: cozy cafe interior background
 
 [spring.noon]
-outfit: white blouse, long skirt, bra
+outfit: white silk blouse with Peter Pan collar, flowing light blue midi skirt, nude bra
 expression: happy expression
 lighting: bright canteen lighting, lunchtime bustle
 background: cozy cafe interior background
 
 [spring.afternoon]
-outfit: white blouse, long skirt, bra
+outfit: soft white cotton blouse with ruffled sleeves, flowing mint green midi skirt, nude bra
 expression: delighted expression
 lighting: warm afternoon cafe light through window
 background: cozy cafe interior background
 
 [spring.evening]
-outfit: casual outfit, light jacket
+outfit: white silk blouse, flowing lavender midi skirt, nude bra, light cream jacket
 expression: relaxed smile
 lighting: warm evening cafe light
 background: cozy cafe interior background
 
 [spring.night]
-outfit: white blouse, long skirt, bra
+outfit: soft white cotton blouse, flowing blush pink midi skirt, nude bra
 expression: gentle smile
 lighting: warm cafe interior light, night outside window
 background: cozy cafe interior background
 
 [summer.morning]
-outfit: light summer outfit, sunglasses
+outfit: light white linen blouse, flowing sunflower yellow midi skirt, nude bra, stylish cat-eye sunglasses
 expression: cheerful smile
 lighting: bright morning light, summer heat haze
 background: cozy cafe interior background
 
 [summer.forenoon]
-outfit: light summer outfit
+outfit: light white cotton blouse, flowing sky blue midi skirt, nude bra
 expression: happy smile
 lighting: bright morning light
 background: cozy cafe interior background
 
 [summer.noon]
-outfit: light summer outfit
+outfit: white linen blouse, flowing light pink midi skirt, nude bra
 expression: natural expression
 lighting: indoor canteen lighting, relief from heat
 background: cozy cafe interior background
 
 [summer.afternoon]
-outfit: light summer outfit
+outfit: light white cotton blouse, flowing mint green midi skirt, nude bra
 expression: relaxed expression
 lighting: bright afternoon light
 background: cozy cafe interior background
 
 [summer.evening]
-outfit: casual summer outfit
+outfit: white silk blouse, flowing coral midi skirt, nude bra
 expression: happy smile
 lighting: warm cafe light
 background: cozy cafe interior background
 
 [summer.night]
-outfit: casual summer outfit
+outfit: soft white cotton blouse, flowing deep red midi skirt, nude bra
 expression: peaceful smile
 lighting: night cafe atmosphere
 background: cozy cafe interior background
 
 [autumn.morning]
-outfit: autumn sweater, casual pants
+outfit: cozy cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra
 expression: warm smile
 lighting: warm morning light
 background: cozy cafe interior background
 
 [autumn.forenoon]
-outfit: autumn sweater
+outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra
 expression: friendly smile
 lighting: warm morning light
 background: cozy cafe interior background
 
 [autumn.noon]
-outfit: autumn casual outfit
+outfit: soft rust orange knit sweater, high-waisted dark brown wool pants, nude bra
 expression: happy expression
 lighting: warm canteen lighting, steam rising from bowl
 background: cozy cafe interior background
 
 [autumn.afternoon]
-outfit: autumn sweater
+outfit: cozy burgundy knit sweater with turtleneck, high-waisted dark grey corduroy pants, nude bra
 expression: delighted expression
 lighting: warm afternoon light
 background: cozy cafe interior background
 
 [autumn.evening]
-outfit: autumn sweater, scarf
+outfit: warm cream knit sweater, high-waisted dark brown wool pants, nude bra, soft cashmere scarf in forest green
 expression: relaxed smile
 lighting: warm evening light
 background: cozy cafe interior background
 
 [autumn.night]
-outfit: autumn sweater, scarf
+outfit: cozy burgundy knit sweater, high-waisted dark green corduroy pants, nude bra, warm cashmere scarf in cream
 expression: gentle smile
 lighting: warm night cafe
 background: cozy cafe interior background
 
 [winter.morning]
-outfit: winter coat, warm sweater
+outfit: thick cream wool coat with fur collar, warm cream turtleneck sweater underneath, nude bra
 expression: gentle smile
 lighting: cold winter morning light, breath mist
 background: cozy cafe interior background
 
 [winter.forenoon]
-outfit: winter coat, sweater
+outfit: warm camel wool coat, cozy forest green turtleneck sweater, nude bra
 expression: warm smile
 lighting: warm morning light
 background: cozy cafe interior background
 
 [winter.noon]
-outfit: winter coat, scarf
+outfit: thick navy wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in cream
 expression: happy smile
 lighting: warm canteen light, steam and warmth
 background: cozy cafe interior background
 
 [winter.afternoon]
-outfit: winter coat, sweater
+outfit: warm grey wool coat, cozy cream turtleneck sweater, nude bra
 expression: relaxed expression
 lighting: warm afternoon light
 background: cozy cafe interior background
 
 [winter.evening]
-outfit: winter coat, scarf
+outfit: thick cream wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in forest green
 expression: peaceful expression
 lighting: warm evening light
 background: cozy cafe interior background
 
 [winter.night]
-outfit: winter coat, warm scarf
+outfit: warm navy wool coat, cozy forest green turtleneck sweater, nude bra, thick cashmere scarf in cream
 expression: gentle smile
 lighting: warm night cafe with steam
 background: cozy cafe interior background

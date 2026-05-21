@@ -1,145 +1,145 @@
 # 图书馆 — 场景提示词
 
 [spring.morning]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: crisp white cotton button-down shirt, soft cream knit cardigan, flowing light blue midi skirt, nude bra
 expression: focused expression
 lighting: natural daylight from large library windows
 background: library background with bookshelves
 
 [spring.forenoon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: soft white cotton blouse, light mint green knit cardigan, flowing cream midi skirt, nude bra
 expression: thoughtful look
 lighting: natural daylight from large library windows
 background: library background with bookshelves
 
 [spring.noon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: white silk blouse, soft pastel pink knit cardigan, flowing lavender midi skirt, nude bra
 expression: gentle smile
 lighting: warm noon light, peaceful quiet moment
 background: library background with bookshelves
 
 [spring.afternoon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: crisp white cotton shirt, light peach knit cardigan, flowing blush pink midi skirt, nude bra
 expression: studious expression
 lighting: warm afternoon indoor lighting
 background: library background with bookshelves
 
 [spring.evening]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: soft white cotton blouse, warm cream knit cardigan, flowing mauve midi skirt, nude bra
 expression: relaxed smile
 lighting: warm evening library light
 background: library background with bookshelves
 
 [spring.night]
-outfit: comfortable study outfit
+outfit: cozy cream knit sweater, soft grey knit pants, nude bra, comfortable for studying
 expression: gentle smile
 lighting: warm desk lamp light, quiet library
 background: library background with bookshelves
 
 [summer.morning]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: crisp white linen button-down shirt, lightweight sky blue knit cardigan, flowing white linen midi skirt, nude bra
 expression: focused expression
 lighting: cool indoor fluorescent lighting
 background: library background with bookshelves
 
 [summer.forenoon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: light white cotton blouse, lightweight mint green knit cardigan, flowing light blue linen midi skirt, nude bra
 expression: thoughtful look
 lighting: bright library lighting, AC comfort
 background: library background with bookshelves
 
 [summer.noon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: white linen blouse, lightweight cream knit cardigan, flowing light pink linen midi skirt, nude bra
 expression: natural expression
 lighting: dim lab lighting, quiet noon
 background: library background with bookshelves
 
 [summer.afternoon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: crisp white cotton shirt, lightweight light blue knit cardigan, flowing white linen midi skirt, nude bra
 expression: studious expression
 lighting: cool lab lighting, air conditioning humming
 background: library background with bookshelves
 
 [summer.evening]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: soft white cotton blouse, lightweight peach knit cardigan, flowing sky blue linen midi skirt, nude bra
 expression: relaxed expression
 lighting: warm evening library light
 background: library background with bookshelves
 
 [summer.night]
-outfit: comfortable study outfit
+outfit: cozy light grey knit sweater, soft white knit pants, nude bra, comfortable for studying
 expression: gentle smile
 lighting: warm desk lamp, quiet summer night
 background: library background with bookshelves
 
 [autumn.morning]
-outfit: casual academic outfit, light sweater
+outfit: soft cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra
 expression: focused expression
 lighting: warm library lighting, autumn atmosphere
 background: library background with bookshelves
 
 [autumn.forenoon]
-outfit: casual academic outfit, sweater
+outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra
 expression: thoughtful look
 lighting: indoor lab lighting, academic atmosphere
 background: library background with bookshelves
 
 [autumn.noon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: white silk blouse, soft burgundy knit cardigan, flowing dark brown midi skirt, nude bra
 expression: gentle smile
 lighting: warm noon light through library windows
 background: library background with bookshelves
 
 [autumn.afternoon]
-outfit: casual academic outfit, sweater
+outfit: cozy rust orange knit sweater, high-waisted dark grey corduroy pants, nude bra
 expression: studious expression
 lighting: warm afternoon lab lighting
 background: library background with bookshelves
 
 [autumn.evening]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: soft white cotton blouse, warm cream knit cardigan, flowing forest green midi skirt, nude bra
 expression: relaxed smile
 lighting: warm golden afternoon light through window
 background: library background with bookshelves
 
 [autumn.night]
-outfit: comfortable study outfit
+outfit: cozy burgundy knit sweater, soft dark brown knit pants, nude bra, comfortable for studying
 expression: gentle smile
 lighting: warm desk lamp, cozy autumn night
 background: library background with bookshelves
 
 [winter.morning]
-outfit: casual academic outfit, warm sweater
+outfit: thick cream turtleneck sweater, high-waisted dark grey wool pants, nude bra
 expression: focused expression
 lighting: warm indoor lighting, winter morning
 background: library background with bookshelves
 
 [winter.forenoon]
-outfit: casual academic outfit, warm sweater
+outfit: warm forest green turtleneck sweater, high-waisted dark brown wool pants, nude bra
 expression: thoughtful look
 lighting: warm lab lighting, cozy despite winter
 background: library background with bookshelves
 
 [winter.noon]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: white silk blouse, thick cream knit cardigan, flowing dark grey wool midi skirt, nude bra
 expression: natural expression
 lighting: warm noon library light
 background: library background with bookshelves
 
 [winter.afternoon]
-outfit: casual academic outfit, warm sweater
+outfit: cozy burgundy turtleneck sweater, high-waisted dark green wool pants, nude bra
 expression: studious expression
 lighting: warm afternoon lab lighting, winter outside
 background: library background with bookshelves
 
 [winter.evening]
-outfit: white shirt, cardigan, long skirt, bra
+outfit: soft white cotton blouse, thick cream knit cardigan, flowing dark brown wool midi skirt, nude bra
 expression: relaxed expression
 lighting: warm library light, snowflakes outside window
 background: library background with bookshelves
 
 [winter.night]
-outfit: comfortable study outfit
+outfit: thick cream turtleneck sweater, soft dark grey knit pants, nude bra, comfortable for studying
 expression: gentle smile
 lighting: warm desk lamp, cozy winter night
 background: library background with bookshelves

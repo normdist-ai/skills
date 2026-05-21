@@ -1,145 +1,145 @@
 # 卧室 — 场景提示词
 
 [spring.morning]
-outfit: comfortable cotton pajama set
+outfit: soft pastel pink cotton pajama set with delicate lace trim, cozy long sleeves, bra
 expression: sleepy cute expression
 lighting: soft morning light through curtains
 background: cozy bedroom background
 
 [spring.forenoon]
-outfit: casual loungewear set
+outfit: light blue cotton loungewear set with small floral print, loose comfortable fit, bra
 expression: gentle smile
 lighting: soft morning bedroom light
 background: cozy bedroom background
 
 [spring.noon]
-outfit: cotton pajama top and long pants, bra
+outfit: light grey cotton pajama top with long matching pants, soft ribbed fabric, bra
 expression: relaxed smile
 lighting: natural window light, soft diffused daylight
 background: cozy bedroom background
 
 [spring.afternoon]
-outfit: casual loungewear set
+outfit: mint green cotton loungewear set with drawstring waist, comfortable loose fit, bra
 expression: peaceful expression
 lighting: warm afternoon light through window
 background: cozy bedroom background
 
 [spring.evening]
-outfit: comfortable loungewear set
+outfit: soft lavender cotton loungewear set, warm and cozy, bra
 expression: relaxed smile
 lighting: warm bedside lamp glow
 background: cozy bedroom background
 
 [spring.night]
-outfit: cotton nightgown, long, bra
+outfit: long white cotton nightgown with delicate lace trim, soft flowing fabric, bra
 expression: peaceful expression
 lighting: warm bedside lamp, soft fairy lights
 background: cozy bedroom background
 
 [summer.morning]
-outfit: light cotton pajama set
+outfit: light yellow cotton pajama set, short sleeves, thin breathable fabric, bra
 expression: sleepy cute expression
 lighting: bright morning light, summer heat outside
 background: cozy bedroom background
 
 [summer.forenoon]
-outfit: casual loungewear set
+outfit: sky blue cotton loungewear set, lightweight comfortable, bra
 expression: gentle smile
 lighting: bright bedroom light
 background: cozy bedroom background
 
 [summer.noon]
-outfit: cotton pajama top and long pants, bra
+outfit: white cotton pajama top with light blue long pants, cool breathable fabric, bra
 expression: relaxed smile
 lighting: cool indoor lighting
 background: cozy bedroom background
 
 [summer.afternoon]
-outfit: casual loungewear set
+outfit: light pink cotton loungewear set, loose cool fit, bra
 expression: peaceful expression
 lighting: cool afternoon rest
 background: cozy bedroom background
 
 [summer.evening]
-outfit: comfortable loungewear set
+outfit: light grey cotton loungewear set, soft and comfortable, bra
 expression: relaxed smile
 lighting: dim evening light
 background: cozy bedroom background
 
 [summer.night]
-outfit: cotton nightgown, long, bra
+outfit: long white cotton nightgown, thin breathable fabric, bra
 expression: peaceful expression
 lighting: dim night light, fan breeze
 background: cozy bedroom background
 
 [autumn.morning]
-outfit: comfortable cotton pajama set
+outfit: warm beige cotton pajama set with long sleeves, soft cozy fabric, bra
 expression: sleepy cute expression
 lighting: warm morning light through window, autumn colors outside
 background: cozy bedroom background
 
 [autumn.forenoon]
-outfit: casual loungewear set
+outfit: caramel brown cotton loungewear set, warm and comfortable, bra
 expression: gentle smile
 lighting: warm bedroom light
 background: cozy bedroom background
 
 [autumn.noon]
-outfit: cotton pajama top and long pants, bra
+outfit: soft brown cotton pajama top with long matching pants, warm ribbed fabric, bra
 expression: relaxed smile
 lighting: warm noon light through window
 background: cozy bedroom background
 
 [autumn.afternoon]
-outfit: casual loungewear set
+outfit: rust orange cotton loungewear set, warm and cozy, bra
 expression: peaceful expression
 lighting: warm afternoon bedroom light
 background: cozy bedroom background
 
 [autumn.evening]
-outfit: comfortable loungewear set
+outfit: deep burgundy cotton loungewear set, warm and comfortable, bra
 expression: relaxed smile
 lighting: warm bedside lamp
 background: cozy bedroom background
 
 [autumn.night]
-outfit: cotton nightgown, long, bra
+outfit: long cream cotton nightgown with soft lace trim, warm flowing fabric, bra
 expression: peaceful expression
 lighting: warm bedside lamp, cozy autumn night
 background: cozy bedroom background
 
 [winter.morning]
-outfit: warm flannel pajama set
+outfit: thick red and black plaid flannel pajama set, warm and cozy, bra
 expression: sleepy cute expression
 lighting: cold grey morning light through frosted window
 background: cozy bedroom background
 
 [winter.forenoon]
-outfit: warm loungewear set
+outfit: warm forest green cotton loungewear set, thick and comfortable, bra
 expression: gentle smile
 lighting: warm indoor light, winter morning
 background: cozy bedroom background
 
 [winter.noon]
-outfit: cotton pajama top and long pants, bra
+outfit: dark grey cotton pajama top with long matching pants, warm soft fabric, bra
 expression: relaxed smile
 lighting: warm indoor light
 background: cozy bedroom background
 
 [winter.afternoon]
-outfit: warm loungewear set
+outfit: warm navy blue cotton loungewear set, thick and cozy, bra
 expression: peaceful expression
 lighting: warm afternoon bedroom light
 background: cozy bedroom background
 
 [winter.evening]
-outfit: warm comfortable loungewear set
+outfit: soft burgundy cotton loungewear set, warm and comfortable, bra
 expression: relaxed smile
 lighting: warm bedside lamp glow
 background: cozy bedroom background
 
 [winter.night]
-outfit: warm cotton nightgown
+outfit: long warm cream cotton nightgown, thick soft fabric, bra
 expression: peaceful expression
 lighting: warm bedside lamp, cozy winter night
 background: cozy bedroom background

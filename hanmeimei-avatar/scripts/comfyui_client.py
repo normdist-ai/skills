@@ -126,7 +126,7 @@ class ComfyUIClient:
         self,
         workflow: Dict,
         output_dir: Optional[str] = None,
-        timeout: int = 360,
+        timeout: int = 600,
         input_images: Optional[Dict[str, str]] = None
     ) -> Dict:
         """
@@ -166,6 +166,7 @@ class ComfyUIClient:
                 "--workflow", str(temp_workflow),
                 "--host", self.host,
                 "--output-dir", output_dir,
+                "--timeout", str(timeout),
             ]
             
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)

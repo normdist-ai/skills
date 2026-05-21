@@ -3,145 +3,145 @@
 # 留空则使用 base.txt 的默认值
 
 [spring.morning]
-outfit: light spring dress, pastel cardigan
+outfit: light pastel pink spring dress with delicate floral print, soft cream knit cardigan, white ankle socks, nude bra
 expression: peaceful smile
 lighting: fresh spring morning sunlight through cherry blossom branches
 background: outdoor street with trees and buildings
 
 [spring.forenoon]
-outfit: stylish casual clothes
+outfit: white cotton blouse with small floral embroidery, high-waisted light blue jeans, nude bra
 expression: relaxed expression
 lighting: natural daylight on tree-lined street
 background: outdoor street with trees and buildings
 
 [spring.noon]
-outfit: casual blouse, light jeans
+outfit: light mint green cotton blouse, high-waisted white jeans, nude bra
 expression: happy smile
 lighting: bright spring noon sunlight
 background: outdoor street with trees and buildings
 
 [spring.afternoon]
-outfit: stylish casual clothes
+outfit: soft peach cotton blouse, high-waisted light blue jeans, nude bra
 expression: natural expression
 lighting: warm afternoon light through trees
 background: outdoor street with trees and buildings
 
 [spring.evening]
-outfit: stylish casual outfit
+outfit: white silk blouse, high-waisted dark blue jeans, nude bra, light cream jacket
 expression: relaxed expression
 lighting: golden hour, warm spring sunset glow
 background: outdoor street with trees and buildings
 
 [spring.night]
-outfit: stylish casual clothes with jacket
+outfit: soft white cotton blouse, high-waisted dark blue jeans, nude bra, light cream jacket
 expression: gentle smile
 lighting: soft street lamp light, spring night
 background: outdoor street with trees and buildings
 
 [summer.morning]
-outfit: white sundress, straw hat
+outfit: white cotton sundress with small floral print, wide-brimmed straw hat, nude bra
 expression: cheerful smile
 lighting: bright morning light, summer heat haze
 background: outdoor street with trees and buildings
 
 [summer.forenoon]
-outfit: casual summer outfit, sunglasses
+outfit: light sky blue cotton sundress, stylish cat-eye sunglasses, nude bra
 expression: happy smile
 lighting: bright summer morning light
 background: outdoor street with trees and buildings
 
 [summer.noon]
-outfit: light summer dress
+outfit: light yellow linen sundress, nude bra
 expression: natural expression
 lighting: harsh bright noon sunlight
 background: outdoor street with trees and buildings
 
 [summer.afternoon]
-outfit: casual summer clothes, sunglasses
+outfit: white cotton sundress, stylish cat-eye sunglasses, nude bra
 expression: relaxed expression
 lighting: bright afternoon light
 background: outdoor street with trees and buildings
 
 [summer.evening]
-outfit: stylish casual outfit
+outfit: coral silk sundress, nude bra
 expression: happy smile
 lighting: warm summer sunset, long golden light
 background: outdoor street with trees and buildings
 
 [summer.night]
-outfit: stylish casual clothes with light jacket
+outfit: deep red cotton sundress, nude bra, light cream jacket
 expression: peaceful smile
 lighting: warm night street lights, summer evening
 background: outdoor street with trees and buildings
 
 [autumn.morning]
-outfit: autumn coat, scarf
+outfit: warm cream wool coat with soft collar, cozy cream knit sweater underneath, nude bra, soft cashmere scarf in forest green
 expression: peaceful smile
 lighting: crisp morning light, golden autumn atmosphere
 background: outdoor street with trees and golden leaves
 
 [autumn.forenoon]
-outfit: autumn sweater, casual pants
+outfit: cozy caramel knit sweater, high-waisted dark brown corduroy pants, nude bra
 expression: relaxed expression
 lighting: soft autumn morning light
 background: outdoor street with trees and golden leaves
 
 [autumn.noon]
-outfit: autumn casual outfit
+outfit: rust orange knit sweater, high-waisted dark green corduroy pants, nude bra
 expression: happy smile
 lighting: bright autumn noon light, golden ginkgo leaves
 background: outdoor street with trees and golden leaves
 
 [autumn.afternoon]
-outfit: autumn sweater, casual pants
+outfit: burgundy knit sweater with turtleneck, high-waisted dark grey corduroy pants, nude bra
 expression: natural expression
 lighting: warm afternoon golden light
 background: outdoor street with trees and golden leaves
 
 [autumn.evening]
-outfit: autumn coat, scarf
+outfit: warm camel wool coat, cozy cream knit sweater, nude bra, soft cashmere scarf in burgundy
 expression: relaxed expression
 lighting: golden hour, warm autumn glow, long shadows
 background: outdoor street with trees and golden leaves
 
 [autumn.night]
-outfit: autumn coat, warm scarf
+outfit: thick navy wool coat, warm forest green turtleneck sweater, nude bra, thick cashmere scarf in cream
 expression: gentle smile
 lighting: warm street lights, autumn night
 background: outdoor street with trees and buildings
 
 [winter.morning]
-outfit: winter coat, knit scarf, gloves
+outfit: thick cream wool coat with fur collar, warm cream turtleneck sweater, nude bra, knit scarf in forest green, knit gloves in cream
 expression: gentle smile
 lighting: cold morning with frost
 background: outdoor street with trees and buildings
 
 [winter.forenoon]
-outfit: winter coat, warm sweater
+outfit: warm camel wool coat, cozy forest green turtleneck sweater, nude bra
 expression: natural expression
 lighting: pale winter morning light
 background: outdoor street with trees and buildings
 
 [winter.noon]
-outfit: winter coat, scarf
+outfit: thick navy wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in cream
 expression: happy smile
 lighting: bright but cold winter noon sunlight
 background: outdoor street with trees and buildings
 
 [winter.afternoon]
-outfit: winter coat, warm sweater
+outfit: warm grey wool coat, cozy cream turtleneck sweater, nude bra
 expression: relaxed expression
 lighting: pale winter afternoon light
 background: outdoor street with trees and buildings
 
 [winter.evening]
-outfit: winter coat, knit scarf, gloves
+outfit: thick cream wool coat, warm burgundy turtleneck sweater, nude bra, knit scarf in forest green, knit gloves in cream
 expression: peaceful expression
 lighting: warm street lights, cold winter evening, breath mist
 background: outdoor street with trees and buildings
 
 [winter.night]
-outfit: winter coat, warm scarf, knit hat
+outfit: thick navy wool coat, cozy forest green turtleneck sweater, nude bra, knit scarf in cream, knit beanie in cream
 expression: gentle smile
 lighting: warm street lamp light, winter night, snowflakes
 background: outdoor street with trees and buildings

@@ -142,23 +142,29 @@ def save_seed_to_pool(seed, scene="", note=""):
 def pick_seed(args):
     """
     决定种子：
-      --random-seed → 全随机（-1）
-      --seed N      → 指定种子 N
-      默认          → 从 good-seeds.txt 池中选一个；如果池为空则用 DEFAULT_SEED
+      --seed-file F   → 从文件随机选一个种子
+      --random-seed   → 全随机（-1）
+      --seed N        → 指定种子 N
+      默认            → 完全随机（1-999999999）
     """
+    if args.seed_file:
+        seeds = load_good_seeds()
+        if not seeds:
+            print(f"[ERROR] 种子文件不存在或为空: {args.seed_file}", file=sys.stderr)
+            sys.exit(1)
+        chosen = random.choice(seeds)
+        return chosen[0], f"种子文件随机 → {chosen[0]} ({chosen[1]})"
+
     if args.random_seed:
-        return random.randint(1, 999999999), "完全随机"
+        seed = random.randint(1, 999999999)
+        return seed, "完全随机"
 
     if args.seed is not None:
         return args.seed, f"指定种子 {args.seed}"
 
-    # 从 good-seeds.txt 池中选
-    pool = load_good_seeds()
-    if pool:
-        chosen = random.choice(pool)
-        return chosen[0], f"种子池随机 → {chosen[0]} ({chosen[1]})"
-    else:
-        return DEFAULT_SEED, "种子池为空，使用默认种子"
+    # 默认：完全随机
+    seed = random.randint(1, 999999999)
+    return seed, "默认随机"
 
 
 # ══════════════════════════════════════════════════════════════
@@ -311,42 +317,22 @@ def get_random_face_reference() -> str:
 def get_time_description(period: str, hour: int) -> str:
     from datetime import datetime as dt
     now = dt.now()
-    m = now.month
-    if m in (3,4,5): season_name = "spring"
-    elif m in (6,7,8): season_name = "summer"
-    elif m in (9,10,11): season_name = "autumn"
-    else: season_name = "winter"
-
-    month_desc = {
-        1: "early winter", 2: "late winter", 3: "early spring", 4: "mid spring",
-        5: "late spring", 6: "early summer", 7: "mid summer", 8: "late summer",
-        9: "early autumn", 10: "mid autumn", 11: "late autumn", 12: "early winter"
-    }
-
-    time_words = {
-        "morning": {6: "dawn light, first light of day, early spring morning at 6am", 
-                    7: "soft sunrise glow, mid spring morning at 7am", 
-                    8: "bright morning sunlight, late spring morning at 8am"},
-        "forenoon": {9: "late morning light, mid spring morning at 9am", 
-                     10: "mid-morning bright light, late spring morning at 10am", 
-                     11: "bright late morning light, early summer morning at 11am"},
-        "noon": {12: "bright noon sunlight overhead, mid summer day at 12pm", 
-                 13: "warm afternoon light, late summer at 1pm"},
-        "afternoon": {14: "warm afternoon sunlight, early autumn at 2pm", 
-                      15: "golden afternoon light, mid autumn at 3pm", 
-                      16: "late afternoon warm golden light, late autumn at 4pm"},
-        "evening": {17: "golden hour sunset glow, early winter evening at 5pm", 
-                    18: "deep golden sunset, late autumn dusk at 6pm"},
-        "night": {19: "early dusk twilight, late autumn night at 7pm", 
-                  20: "evening blue hour, mid autumn night at 8pm", 
-                  21: "warm artificial indoor lighting, late autumn night at 9pm", 
-                  22: "late night warm indoor lighting, early winter night at 10pm", 
-                  23: "late night soft lamp glow, deep winter night at 11pm"},
-    }
-
-    period_words = time_words.get(period, {})
-    base_time = period_words.get(hour, f"{period} light, {hour}:00")
-    return f"{month_desc[m]} season, {base_time}"
+    
+    # 动态季节判断
+    month = now.month
+    if month in (3, 4, 5):
+        season_en = "spring"
+    elif month in (6, 7, 8):
+        season_en = "summer"
+    elif month in (9, 10, 11):
+        season_en = "autumn"
+    else:
+        season_en = "winter"
+    
+    # 精确时间戳（让模型根据时间判断光线和景色）
+    precise_time = now.strftime("%B %d, %Y, %I:%M %p")
+    
+    return f"{season_en}, {precise_time}"
 
 
 def build_final_positive(base_positive, outfit, expression, expression_weight, lighting, background, nude, time_description=""):
@@ -355,26 +341,30 @@ def build_final_positive(base_positive, outfit, expression, expression_weight, l
         text = f'1girl, solo, nude, {text}'
         text = re.sub(r',?\s*wearing [^,]+', '', text)
     else:
-        text = f'1girl, (solo:1.5), {text}'
         if outfit:
-            text = text + f', wearing bra, (round neck t-shirt:1.3), {outfit}'
+            text = text + f', {outfit}'
 
     if expression:
         text = text + f', ({expression}:{expression_weight})'
-    if time_description:
-        text = text + f', {time_description}'
     if lighting:
         text = text + f', {lighting}'
     if background:
         text = text + f', {background}'
+    if time_description:
+        text = text + f', {time_description}'
     return text
 
 
 def build_final_negative(base_negative, nude):
     text = base_negative
     if nude:
-        for kw in ['(nsfw:1.8)', '(nude:1.5)', '(topless:1.5)', '(naked:1.5)', '(no shirt:1.3)', '(nipples:1.3)', '(bare chest:1.3)']:
-            text = text.replace(kw, '').replace(', ,', ',').strip(', ')
+        # 移除所有裸体/NSFW 相关约束（覆盖各种权重版本）
+        for kw in ['(nsfw:2.0)', '(nsfw:1.8)', '(nude:1.8)', '(nude:1.5)', '(topless:1.5)', '(naked:1.5)', '(no shirt:1.3)', '(nipples:1.5)', '(nipples:1.3)', '(bare chest:1.3)']:
+            text = text.replace(kw, '')
+        # 清理多余逗号
+        while ', ,' in text:
+            text = text.replace(', ,', ',')
+        text = text.strip(', ')
     return text
 
 
@@ -426,6 +416,7 @@ def main():
     parser.add_argument("--start-at", "-sa", type=float, default=0.0, help="FaceID start_at")
     parser.add_argument("--seed", "-s", type=int, help="指定种子（不从池中选）")
     parser.add_argument("--random-seed", action="store_true", help="完全随机，忽略种子池")
+    parser.add_argument("--seed-file", type=str, help="从指定种子文件随机选择种子")
     parser.add_argument("--add-seed", action="store_true", help="将当前种子追加到 good-seeds.txt")
     parser.add_argument("--nude", "-n", action="store_true", help="nude 模式")
     parser.add_argument("--scene", type=str, help="指定场景（bedroom/cafe/library/boulevard/rooftop）")
@@ -446,10 +437,13 @@ def main():
             expression_weight = smile_config["weight"]
         print(f"[INFO] 笑容等级: {args.smile_level} - {smile_config['description']}", file=sys.stderr)
     else:
-        smile_config = SMILE_LEVELS[3]
+        # 默认随机选择笑容等级
+        level = random.choice(list(SMILE_LEVELS.keys()))
+        smile_config = SMILE_LEVELS[level]
         expression = smile_config["expression"]
         if expression_weight is None:
             expression_weight = smile_config["weight"]
+        print(f"[INFO] 笑容等级: {level} (随机) - {smile_config['description']}", file=sys.stderr)
 
     # ── 环境感知 ──
     season = get_season()
