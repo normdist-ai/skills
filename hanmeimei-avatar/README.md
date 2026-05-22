@@ -2,6 +2,11 @@
 
 基于 ComfyUI 的 AI 写真照片生成技能，支持 FaceID 面部一致性保持、四维环境感知自拍、多场景生活化生成。
 
+## 仓库地址
+
+- GitHub: [https://github.com/normdist-ai/skills/tree/main/hanmeimei-avatar](https://github.com/normdist-ai/skills/tree/main/hanmeimei-avatar)
+
+
 ## 特性
 
 - ✅ **FaceID 面部一致性**：使用 IPAdapter FaceID 保持韩梅梅的脸型特征
