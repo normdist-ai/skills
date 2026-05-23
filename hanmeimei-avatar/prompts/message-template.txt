@@ -1,0 +1,11 @@
+# 韩梅梅自拍消息模板（单气泡版，no_agent 模式用）
+# 变量：{image}, {time_full}, {scene_cn}, {seed}, {thought}
+# 顺序：图片 → 引用块信息 → 横线 → 想法
+
+[default]
+{image}
+时间：{time_full}
+地点：{scene_cn}
+种子：{seed}
+---
+{thought}

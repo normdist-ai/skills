@@ -1,145 +1,148 @@
 # 图书馆 — 场景提示词
 
 [spring.morning]
-outfit: crisp white cotton button-down shirt, soft cream knit cardigan, flowing light blue midi skirt, nude bra
+outfit: crisp white cotton button-down shirt, soft cream knit cardigan, flowing light blue midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: focused expression
 lighting: natural daylight from large library windows
 background: library background with bookshelves
 
 [spring.forenoon]
-outfit: soft white cotton blouse, light mint green knit cardigan, flowing cream midi skirt, nude bra
+outfit: soft white cotton blouse, light mint green knit cardigan, flowing cream midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: thoughtful look
 lighting: natural daylight from large library windows
 background: library background with bookshelves
 
 [spring.noon]
-outfit: white silk blouse, soft pastel pink knit cardigan, flowing lavender midi skirt, nude bra
+outfit: white silk blouse, soft pastel pink knit cardigan, flowing lavender midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm noon light, peaceful quiet moment
 background: library background with bookshelves
 
 [spring.afternoon]
-outfit: crisp white cotton shirt, light peach knit cardigan, flowing blush pink midi skirt, nude bra
+outfit: crisp white cotton shirt, light peach knit cardigan, flowing blush pink midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: studious expression
 lighting: warm afternoon indoor lighting
 background: library background with bookshelves
 
 [spring.evening]
-outfit: soft white cotton blouse, warm cream knit cardigan, flowing mauve midi skirt, nude bra
+outfit: soft white cotton blouse, warm cream knit cardigan, flowing mauve midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm evening library light
 background: library background with bookshelves
 
 [spring.night]
-outfit: cozy cream knit sweater, soft grey knit pants, nude bra, comfortable for studying
+outfit: cozy cream knit sweater, soft grey knit pants, nude bra, comfortable for studying, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm desk lamp light, quiet library
 background: library background with bookshelves
 
 [summer.morning]
-outfit: crisp white linen button-down shirt, lightweight sky blue knit cardigan, flowing white linen midi skirt, nude bra
+outfit: crisp white linen button-down shirt, lightweight sky blue knit cardigan, flowing white linen midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: focused expression
 lighting: cool indoor fluorescent lighting
 background: library background with bookshelves
 
 [summer.forenoon]
-outfit: light white cotton blouse, lightweight mint green knit cardigan, flowing light blue linen midi skirt, nude bra
+outfit: light white cotton blouse, lightweight mint green knit cardigan, flowing light blue linen midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: thoughtful look
 lighting: bright library lighting, AC comfort
 background: library background with bookshelves
 
 [summer.noon]
-outfit: white linen blouse, lightweight cream knit cardigan, flowing light pink linen midi skirt, nude bra
+outfit: white linen blouse, lightweight cream knit cardigan, flowing light pink linen midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: natural expression
 lighting: dim lab lighting, quiet noon
 background: library background with bookshelves
 
 [summer.afternoon]
-outfit: crisp white cotton shirt, lightweight light blue knit cardigan, flowing white linen midi skirt, nude bra
+outfit: crisp white cotton shirt, lightweight light blue knit cardigan, flowing white linen midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: studious expression
 lighting: cool lab lighting, air conditioning humming
 background: library background with bookshelves
 
 [summer.evening]
-outfit: soft white cotton blouse, lightweight peach knit cardigan, flowing sky blue linen midi skirt, nude bra
+outfit: soft white cotton blouse, lightweight peach knit cardigan, flowing sky blue linen midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed expression
 lighting: warm evening library light
 background: library background with bookshelves
 
 [summer.night]
-outfit: cozy light grey knit sweater, soft white knit pants, nude bra, comfortable for studying
+outfit: cozy light grey knit sweater, soft white knit pants, nude bra, comfortable for studying, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm desk lamp, quiet summer night
 background: library background with bookshelves
 
 [autumn.morning]
-outfit: soft cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra
+outfit: soft cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: focused expression
 lighting: warm library lighting, autumn atmosphere
 background: library background with bookshelves
 
 [autumn.forenoon]
-outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra
+outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: thoughtful look
 lighting: indoor lab lighting, academic atmosphere
 background: library background with bookshelves
 
 [autumn.noon]
-outfit: white silk blouse, soft burgundy knit cardigan, flowing dark brown midi skirt, nude bra
+outfit: white silk blouse, soft burgundy knit cardigan, flowing dark brown midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm noon light through library windows
 background: library background with bookshelves
 
 [autumn.afternoon]
-outfit: cozy rust orange knit sweater, high-waisted dark grey corduroy pants, nude bra
+outfit: cozy rust orange knit sweater, high-waisted dark grey corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: studious expression
 lighting: warm afternoon lab lighting
 background: library background with bookshelves
 
 [autumn.evening]
-outfit: soft white cotton blouse, warm cream knit cardigan, flowing forest green midi skirt, nude bra
+outfit: soft white cotton blouse, warm cream knit cardigan, flowing forest green midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm golden afternoon light through window
 background: library background with bookshelves
 
 [autumn.night]
-outfit: cozy burgundy knit sweater, soft dark brown knit pants, nude bra, comfortable for studying
+outfit: cozy burgundy knit sweater, soft dark brown knit pants, nude bra, comfortable for studying, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm desk lamp, cozy autumn night
 background: library background with bookshelves
 
 [winter.morning]
-outfit: thick cream turtleneck sweater, high-waisted dark grey wool pants, nude bra
+outfit: thick cream turtleneck sweater, high-waisted dark grey wool pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: focused expression
 lighting: warm indoor lighting, winter morning
 background: library background with bookshelves
 
 [winter.forenoon]
-outfit: warm forest green turtleneck sweater, high-waisted dark brown wool pants, nude bra
+outfit: warm forest green turtleneck sweater, high-waisted dark brown wool pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: thoughtful look
 lighting: warm lab lighting, cozy despite winter
 background: library background with bookshelves
 
 [winter.noon]
-outfit: white silk blouse, thick cream knit cardigan, flowing dark grey wool midi skirt, nude bra
+outfit: white silk blouse, thick cream knit cardigan, flowing dark grey wool midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: natural expression
 lighting: warm noon library light
 background: library background with bookshelves
 
 [winter.afternoon]
-outfit: cozy burgundy turtleneck sweater, high-waisted dark green wool pants, nude bra
+outfit: cozy burgundy turtleneck sweater, high-waisted dark green wool pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: studious expression
 lighting: warm afternoon lab lighting, winter outside
 background: library background with bookshelves
 
 [winter.evening]
-outfit: soft white cotton blouse, thick cream knit cardigan, flowing dark brown wool midi skirt, nude bra
+outfit: soft white cotton blouse, thick cream knit cardigan, flowing dark brown wool midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed expression
 lighting: warm library light, snowflakes outside window
 background: library background with bookshelves
 
 [winter.night]
-outfit: thick cream turtleneck sweater, soft dark grey knit pants, nude bra, comfortable for studying
+outfit: thick cream turtleneck sweater, soft dark grey knit pants, nude bra, comfortable for studying, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm desk lamp, cozy winter night
 background: library background with bookshelves
+
+[negative]
+ng_deepnegative_v1_75t,EasyNegative,(worst quality:2),(low quality:2),lowres,normal quality,illustration,anime,painting,drawing,art,sketch,3d render,plastic skin,airbrushed,oversmoothed,caricature,cartoon,((monochrome)),((grayscale)),tanned skin,dark skin,yellow skin,freckles,moles,spots,blemishes,skin imperfection,acne,scars,(bad anatomy:1.21),(bad proportions:1.331),(disfigured:1.331),extra limbs,(missing arms:1.331),(extra legs:1.331),(unclear eyes:1.331),(multiple people:2.0),(multiple faces:2.0),(two people:1.9),(three people:1.9),(group:1.9),(crowd:1.9),(extra faces:1.8),(duplicate face:1.8),(cloned face:1.8),(2girls:1.8),(3girls:1.8),(multiple girls:1.8),(cropped:1.5),(cut off:1.5),(nsfw:1.8),(nude:1.5)

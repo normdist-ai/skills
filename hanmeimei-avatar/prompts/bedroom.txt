@@ -1,145 +1,148 @@
 # 卧室 — 场景提示词
 
 [spring.morning]
-outfit: soft pastel pink cotton pajama set with delicate lace trim, cozy long sleeves, bra
+outfit: soft pastel pink cotton pajama set with delicate lace trim, cozy long sleeves, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: sleepy cute expression
 lighting: soft morning light through curtains
 background: cozy bedroom background
 
 [spring.forenoon]
-outfit: light blue cotton loungewear set with small floral print, loose comfortable fit, bra
+outfit: light blue cotton loungewear set with small floral print, loose comfortable fit, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: soft morning bedroom light
 background: cozy bedroom background
 
 [spring.noon]
-outfit: light grey cotton pajama top with long matching pants, soft ribbed fabric, bra
+outfit: light grey cotton pajama top with long matching pants, soft ribbed fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: natural window light, soft diffused daylight
 background: cozy bedroom background
 
 [spring.afternoon]
-outfit: mint green cotton loungewear set with drawstring waist, comfortable loose fit, bra
+outfit: mint green cotton loungewear set with drawstring waist, comfortable loose fit, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm afternoon light through window
 background: cozy bedroom background
 
 [spring.evening]
-outfit: soft lavender cotton loungewear set, warm and cozy, bra
+outfit: soft lavender cotton loungewear set, warm and cozy, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm bedside lamp glow
 background: cozy bedroom background
 
 [spring.night]
-outfit: long white cotton nightgown with delicate lace trim, soft flowing fabric, bra
+outfit: long white cotton nightgown with delicate lace trim, soft flowing fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm bedside lamp, soft fairy lights
 background: cozy bedroom background
 
 [summer.morning]
-outfit: light yellow cotton pajama set, short sleeves, thin breathable fabric, bra
+outfit: light yellow cotton pajama set, short sleeves, thin breathable fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: sleepy cute expression
 lighting: bright morning light, summer heat outside
 background: cozy bedroom background
 
 [summer.forenoon]
-outfit: sky blue cotton loungewear set, lightweight comfortable, bra
+outfit: sky blue cotton loungewear set, lightweight comfortable, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: bright bedroom light
 background: cozy bedroom background
 
 [summer.noon]
-outfit: white cotton pajama top with light blue long pants, cool breathable fabric, bra
+outfit: white cotton pajama top with light blue long pants, cool breathable fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: cool indoor lighting
 background: cozy bedroom background
 
 [summer.afternoon]
-outfit: light pink cotton loungewear set, loose cool fit, bra
+outfit: light pink cotton loungewear set, loose cool fit, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: cool afternoon rest
 background: cozy bedroom background
 
 [summer.evening]
-outfit: light grey cotton loungewear set, soft and comfortable, bra
+outfit: light grey cotton loungewear set, soft and comfortable, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: dim evening light
 background: cozy bedroom background
 
 [summer.night]
-outfit: long white cotton nightgown, thin breathable fabric, bra
+outfit: long white cotton nightgown, thin breathable fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: dim night light, fan breeze
 background: cozy bedroom background
 
 [autumn.morning]
-outfit: warm beige cotton pajama set with long sleeves, soft cozy fabric, bra
+outfit: warm beige cotton pajama set with long sleeves, soft cozy fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: sleepy cute expression
 lighting: warm morning light through window, autumn colors outside
 background: cozy bedroom background
 
 [autumn.forenoon]
-outfit: caramel brown cotton loungewear set, warm and comfortable, bra
+outfit: caramel brown cotton loungewear set, warm and comfortable, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm bedroom light
 background: cozy bedroom background
 
 [autumn.noon]
-outfit: soft brown cotton pajama top with long matching pants, warm ribbed fabric, bra
+outfit: soft brown cotton pajama top with long matching pants, warm ribbed fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm noon light through window
 background: cozy bedroom background
 
 [autumn.afternoon]
-outfit: rust orange cotton loungewear set, warm and cozy, bra
+outfit: rust orange cotton loungewear set, warm and cozy, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm afternoon bedroom light
 background: cozy bedroom background
 
 [autumn.evening]
-outfit: deep burgundy cotton loungewear set, warm and comfortable, bra
+outfit: deep burgundy cotton loungewear set, warm and comfortable, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm bedside lamp
 background: cozy bedroom background
 
 [autumn.night]
-outfit: long cream cotton nightgown with soft lace trim, warm flowing fabric, bra
+outfit: long cream cotton nightgown with soft lace trim, warm flowing fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm bedside lamp, cozy autumn night
 background: cozy bedroom background
 
 [winter.morning]
-outfit: thick red and black plaid flannel pajama set, warm and cozy, bra
+outfit: thick red and black plaid flannel pajama set, warm and cozy, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: sleepy cute expression
 lighting: cold grey morning light through frosted window
 background: cozy bedroom background
 
 [winter.forenoon]
-outfit: warm forest green cotton loungewear set, thick and comfortable, bra
+outfit: warm forest green cotton loungewear set, thick and comfortable, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm indoor light, winter morning
 background: cozy bedroom background
 
 [winter.noon]
-outfit: dark grey cotton pajama top with long matching pants, warm soft fabric, bra
+outfit: dark grey cotton pajama top with long matching pants, warm soft fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm indoor light
 background: cozy bedroom background
 
 [winter.afternoon]
-outfit: warm navy blue cotton loungewear set, thick and cozy, bra
+outfit: warm navy blue cotton loungewear set, thick and cozy, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm afternoon bedroom light
 background: cozy bedroom background
 
 [winter.evening]
-outfit: soft burgundy cotton loungewear set, warm and comfortable, bra
+outfit: soft burgundy cotton loungewear set, warm and comfortable, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm bedside lamp glow
 background: cozy bedroom background
 
 [winter.night]
-outfit: long warm cream cotton nightgown, thick soft fabric, bra
+outfit: long warm cream cotton nightgown, thick soft fabric, bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm bedside lamp, cozy winter night
 background: cozy bedroom background
+
+[negative]
+ng_deepnegative_v1_75t,EasyNegative,(worst quality:2),(low quality:2),lowres,normal quality,illustration,anime,painting,drawing,art,sketch,3d render,plastic skin,airbrushed,oversmoothed,caricature,cartoon,((monochrome)),((grayscale)),tanned skin,dark skin,yellow skin,freckles,moles,spots,blemishes,skin imperfection,acne,scars,(bad anatomy:1.21),(bad proportions:1.331),(disfigured:1.331),extra limbs,(missing arms:1.331),(extra legs:1.331),(unclear eyes:1.331),(multiple people:2.0),(multiple faces:2.0),(two people:1.9),(three people:1.9),(group:1.9),(crowd:1.9),(extra faces:1.8),(duplicate face:1.8),(cloned face:1.8),(2girls:1.8),(3girls:1.8),(multiple girls:1.8),(cropped:1.5),(cut off:1.5),(nsfw:1.8),(nude:1.5)

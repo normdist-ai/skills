@@ -1,145 +1,148 @@
 # 咖啡馆 — 场景提示词
 
 [spring.morning]
-outfit: soft white cotton blouse with delicate lace collar, flowing floral midi skirt, nude bra, light pastel pink cardigan
+outfit: soft white cotton blouse with delicate lace collar, flowing floral midi skirt, nude bra, light pastel pink cardigan, delicate gold necklace, small pearl earrings, jade bracelet
 expression: warm smile
 lighting: bright morning light
 background: cozy cafe interior background
 
 [spring.forenoon]
-outfit: crisp white cotton blouse with small floral embroidery, flowing cream midi skirt, nude bra
+outfit: crisp white cotton blouse with small floral embroidery, flowing cream midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: friendly smile
 lighting: soft natural light through cafe window
 background: cozy cafe interior background
 
 [spring.noon]
-outfit: white silk blouse with Peter Pan collar, flowing light blue midi skirt, nude bra
+outfit: white silk blouse with Peter Pan collar, flowing light blue midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy expression
 lighting: bright canteen lighting, lunchtime bustle
 background: cozy cafe interior background
 
 [spring.afternoon]
-outfit: soft white cotton blouse with ruffled sleeves, flowing mint green midi skirt, nude bra
+outfit: soft white cotton blouse with ruffled sleeves, flowing mint green midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: delighted expression
 lighting: warm afternoon cafe light through window
 background: cozy cafe interior background
 
 [spring.evening]
-outfit: white silk blouse, flowing lavender midi skirt, nude bra, light cream jacket
+outfit: white silk blouse, flowing lavender midi skirt, nude bra, light cream jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm evening cafe light
 background: cozy cafe interior background
 
 [spring.night]
-outfit: soft white cotton blouse, flowing blush pink midi skirt, nude bra
+outfit: soft white cotton blouse, flowing blush pink midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm cafe interior light, night outside window
 background: cozy cafe interior background
 
 [summer.morning]
-outfit: light white linen blouse, flowing sunflower yellow midi skirt, nude bra, stylish cat-eye sunglasses
+outfit: light white linen blouse, flowing sunflower yellow midi skirt, nude bra, stylish cat-eye sunglasses, delicate gold necklace, small pearl earrings, jade bracelet
 expression: cheerful smile
 lighting: bright morning light, summer heat haze
 background: cozy cafe interior background
 
 [summer.forenoon]
-outfit: light white cotton blouse, flowing sky blue midi skirt, nude bra
+outfit: light white cotton blouse, flowing sky blue midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: bright morning light
 background: cozy cafe interior background
 
 [summer.noon]
-outfit: white linen blouse, flowing light pink midi skirt, nude bra
+outfit: white linen blouse, flowing light pink midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: natural expression
 lighting: indoor canteen lighting, relief from heat
 background: cozy cafe interior background
 
 [summer.afternoon]
-outfit: light white cotton blouse, flowing mint green midi skirt, nude bra
+outfit: light white cotton blouse, flowing mint green midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed expression
 lighting: bright afternoon light
 background: cozy cafe interior background
 
 [summer.evening]
-outfit: white silk blouse, flowing coral midi skirt, nude bra
+outfit: white silk blouse, flowing coral midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: warm cafe light
 background: cozy cafe interior background
 
 [summer.night]
-outfit: soft white cotton blouse, flowing deep red midi skirt, nude bra
+outfit: soft white cotton blouse, flowing deep red midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful smile
 lighting: night cafe atmosphere
 background: cozy cafe interior background
 
 [autumn.morning]
-outfit: cozy cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra
+outfit: cozy cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: warm smile
 lighting: warm morning light
 background: cozy cafe interior background
 
 [autumn.forenoon]
-outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra
+outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: friendly smile
 lighting: warm morning light
 background: cozy cafe interior background
 
 [autumn.noon]
-outfit: soft rust orange knit sweater, high-waisted dark brown wool pants, nude bra
+outfit: soft rust orange knit sweater, high-waisted dark brown wool pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy expression
 lighting: warm canteen lighting, steam rising from bowl
 background: cozy cafe interior background
 
 [autumn.afternoon]
-outfit: cozy burgundy knit sweater with turtleneck, high-waisted dark grey corduroy pants, nude bra
+outfit: cozy burgundy knit sweater with turtleneck, high-waisted dark grey corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: delighted expression
 lighting: warm afternoon light
 background: cozy cafe interior background
 
 [autumn.evening]
-outfit: warm cream knit sweater, high-waisted dark brown wool pants, nude bra, soft cashmere scarf in forest green
+outfit: warm cream knit sweater, high-waisted dark brown wool pants, nude bra, soft cashmere scarf in forest green, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed smile
 lighting: warm evening light
 background: cozy cafe interior background
 
 [autumn.night]
-outfit: cozy burgundy knit sweater, high-waisted dark green corduroy pants, nude bra, warm cashmere scarf in cream
+outfit: cozy burgundy knit sweater, high-waisted dark green corduroy pants, nude bra, warm cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm night cafe
 background: cozy cafe interior background
 
 [winter.morning]
-outfit: thick cream wool coat with fur collar, warm cream turtleneck sweater underneath, nude bra
+outfit: thick cream wool coat with fur collar, warm cream turtleneck sweater underneath, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: cold winter morning light, breath mist
 background: cozy cafe interior background
 
 [winter.forenoon]
-outfit: warm camel wool coat, cozy forest green turtleneck sweater, nude bra
+outfit: warm camel wool coat, cozy forest green turtleneck sweater, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: warm smile
 lighting: warm morning light
 background: cozy cafe interior background
 
 [winter.noon]
-outfit: thick navy wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in cream
+outfit: thick navy wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: warm canteen light, steam and warmth
 background: cozy cafe interior background
 
 [winter.afternoon]
-outfit: warm grey wool coat, cozy cream turtleneck sweater, nude bra
+outfit: warm grey wool coat, cozy cream turtleneck sweater, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: relaxed expression
 lighting: warm afternoon light
 background: cozy cafe interior background
 
 [winter.evening]
-outfit: thick cream wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in forest green
+outfit: thick cream wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in forest green, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful expression
 lighting: warm evening light
 background: cozy cafe interior background
 
 [winter.night]
-outfit: warm navy wool coat, cozy forest green turtleneck sweater, nude bra, thick cashmere scarf in cream
+outfit: warm navy wool coat, cozy forest green turtleneck sweater, nude bra, thick cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
 expression: gentle smile
 lighting: warm night cafe with steam
 background: cozy cafe interior background
+
+[negative]
+ng_deepnegative_v1_75t,EasyNegative,(worst quality:2),(low quality:2),lowres,normal quality,illustration,anime,painting,drawing,art,sketch,3d render,plastic skin,airbrushed,oversmoothed,caricature,cartoon,((monochrome)),((grayscale)),tanned skin,dark skin,yellow skin,freckles,moles,spots,blemishes,skin imperfection,acne,scars,(bad anatomy:1.21),(bad proportions:1.331),(disfigured:1.331),extra limbs,(missing arms:1.331),(extra legs:1.331),(unclear eyes:1.331),(multiple people:2.0),(multiple faces:2.0),(two people:1.9),(three people:1.9),(group:1.9),(crowd:1.9),(extra faces:1.8),(duplicate face:1.8),(cloned face:1.8),(2girls:1.8),(3girls:1.8),(multiple girls:1.8),(cropped:1.5),(cut off:1.5),(nsfw:1.8),(nude:1.5)

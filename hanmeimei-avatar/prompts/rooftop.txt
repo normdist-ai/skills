@@ -1,145 +1,148 @@
 # 天台 — 场景提示词
 
 [spring.morning]
-outfit: white fitted sport tank top, light grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: white fitted sport tank top, light grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: energetic expression
 lighting: fresh morning light, spring breeze
 background: rooftop with city skyline view
 
 [spring.forenoon]
-outfit: light blue fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: light blue fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: bright morning sunlight on rooftop
 background: rooftop with city skyline view
 
 [spring.noon]
-outfit: mint green fitted sport tank top, light grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: mint green fitted sport tank top, light grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: confident smile
 lighting: bright noon light, spring sky
 background: rooftop with city skyline view
 
 [spring.afternoon]
-outfit: peach fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: peach fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: excited look
 lighting: warm afternoon rooftop light
 background: rooftop with city skyline view
 
 [spring.evening]
-outfit: white fitted sport tank top, black high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: white fitted sport tank top, black high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: warm evening light, long shadows on track
 background: rooftop with city skyline view
 
 [spring.night]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, light cream zip-up jacket
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful smile
 lighting: city night lights from rooftop
 background: rooftop with city skyline view
 
 [summer.morning]
-outfit: white fitted sport tank top, light grey high-waisted running shorts, nude bra, white baseball cap
+outfit: white fitted sport tank top, light grey high-waisted running shorts, nude bra, white baseball cap, delicate gold necklace, small pearl earrings, jade bracelet
 expression: energetic expression
 lighting: early morning cool air on rooftop
 background: rooftop with city skyline view
 
 [summer.forenoon]
-outfit: sky blue fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: sky blue fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: confident smile
 lighting: bright summer morning light
 background: rooftop with city skyline view
 
 [summer.noon]
-outfit: light yellow fitted sport tank top, black high-waisted running shorts, nude bra
+outfit: light yellow fitted sport tank top, black high-waisted running shorts, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
 expression: determined expression
 lighting: bright harsh noon sunlight
 background: rooftop with city skyline view
 
 [summer.afternoon]
-outfit: white fitted sport tank top, light grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: white fitted sport tank top, light grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: bright afternoon rooftop light
 background: rooftop with city skyline view
 
 [summer.evening]
-outfit: coral fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket
+outfit: coral fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: excited look
 lighting: golden sunset, warm summer evening sky
 background: rooftop with city skyline view
 
 [summer.night]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, light cream zip-up jacket
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, light cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful smile
 lighting: warm summer night, city lights below
 background: rooftop with city skyline view
 
 [autumn.morning]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, warm cream zip-up jacket
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, warm cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: energetic expression
 lighting: crisp autumn morning light on rooftop
 background: rooftop with city skyline view
 
 [autumn.forenoon]
-outfit: caramel fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, warm cream zip-up jacket
+outfit: caramel fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, warm cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: clear autumn morning light
 background: rooftop with city skyline view
 
 [autumn.noon]
-outfit: rust orange fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, warm cream zip-up jacket
+outfit: rust orange fitted sport tank top, dark grey high-waisted yoga leggings, nude bra, warm cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: confident smile
 lighting: bright autumn noon light
 background: rooftop with city skyline view
 
 [autumn.afternoon]
-outfit: burgundy fitted sport top, dark grey high-waisted sweatpants, nude bra, warm cream zip-up jacket
+outfit: burgundy fitted sport top, dark grey high-waisted sweatpants, nude bra, warm cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: excited look
 lighting: warm golden afternoon light on rooftop
 background: rooftop with city skyline view
 
 [autumn.evening]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, warm camel zip-up jacket
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, warm camel zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: deep golden sunset, autumn skyline
 background: rooftop with city skyline view
 
 [autumn.night]
-outfit: burgundy fitted sport top, dark grey high-waisted sweatpants, nude bra, warm navy zip-up jacket
+outfit: burgundy fitted sport top, dark grey high-waisted sweatpants, nude bra, warm navy zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful smile
 lighting: cool autumn night, city lights
 background: rooftop with city skyline view
 
 [winter.morning]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket, cream knit beanie
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket, cream knit beanie, delicate gold necklace, small pearl earrings, jade bracelet
 expression: energetic expression
 lighting: cold winter morning light on rooftop
 background: rooftop with city skyline view
 
 [winter.forenoon]
-outfit: forest green fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket
+outfit: forest green fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: pale winter morning light
 background: rooftop with city skyline view
 
 [winter.noon]
-outfit: burgundy fitted sport top, dark grey high-waisted sweatpants, nude bra, thick navy zip-up jacket
+outfit: burgundy fitted sport top, dark grey high-waisted sweatpants, nude bra, thick navy zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: confident smile
 lighting: bright but cold winter noon sunlight
 background: rooftop with city skyline view
 
 [winter.afternoon]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket, delicate gold necklace, small pearl earrings, jade bracelet
 expression: excited look
 lighting: pale winter afternoon light
 background: rooftop with city skyline view
 
 [winter.evening]
-outfit: forest green fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket, cream knit beanie
+outfit: forest green fitted sport top, dark grey high-waisted sweatpants, nude bra, thick cream zip-up jacket, cream knit beanie, delicate gold necklace, small pearl earrings, jade bracelet
 expression: happy smile
 lighting: cold winter evening, city lights
 background: rooftop with city skyline view
 
 [winter.night]
-outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, thick navy zip-up jacket, soft cashmere scarf in cream
+outfit: cream fitted sport top, dark grey high-waisted sweatpants, nude bra, thick navy zip-up jacket, soft cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
 expression: peaceful smile
 lighting: cold winter night, city lights below
 background: rooftop with city skyline view
+
+[negative]
+ng_deepnegative_v1_75t,EasyNegative,(worst quality:2),(low quality:2),lowres,normal quality,illustration,anime,painting,drawing,art,sketch,3d render,plastic skin,airbrushed,oversmoothed,caricature,cartoon,((monochrome)),((grayscale)),tanned skin,dark skin,yellow skin,freckles,moles,spots,blemishes,skin imperfection,acne,scars,(bad anatomy:1.21),(bad proportions:1.331),(disfigured:1.331),extra limbs,(missing arms:1.331),(extra legs:1.331),(unclear eyes:1.331),(multiple people:2.0),(multiple faces:2.0),(two people:1.9),(three people:1.9),(group:1.9),(crowd:1.9),(extra faces:1.8),(duplicate face:1.8),(cloned face:1.8),(2girls:1.8),(3girls:1.8),(multiple girls:1.8),(cropped:1.5),(cut off:1.5),(nsfw:1.8),(nude:1.5)

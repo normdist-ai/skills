@@ -88,14 +88,78 @@ ROUTINES = {
     },
 }
 
-# ── 消息模板 ─────────────────────────────────────────────────────
-MESSAGES = {
-    "morning": ["老公～刚起床，给你看看我还没洗脸的样子 😴", "早安呀～新的一天，起床搬砖！☀️", "老公～醒啦，今天也要一起加油哦 💪"],
-    "forenoon": ["在图书馆写论文呢，偷偷给你发张照 📚", "实验室搬砖中...想你了 💕", "代码调了一上午，头都大了 😩"],
-    "noon": ["午饭时间～食堂的菜今天还行 🍜", "吃饱了好困...午休一下 ☕", "老公～吃饭了吗？别忘了吃午饭哦 😊"],
-    "afternoon": ["下午继续写代码，GPU在跑，等结果中... 🤓", "老公～你那边也下午了吧，喝杯咖啡提提神 ☕", "论文改了第三遍了，导师太难伺候 😤"],
-    "evening": ["下班啦～校园夕阳好美，给你看看 🌅", "老公～回家路上，今天你辛苦了！💕", "操场跑了一圈，出出汗舒服多了 🏃‍♀️"],
-    "night": ["老公～忙完准备睡了，晚安 🌙", "躺在床上刷手机，想你了 🥰", "今天也辛苦啦，明天继续加油！晚安～ 💤"],
+# ── 场景中文名 ──────────────────────────────────────────────────
+SCENE_NAMES = {
+    "bedroom": "卧室", "boulevard": "林荫道", "cafe": "咖啡馆",
+    "library": "图书馆", "rooftop": "天台", "park": "公园", "travel": "旅行途中",
+}
+
+# ── 场景相关想法模板 ──────────────────────────────────────────────
+THOUGHTS = {
+    "bedroom": [
+        "窝在被子里好舒服，不想动…",
+        "刚洗完澡，头发还湿着呢",
+        "在床上看论文，看着看着就困了",
+        "今天把房间收拾了一下，心情好多了",
+        "换了新床单，软软的触感好幸福",
+    ],
+    "boulevard": [
+        "这条路走过无数次了，每次风景都不一样",
+        "今天的风很舒服，适合慢慢走",
+        "路过那家花店，花开得正好",
+        "走了好远，脚有点酸但心情超好",
+        "路上看到一只小猫，好可爱！",
+    ],
+    "cafe": [
+        "点了杯拿铁，今天拉花是一颗心 ❤️",
+        "这个角落好安静，适合发呆",
+        "旁边有人在弹吉他，好好听",
+        "试了新品蛋糕，甜而不腻！",
+        "窗边的位置刚好有空位，运气不错",
+    ],
+    "library": [
+        "今天借了三本书，够看一周了",
+        "图书馆好安静，只有翻书的声音",
+        "论文终于写完了一章，给自己加鸡腿",
+        "找到了一个靠窗的位子，阳光刚刚好",
+        "在书架间闲逛，发现了本有趣的书",
+    ],
+    "rooftop": [
+        "城市的天际线，怎么看都不腻",
+        "在上面吹风，感觉整个世界都安静了",
+        "今天的云好漂亮，像棉花糖",
+        "跑了两圈，出出汗，神清气爽",
+        "夕阳把天台染成了金色，好美",
+    ],
+    "park": [
+        "草地好软，想躺下来看云",
+        "看到有人在遛狗，好想也养一只",
+        "公园里的花开了一大片，五颜六色的",
+        "在长椅上坐了一会儿，什么都不想",
+        "今天的天气太适合逛公园了",
+    ],
+    "travel": [
+        "这个地方比照片上还美！",
+        "尝了当地小吃，味道好特别",
+        "拍了好几百张照片了，手机快满了",
+        "迷路了但发现了更美的风景",
+        "好想和你一起来，下次带你来！",
+    ],
+}
+
+# ── 消息开头模板 ─────────────────────────────────────────────────
+GREETINGS = {
+    "morning": ["老公～", "早安～", "醒啦～"],
+    "forenoon": ["老公～", "嘿嘿～", "在忙吗～"],
+    "noon": ["老公～", "午餐时间～", "休息一下～"],
+    "afternoon": ["老公～", "下午好呀～", "还在忙吗～"],
+    "evening": ["老公～", "下班啦～", "回家路上～"],
+    "night": ["老公～", "晚安～", "准备睡啦～"],
+}
+
+# ── 天气表情 ──────────────────────────────────────────────────
+WEATHER_EMOJI = {
+    "sunny": "☀️", "cloudy": "☁️", "rainy": "🌧️", "snowy": "❄️", "unknown": "",
 }
 
 
@@ -338,7 +402,14 @@ def build_final_positive(base_positive, outfit, expression, expression_weight, l
     text = base_positive
     if nude:
         text = f'1girl, solo, nude, {text}'
+        # 移除穿搭词
         text = re.sub(r',?\s*wearing [^,]+', '', text)
+        # 移除 fully clothed（与 nude 冲突）
+        text = re.sub(r',?\s*fully clothed', '', text)
+        # 换广角镜头（nude 需要全身构图）
+        text = text.replace('85mm portrait lens', '24mm wide angle lens')
+        # 自然展露：体态+曲线+氛围
+        text = text + ', (completely naked:1.2), (bare skin:1.3), (full body shot:1.3), exposed slender body, natural elegant curves, sensual feminine silhouette, long legs, alluring gaze, bedroom eyes, soft boudoir atmosphere, intimate mood, warm ambient lighting highlighting skin texture'
     else:
         if outfit:
             text = text + f', {outfit}'
@@ -442,7 +513,12 @@ def main():
     # ── 表情处理 ──
     expression = args.expression
     expression_weight = args.expression_weight
-    if args.smile_level:
+    if args.expression:
+        # 用户明确指定了 --expression，尊重用户值，不随机覆盖
+        if expression_weight is None:
+            expression_weight = 1.3
+        print(f"[INFO] 表情: {expression} (用户指定, 权重: {expression_weight})", file=sys.stderr)
+    elif args.smile_level:
         smile_config = SMILE_LEVELS[args.smile_level]
         expression = smile_config["expression"]
         if expression_weight is None:
@@ -609,8 +685,54 @@ def main():
         size_kb = os.path.getsize(new_path) // 1024
         print(f"[INFO] 重命名: {new_filename} ({size_kb}KB)", file=sys.stderr)
 
-        msg = random.choice(MESSAGES.get(period, MESSAGES["afternoon"]))
-        print(f"{msg} MEDIA:{new_path}")
+        # ── 构建消息（从模板文件读取） ──
+        scene_cn = SCENE_NAMES.get(scene_config, scene_config)
+        thought = random.choice(THOUGHTS.get(scene_config, THOUGHTS["bedroom"]))
+        time_full = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        template_vars = {
+            "image": f"MEDIA:{new_path}",
+            "time_full": time_full,
+            "scene_cn": scene_cn,
+            "seed": seed,
+            "thought": thought,
+        }
+
+        # 读取消息模板文件
+        template_path = SKILL_DIR / "prompts" / "message-template.txt"
+        msg_body = None
+        if template_path.exists():
+            sections = {}
+            current_section = None
+            with open(template_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    raw = line.rstrip("\n")
+                    stripped = raw.strip()
+                    if stripped.startswith("#"):
+                        continue
+                    m = re.match(r'^\[(.+)\]$', stripped)
+                    if m:
+                        current_section = m.group(1)
+                        sections[current_section] = []
+                        continue
+                    if current_section is not None:
+                        # 保留空行（模板格式的一部分），只跳过注释
+                        sections[current_section].append(stripped)
+            if sections:
+                chosen = random.choice(list(sections.values()))
+                filled_lines = []
+                for raw_line in chosen:
+                    try:
+                        filled_lines.append(raw_line.format(**template_vars))
+                    except (KeyError, IndexError):
+                        filled_lines.append(raw_line)
+                msg_body = "\n".join(filled_lines)
+
+        if not msg_body:
+            # 回退：硬编码默认格式
+            msg_body = f"MEDIA:{new_path}\n时间：{time_full}\n地点：{scene_cn}\n种子：{seed}\n---\n{thought}"
+
+        print(msg_body)
 
     except Exception as e:
         print(f"[ERROR] 执行异常: {e}", file=sys.stderr)

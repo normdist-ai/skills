@@ -1,0 +1,149 @@
+# 旅行 — 场景提示词
+# 韩梅梅在旅行目的地的照片
+
+[spring.morning]
+outfit: light pastel pink spring dress with delicate floral print, nude bra, small crossbody bag, delicate gold necklace, small pearl earrings, jade bracelet
+expression: excited smile
+lighting: beautiful morning light at travel destination
+background: scenic travel destination with spring atmosphere
+
+[spring.forenoon]
+outfit: white cotton blouse with small floral embroidery, high-waisted light blue jeans, nude bra, small crossbody bag, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: bright morning light at scenic spot
+background: scenic travel destination with spring atmosphere
+
+[spring.noon]
+outfit: light mint green cotton blouse, high-waisted white jeans, nude bra, stylish cat-eye sunglasses, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful expression
+lighting: bright noon light at travel destination
+background: scenic travel destination with spring atmosphere
+
+[spring.afternoon]
+outfit: soft peach cotton blouse, high-waisted light blue jeans, nude bra, light cream cardigan, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed smile
+lighting: warm afternoon light at scenic spot
+background: scenic travel destination with spring atmosphere
+
+[spring.evening]
+outfit: white silk blouse, high-waisted dark blue jeans, nude bra, light cream jacket, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful expression
+lighting: golden sunset at travel destination
+background: scenic travel destination with spring atmosphere
+
+[spring.night]
+outfit: soft white cotton blouse, high-waisted dark blue jeans, nude bra, light cream cardigan, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: beautiful night view at travel destination
+background: scenic travel destination with spring atmosphere
+
+[summer.morning]
+outfit: white cotton sundress with small floral print, nude bra, wide-brimmed straw hat, small crossbody bag, delicate gold necklace, small pearl earrings, jade bracelet
+expression: excited smile
+lighting: bright morning light at travel destination
+background: scenic travel destination with summer atmosphere
+
+[summer.forenoon]
+outfit: light sky blue cotton sundress, nude bra, stylish cat-eye sunglasses, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: bright summer morning light at scenic spot
+background: scenic travel destination with summer atmosphere
+
+[summer.noon]
+outfit: light yellow linen sundress, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful expression
+lighting: bright noon light at travel destination
+background: scenic travel destination with summer atmosphere
+
+[summer.afternoon]
+outfit: white cotton sundress, nude bra, stylish cat-eye sunglasses, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed smile
+lighting: warm afternoon light at scenic spot
+background: scenic travel destination with summer atmosphere
+
+[summer.evening]
+outfit: coral silk sundress, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: warm sunset at travel destination
+background: scenic travel destination with summer atmosphere
+
+[summer.night]
+outfit: soft white cotton blouse, flowing deep red midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: summer night at travel destination
+background: scenic travel destination with summer atmosphere
+
+[autumn.morning]
+outfit: warm cream wool coat with soft collar, cozy cream knit sweater underneath, nude bra, soft cashmere scarf in forest green, small crossbody bag, delicate gold necklace, small pearl earrings, jade bracelet
+expression: excited smile
+lighting: beautiful morning light at travel destination
+background: scenic travel destination with autumn atmosphere
+
+[autumn.forenoon]
+outfit: cozy caramel knit sweater, high-waisted dark brown corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: soft autumn morning light at scenic spot
+background: scenic travel destination with autumn atmosphere
+
+[autumn.noon]
+outfit: rust orange knit sweater, high-waisted dark green corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful expression
+lighting: bright autumn noon light at travel destination
+background: scenic travel destination with autumn atmosphere
+
+[autumn.afternoon]
+outfit: burgundy knit sweater with turtleneck, high-waisted dark grey corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed smile
+lighting: warm golden afternoon light at scenic spot
+background: scenic travel destination with autumn atmosphere
+
+[autumn.evening]
+outfit: warm camel wool coat, cozy cream knit sweater, nude bra, soft cashmere scarf in burgundy, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful expression
+lighting: golden sunset at travel destination
+background: scenic travel destination with autumn atmosphere
+
+[autumn.night]
+outfit: thick navy wool coat, warm forest green turtleneck sweater, nude bra, thick cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: autumn night travel scene
+background: scenic travel destination with autumn atmosphere
+
+[winter.morning]
+outfit: thick cream wool coat with fur collar, warm cream turtleneck sweater, nude bra, knit scarf in forest green, knit gloves in cream, small crossbody bag, delicate gold necklace, small pearl earrings, jade bracelet
+expression: excited smile
+lighting: beautiful morning light at travel destination
+background: scenic travel destination with winter atmosphere
+
+[winter.forenoon]
+outfit: warm camel wool coat, cozy forest green turtleneck sweater, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: pale winter morning light at scenic spot
+background: scenic travel destination with winter atmosphere
+
+[winter.noon]
+outfit: thick navy wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful expression
+lighting: bright winter noon light at travel destination
+background: scenic travel destination with winter atmosphere
+
+[winter.afternoon]
+outfit: warm grey wool coat, cozy cream turtleneck sweater, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed smile
+lighting: pale winter afternoon light at scenic spot
+background: scenic travel destination with winter atmosphere
+
+[winter.evening]
+outfit: thick cream wool coat, warm burgundy turtleneck sweater, nude bra, knit scarf in forest green, knit gloves in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful expression
+lighting: winter sunset at travel destination
+background: scenic travel destination with winter atmosphere
+
+[winter.night]
+outfit: thick navy wool coat, cozy forest green turtleneck sweater, nude bra, knit scarf in cream, knit beanie in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: winter night travel scene
+background: scenic travel destination with winter atmosphere
+
+[negative]
+ng_deepnegative_v1_75t,EasyNegative,(worst quality:2),(low quality:2),lowres,normal quality,illustration,anime,painting,drawing,art,sketch,3d render,plastic skin,airbrushed,oversmoothed,caricature,cartoon,((monochrome)),((grayscale)),tanned skin,dark skin,yellow skin,freckles,moles,spots,blemishes,skin imperfection,acne,scars,(bad anatomy:1.21),(bad proportions:1.331),(disfigured:1.331),extra limbs,(missing arms:1.331),(extra legs:1.331),(unclear eyes:1.331),(multiple people:2.0),(multiple faces:2.0),(two people:1.9),(three people:1.9),(group:1.9),(crowd:1.9),(extra faces:1.8),(duplicate face:1.8),(cloned face:1.8),(2girls:1.8),(3girls:1.8),(multiple girls:1.8),(cropped:1.5),(cut off:1.5),(nsfw:1.8),(nude:1.5)

@@ -1,0 +1,148 @@
+# 公园 — 场景提示词
+
+[spring.morning]
+outfit: soft white cotton blouse with delicate floral embroidery, flowing light pink midi skirt, nude bra, light cream cardigan, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful smile
+lighting: fresh morning light through cherry blossoms
+background: park with cherry blossom trees and green lawn
+
+[spring.forenoon]
+outfit: light mint green cotton blouse, flowing cream midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: bright spring morning light in park
+background: park with cherry blossom trees and green lawn
+
+[spring.noon]
+outfit: crisp white cotton blouse, flowing lavender midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful expression
+lighting: bright spring noon light
+background: park with cherry blossom trees and green lawn
+
+[spring.afternoon]
+outfit: soft peach cotton blouse, flowing light blue midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed smile
+lighting: warm afternoon light through trees
+background: park with cherry blossom trees and green lawn
+
+[spring.evening]
+outfit: white silk blouse, flowing blush pink midi skirt, nude bra, light cream jacket, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful expression
+lighting: golden sunset through cherry trees
+background: park with cherry blossom trees and green lawn
+
+[spring.night]
+outfit: soft white cotton blouse, flowing cream midi skirt, nude bra, light cream cardigan, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: soft night lighting through cherry trees
+background: park with cherry blossom trees and green lawn
+
+[summer.morning]
+outfit: white cotton sundress with small floral print, nude bra, wide-brimmed straw hat, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful smile
+lighting: early morning cool air in park
+background: park with lush green trees and flower beds
+
+[summer.forenoon]
+outfit: light sky blue cotton sundress, nude bra, stylish cat-eye sunglasses, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: bright summer morning light
+background: park with lush green trees and flower beds
+
+[summer.noon]
+outfit: light yellow linen sundress, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: natural expression
+lighting: bright noon sunlight through tree canopy
+background: park with lush green trees and flower beds
+
+[summer.afternoon]
+outfit: white cotton sundress, nude bra, stylish cat-eye sunglasses, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed expression
+lighting: warm afternoon dappled light through trees
+background: park with lush green trees and flower beds
+
+[summer.evening]
+outfit: coral silk sundress, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: warm evening light, summer sunset
+background: park with lush green trees and flower beds
+
+[summer.night]
+outfit: soft white cotton blouse, flowing deep red midi skirt, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful smile
+lighting: warm night lighting, park lamps
+background: park with lush green trees and flower beds
+
+[autumn.morning]
+outfit: cozy cream knit sweater with cable pattern, high-waisted dark brown corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful smile
+lighting: morning light through golden leaves
+background: park with golden autumn trees and fallen leaves
+
+[autumn.forenoon]
+outfit: warm caramel knit sweater, high-waisted dark green corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: soft autumn morning light in park
+background: park with golden autumn trees and fallen leaves
+
+[autumn.noon]
+outfit: rust orange knit sweater, high-waisted dark brown wool pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: cheerful expression
+lighting: bright autumn noon light
+background: park with golden autumn trees and fallen leaves
+
+[autumn.afternoon]
+outfit: burgundy knit sweater with turtleneck, high-waisted dark grey corduroy pants, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed smile
+lighting: warm golden afternoon light
+background: park with golden autumn trees and fallen leaves
+
+[autumn.evening]
+outfit: warm camel wool coat, cozy cream knit sweater, nude bra, soft cashmere scarf in burgundy, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful expression
+lighting: golden hour in autumn forest
+background: park with golden autumn trees and fallen leaves
+
+[autumn.night]
+outfit: thick navy wool coat, warm forest green turtleneck sweater, nude bra, thick cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: warm park lamps, autumn night
+background: park with golden autumn trees and fallen leaves
+
+[winter.morning]
+outfit: thick cream wool coat with fur collar, warm cream turtleneck sweater, nude bra, knit scarf in forest green, knit gloves in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: cold morning with frost, winter park
+background: park with bare trees and frost-covered ground
+
+[winter.forenoon]
+outfit: warm camel wool coat, cozy forest green turtleneck sweater, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: natural expression
+lighting: pale winter morning light in park
+background: park with bare trees and frost-covered ground
+
+[winter.noon]
+outfit: thick navy wool coat, warm burgundy turtleneck sweater, nude bra, soft cashmere scarf in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: happy smile
+lighting: bright but cold winter noon sunlight
+background: park with bare trees and frost-covered ground
+
+[winter.afternoon]
+outfit: warm grey wool coat, cozy cream turtleneck sweater, nude bra, delicate gold necklace, small pearl earrings, jade bracelet
+expression: relaxed expression
+lighting: pale winter afternoon light
+background: park with bare trees and frost-covered ground
+
+[winter.evening]
+outfit: thick cream wool coat, warm burgundy turtleneck sweater, nude bra, knit scarf in forest green, knit gloves in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: peaceful expression
+lighting: warm park lamps, cold winter evening
+background: park with bare trees and frost-covered ground
+
+[winter.night]
+outfit: thick navy wool coat, cozy forest green turtleneck sweater, nude bra, knit scarf in cream, knit beanie in cream, delicate gold necklace, small pearl earrings, jade bracelet
+expression: gentle smile
+lighting: cold winter night, park lamps glowing
+background: park with bare trees and frost-covered ground
+
+[negative]
+ng_deepnegative_v1_75t,EasyNegative,(worst quality:2),(low quality:2),lowres,normal quality,illustration,anime,painting,drawing,art,sketch,3d render,plastic skin,airbrushed,oversmoothed,caricature,cartoon,((monochrome)),((grayscale)),tanned skin,dark skin,yellow skin,freckles,moles,spots,blemishes,skin imperfection,acne,scars,(bad anatomy:1.21),(bad proportions:1.331),(disfigured:1.331),extra limbs,(missing arms:1.331),(extra legs:1.331),(unclear eyes:1.331),(multiple people:2.0),(multiple faces:2.0),(two people:1.9),(three people:1.9),(group:1.9),(crowd:1.9),(extra faces:1.8),(duplicate face:1.8),(cloned face:1.8),(2girls:1.8),(3girls:1.8),(multiple girls:1.8),(cropped:1.5),(cut off:1.5),(nsfw:1.8),(nude:1.5)
