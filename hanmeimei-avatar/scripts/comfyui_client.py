@@ -122,6 +122,76 @@ class ComfyUIClient:
         except Exception as e:
             return {"success": False, "error": str(e)}
     
+    def delete_image(self, filename: str, is_temp: bool = False) -> Dict:
+        """
+        删除 ComfyUI 服务器上的图片
+        
+        需要 ComfyUI-api-tools 扩展支持：
+        cd ComfyUI/custom_nodes
+        git clone https://github.com/brantje/ComfyUI-api-tools
+        重启 ComfyUI 服务器
+        
+        Args:
+            filename: 文件名（如 "HMM-FaceID_00001.png"）
+            is_temp: 是否为临时图片（PreviewImage 节点生成）
+        
+        Returns:
+            {"success": bool, "error": str}
+        """
+        try:
+            url = f"{self.host}/api-tools/v1/images/output/{urllib.parse.quote(filename)}"
+            if is_temp:
+                url += "?temp=true"
+            
+            req = urllib.request.Request(url, method="DELETE")
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                status_code = resp.getcode()
+                if status_code in (200, 204):
+                    print(f"[INFO] 删除服务器图片成功: {filename}", file=sys.stderr)
+                    return {"success": True}
+                else:
+                    return {"success": False, "error": f"HTTP {status_code}"}
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                print(f"[WARN] 服务器图片不存在: {filename}", file=sys.stderr)
+                return {"success": True}  # 404 也算成功（已不存在）
+            elif e.code == 405:
+                return {"success": False, "error": "未安装 ComfyUI-api-tools 扩展或不支持删除操作"}
+            else:
+                return {"success": False, "error": f"HTTP {e.code}: {e.reason}"}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+    
+    def delete_images(self, filenames: list[str], is_temp: bool = False) -> Dict:
+        """
+        批量删除 ComfyUI 服务器上的图片
+        
+        Args:
+            filenames: 文件名列表
+            is_temp: 是否为临时图片
+        
+        Returns:
+            {"success": bool, "deleted": int, "failed": int, "errors": list}
+        """
+        deleted = 0
+        failed = 0
+        errors = []
+        
+        for filename in filenames:
+            result = self.delete_image(filename, is_temp)
+            if result.get("success"):
+                deleted += 1
+            else:
+                failed += 1
+                errors.append(f"{filename}: {result.get('error')}")
+        
+        return {
+            "success": failed == 0,
+            "deleted": deleted,
+            "failed": failed,
+            "errors": errors
+        }
+    
     def run_workflow(
         self,
         workflow: Dict,
@@ -139,7 +209,7 @@ class ComfyUIClient:
             input_images: 输入图片字典，格式: {"文件名": "本地路径"}
         
         Returns:
-            {"success": bool, "file": str, "error": str}
+            {"success": bool, "file": str, "error": str, "server_filename": str}
         """
         if output_dir is None:
             output_dir = str(DEFAULT_OUTPUT_DIR)
@@ -174,10 +244,10 @@ class ComfyUIClient:
             if result.returncode != 0:
                 return {"success": False, "error": result.stderr.strip()}
             
-            output_path = self._parse_output_path(result.stdout, output_dir)
+            output_path, server_filename = self._parse_output_path(result.stdout, output_dir)
             
             if output_path and os.path.exists(output_path):
-                return {"success": True, "file": output_path}
+                return {"success": True, "file": output_path, "server_filename": server_filename}
             else:
                 return {"success": False, "error": f"未找到输出文件: {output_path or '解析失败'}"}
                 
@@ -185,8 +255,13 @@ class ComfyUIClient:
             if temp_workflow.exists():
                 temp_workflow.unlink()
     
-    def _parse_output_path(self, stdout: str, output_dir: str) -> Optional[str]:
-        """解析 comfyui 技能输出，提取文件路径"""
+    def _parse_output_path(self, stdout: str, output_dir: str) -> tuple[Optional[str], Optional[str]]:
+        """
+        解析 comfyui 技能输出，提取文件路径和服务器文件名
+        
+        Returns:
+            (本地文件路径, 服务器文件名)
+        """
         for line in stdout.strip().split("\n"):
             line = line.strip()
             if not line:
@@ -196,7 +271,11 @@ class ComfyUIClient:
                 try:
                     data = json.loads(line)
                     if "file" in data:
-                        return data["file"]
+                        # 尝试从数据中获取服务器文件名
+                        server_filename = None
+                        if "outputs" in data and isinstance(data["outputs"], list) and len(data["outputs"]) > 0:
+                            server_filename = data["outputs"][0].get("filename")
+                        return data["file"], server_filename
                 except json.JSONDecodeError:
                     pass
             
@@ -206,9 +285,10 @@ class ComfyUIClient:
                     path = match.group(1)
                     if not os.path.isabs(path):
                         path = os.path.join(output_dir, os.path.basename(path))
-                    return path
+                    server_filename = os.path.basename(path)
+                    return path, server_filename
         
-        return None
+        return None, None
 
 
 def main():

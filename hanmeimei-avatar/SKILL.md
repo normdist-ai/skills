@@ -8,34 +8,48 @@ description: |
   调用 comfyui 技能执行实际生成。
 metadata:
   author: 韩梅梅
-  version: "5.0.0"
+  version: "5.2.0"
   version_date: "2026-05-24"
-  version_changelog: "v5.14: 远程仓库同步改用 gh api（git clone 超时）；凭证管理规范（.env + fact_store）；PDCA/SIPOC/风险思维方法论"
-  roadmap: "图片✅(v5手部优化版已验证优于v4) → LoRA训练(暂缓) → 视频生成(当前目标) → 语音合成 → 数字人"
-  architecture: "分层架构：selfie.sh（管道，版本无关入口，改一行切版本）→ selfie-v5.py（当前 cron 生产版）→ feishu_sender.py（三气泡发送：①图片→②信息（纯文本，无引用标记无emoji）→③想法）；good-seeds.txt（种子池）+ prompts/*.txt + message-template.txt（消息格式）+ comfyui_client.py → run_workflow.py → 远程ComfyUI"
+  version_changelog: "v5.2: 新增 Trae 发送器、远程删除工具、定时任务、完整文档体系"
+  roadmap: "图片✅(v5 SIPOC 优化 + Trae 平台适配) → LoRA训练(暂缓) → 视频生成(当前目标) → 语音合成 → 数字人"
+  architecture: "v5 架构：selfie-v5.py（SIPOC 优化，~/.avatar/ 统一输出）→ trae_sender.py/feishu_sender.py（多平台发送）→ deletefile.py（SSH 远程删除）→ scheduler.py（定时任务）"
 ---
 
+> **路径约定**：本文档及代码中 `~` 均代表**工作区根目录**（如 `d:\TRAE\workspace-skills`），而非用户主目录。
+
 # 韩梅梅形象生成
+
+## 工作流程
+
+1. 根据用户提示，或者定时任务，结合生活场景，生成提示词。（生成提示词的脚本）
+2. 根据提示词和配置信息，生成ComfyUI工作流文件。（生成工作流文件的脚本）
+3. 调用 comfyui 技能执行生成图片或视频任务。（comcomfyui 技能的脚本）。
+4. 将视频或图片发送给用户。（发送视频或图片的脚本。需要检测客户端，使用相应的脚本）
+
+
 
 ## 架构说明
 
 ```
-# v4 架构（当前）
-scripts/selfie-v4.py (主入口 — 种子池版)
-    ↓ 读取 good-seeds.txt（优质种子池，默认从中随机选种子）
-prompts/base.txt + prompts/{scene}.txt (提示词文件)
+# v5 架构（当前 - SIPOC 优化 + Trae 平台）
+scripts/selfie-v5.py (主入口 — v5 SIPOC 优化版)
+    ↓ 读取 good-seeds.txt（优质种子池）
+prompts/base.txt + prompts/{scene}.txt + message-template.txt
     ↓ 读取
-workflows/faceid.json (工作流模板)
+workflows/faceid.json
     ↓ 调用
-scripts/comfyui_client.py (客户端)
+scripts/comfyui_client.py
     ↓ 调用
-comfyui/run_workflow.py (执行)
-    ↓ 连接
 远程服务器 (10.28.9.6:8188)
+    ↓ 执行工作流
+输出图片 → ~/.avatar/outputs/（30 天自动清理）
+    ↓ 消息格式
+trae_sender.py（Trae 平台） / feishu_sender.py（飞书三气泡）
 ```
 
 ## 目录结构
 
+### 技能目录
 ```
 hanmeimei-avatar/
 ├── SKILL.md                    # 技能元数据
@@ -54,8 +68,11 @@ hanmeimei-avatar/
 │   ├── faceid.json             # FaceID 工作流模板
 │   └── base.json               # 基础工作流（无 FaceID）
 ├── scripts/                    # 脚本文件
-│   ├── selfie-v5.py            # ✅ v5 手部优化版（当前 cron 生产版，推荐）
+│   ├── selfie-v5.py            # ✅ v5 SIPOC 优化版（当前 cron 生产版，推荐）
+│   ├── trae_sender.py          # ✅ Trae 平台发送器（Markdown 格式）
 │   ├── feishu_sender.py        # ✅ 飞书三气泡发送器（独立于生图，cron 用）
+│   ├── deletefile.py           # ✅ SSH 远程删除工具
+│   ├── scheduler.py            # ✅ 定时任务入口
 │   ├── selfie-v4.py            # v4 种子池版（备选）
 │   ├── selfie-v3.py            # v3 主入口（提示词外置版）
 │   ├── selfie.py               # v2 自拍入口（= selfie-v2.py，提示词硬编码版）
@@ -64,18 +81,45 @@ hanmeimei-avatar/
 │   ├── generate.py             # 支持 --composition 构图控制
 │   ├── seed_pool.py            # ✅ 种子池管理工具（list/add/pick）
 │   └── comfyui_client.py       # comfyui 技能客户端
-├── assets/faces/               # 脸部参考图片
-└── outputs/                    # 输出目录
+├── docs/                       # ✅ 文档目录
+│   ├── BEST_PRACTICES.md       # 最佳实践
+│   ├── QUICKSTART.md           # 快速开始
+│   ├── SIPOC_OPTIMIZATION.md   # SIPOC 优化说明
+│   ├── SERVER_CLEANUP.md       # 服务器清理说明
+│   └── TEST_REPORT.md          # 测试报告
+├── assets/                     # 资源目录
+│   ├── faces/                  # 脸部参考图片
+│   └── sample/                 # 示例图片
+└── references/                 # 参考文档
+    ├── good-seeds.md           # 种子管理策略
+    ├── prompt-guides.md        # 提示词指南
+    └── workflow-guides.md      # 工作流指南
+```
+
+### SIPOC 统一输出目录（~/.avatar/）
+```
+~/.avatar/                      # ~/ 代表工作区根目录
+├── config.json                 # 配置文件
+├── outputs/                    # 新生成图片的输出目录
+│   └── HMM-v5-*.png
+└── album/                      # 精选照片（手动挑选的优质输出）
+    ├── photo_*.png
+    └── photo_*.json
 ```
 
 ## 快速开始
 
 ```bash
-# v5 自拍（推荐 — 手部优化版，效果优于 v4）
+# v5 自拍（推荐 — SIPOC 优化版，Trae 平台适配）
 python scripts/selfie-v5.py
 
 # 指定场景
 python scripts/selfie-v5.py --scene cafe
+
+# 指定种子 / 完全随机 / 追加当前种子到池
+python scripts/selfie-v5.py --seed 86522080
+python scripts/selfie-v5.py --random-seed
+python scripts/selfie-v5.py --seed 86522080 --add-seed
 
 # v4 自拍（备选 — 种子池版）
 python scripts/selfie-v4.py

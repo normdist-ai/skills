@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-韩梅梅自拍生成脚本 v5 — 手部优化版
+韩梅梅自拍生成脚本 v5 — SIPOC 优化版
 
-改动（v4 → v5）：
-    - 增强手部和肢体完整性约束
-    - 添加手部相关关键词到提示词
-    - 保留服装描述优化
+改动：
+  - 支持从 ~/.avatar/config.json 读取 ComfyUI 服务配置
+  - 输出图片存放到 ~/.avatar/outputs/ 文件夹
+  - 保留原有的手部优化（移除过度约束，让模型自己发挥）
 
 用法：
     python3 selfie-v5.py                    # 默认完全随机种子
@@ -40,8 +40,210 @@ PROMPTS_DIR = SKILL_DIR / "prompts"
 DEFAULT_OUTPUT_DIR = SKILL_DIR / "outputs"
 GOOD_SEEDS_FILE = SKILL_DIR / "good-seeds.txt"
 
+# SIPOC: 配置文件和输出目录 - ~ 指工作区根目录
+# 工作区根目录: workspace-skills/ (向上查找包含 .avatar 的目录或目录名为 workspace-skills)
+def find_workspace_root() -> Path:
+    """查找工作区根目录（.avatar 文件夹所在位置）"""
+    current = SKILL_DIR
+    # 向上查找，最多查 5 级
+    for _ in range(5):
+        # 优先检查目录名是否为 workspace-skills
+        if current.name == "workspace-skills":
+            return current
+        # 然后检查 .avatar 目录是否存在
+        if (current / ".avatar").exists():
+            return current
+        if current.parent == current:  # 到达根目录了
+            break
+        current = current.parent
+    # 默认回退到技能目录的上级目录
+    return SKILL_DIR.parent.parent.parent  # skills -> .trae -> workspace-skills
+
+WORKSPACE_ROOT = find_workspace_root()
+AVATAR_DIR = WORKSPACE_ROOT / ".avatar"
+CONFIG_FILE = AVATAR_DIR / "config.json"
+ALBUM_DIR = AVATAR_DIR / "album"
+
 sys.path.insert(0, str(SCRIPT_DIR))
 from comfyui_client import ComfyUIClient
+
+
+def load_config():
+    """加载配置文件 ~/.avatar/config.json"""
+    default_config = {
+        "comfyui": {
+            "host": "http://10.28.9.6:8188",
+            "client_id": "hanmeimei-avatar",
+            "timeout": 600
+        },
+        "output": {
+            "dir": "~/.avatar/outputs",
+            "filename_prefix": "HMM",
+            "version": "v5",
+            "retention_days": 30
+        },
+        "defaults": {
+            "faceid_weight": 0.80,
+            "faceid_weight_0": 1.0,
+            "cfg": 4.0,
+            "seed": None,
+            "scene": None,
+            "smile_level": None
+        }
+    }
+    
+    if not CONFIG_FILE.exists():
+        return default_config
+    
+    try:
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            config = json.load(f)
+        # 合并默认配置
+        for key in default_config:
+            if key not in config:
+                config[key] = default_config[key]
+            else:
+                for subkey in default_config[key]:
+                    if subkey not in config[key]:
+                        config[key][subkey] = default_config[key][subkey]
+        return config
+    except Exception as e:
+        print(f"[WARN] 加载配置文件失败，使用默认配置: {e}", file=sys.stderr)
+        return default_config
+
+
+def ensure_avatar_dirs():
+    """
+    确保 ~/.avatar/ 文件夹结构存在
+    首次运行时自动创建：
+      - ~/.avatar/
+      - ~/.avatar/outputs/
+      - ~/.avatar/album/
+      - ~/.avatar/profile/
+    """
+    dirs_to_create = [
+        AVATAR_DIR,
+        AVATAR_DIR / "outputs",
+        AVATAR_DIR / "album",
+        AVATAR_DIR / "profile",
+    ]
+    
+    for dir_path in dirs_to_create:
+        if not dir_path.exists():
+            dir_path.mkdir(parents=True, exist_ok=True)
+            print(f"[INFO] 创建目录: {dir_path}", file=sys.stderr)
+
+
+def cleanup_old_outputs(days_to_keep: int = 30) -> int:
+    """
+    清理 outputs 文件夹中超过指定天数的图片
+    
+    Args:
+        days_to_keep: 保留天数，默认 30 天
+    
+    Returns:
+        删除的文件数量
+    """
+    from datetime import datetime, timedelta
+    
+    outputs_dir = AVATAR_DIR / "outputs"
+    if not outputs_dir.exists():
+        return 0
+    
+    cutoff_date = datetime.now() - timedelta(days=days_to_keep)
+    deleted_count = 0
+    
+    for file_path in outputs_dir.glob("*.png"):
+        file_mtime = datetime.fromtimestamp(file_path.stat().st_mtime)
+        if file_mtime < cutoff_date:
+            try:
+                file_path.unlink()
+                deleted_count += 1
+            except Exception as e:
+                print(f"[WARN] 删除文件失败 {file_path}: {e}", file=sys.stderr)
+    
+    if deleted_count > 0:
+        print(f"[INFO] 清理了 {deleted_count} 个超过 {days_to_keep} 天的旧图片", file=sys.stderr)
+    
+    return deleted_count
+
+
+def get_output_dir(config):
+    """从配置获取输出目录，确保目录存在"""
+    output_dir_str = config["output"]["dir"]
+    # 解释路径
+    if output_dir_str.startswith("~"):
+        # ~ 代表工作区根目录
+        output_dir = WORKSPACE_ROOT / output_dir_str[2:]
+    elif output_dir_str.startswith("./"):
+        # ./ 相对于工作区根目录
+        output_dir = WORKSPACE_ROOT / output_dir_str[2:]
+    else:
+        output_dir = Path(output_dir_str)
+    
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
+def save_to_album(
+    image_path: Path, 
+    seed: int, 
+    scene: str, 
+    positive: str, 
+    negative: str,
+    cfg: float,
+    faceid_weight: float,
+    faceid_weight_0: float,
+    notes: str = "",
+    user_rating: str = "liked"
+) -> tuple:
+    """
+    将照片保存到 ~/.avatar/album/ 文件夹，同时生成对应的 JSON 元数据文件
+    文件命名规则与 outputs 一致：{prefix}-{version}-{timestamp}-{seed}.png
+    
+    Returns:
+        (album_image_path, album_json_path)
+    """
+    ALBUM_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # 使用原文件名（与 outputs 一致）
+    album_image_path = ALBUM_DIR / image_path.name
+    album_json_path = ALBUM_DIR / f"{image_path.stem}.json"
+    
+    # 复制图片
+    import shutil
+    shutil.copy2(image_path, album_image_path)
+    
+    # 生成 JSON 元数据
+    metadata = {
+        "seed": seed,
+        "model": "chilloutmix-Ni.safetensors",
+        "method": "FaceID PLUS V2",
+        "faceid_params": {
+            "weight": faceid_weight_0,
+            "weight_faceidv2": faceid_weight,
+            "lora_strength": 0.0,
+            "end_at": 1.0,
+            "combine_embeds": "average",
+            "embeds_scaling": "K+V"
+        },
+        "cfg": cfg,
+        "steps": "30+20",
+        "sampler": "euler",
+        "base_size": "512x768",
+        "hires": "2x -> 1024x1536",
+        "prompt": positive,
+        "negative": negative,
+        "scene": scene,
+        "notes": notes,
+        "user_rating": user_rating,
+        "saved_at": datetime.now().isoformat()
+    }
+    
+    with open(album_json_path, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, ensure_ascii=False, indent=2)
+    
+    return album_image_path, album_json_path
 
 # ── 笑容等级预设 ────────────────────────────────────────────────
 SMILE_LEVELS = {
@@ -202,12 +404,13 @@ def save_seed_to_pool(seed, scene="", note=""):
         f.write(f"{seed}{tag}  [{ts}]{comment}\n")
 
 
-def pick_seed(args):
+def pick_seed(args, config):
     """
     决定种子：
       --seed-file F   → 从文件随机选一个种子
       --random-seed   → 全随机（-1）
       --seed N        → 指定种子 N
+      配置文件        → config["defaults"]["seed"]
       默认            → 完全随机（1-999999999）
     """
     if args.seed_file:
@@ -224,6 +427,9 @@ def pick_seed(args):
 
     if args.seed is not None:
         return args.seed, f"指定种子 {args.seed}"
+    
+    if config["defaults"]["seed"] is not None:
+        return config["defaults"]["seed"], f"配置文件种子 {config['defaults']['seed']}"
 
     # 默认：完全随机
     seed = random.randint(1, 999999999)
@@ -482,15 +688,22 @@ def update_workflow_params(workflow, faceid_weight=0.80, cfg=4.0, start_at=0.0, 
 # ═══════════════════════════════════════════════════════════════
 
 def main():
-    parser = argparse.ArgumentParser(description="韩梅梅自拍生成 v5 — 手部优化版")
+    config = load_config()
+    
+    # SIPOC: 确保目录结构存在，并清理旧图片
+    ensure_avatar_dirs()
+    retention_days = config["output"].get("retention_days", 30)
+    cleanup_old_outputs(days_to_keep=retention_days)
+    
+    parser = argparse.ArgumentParser(description="韩梅梅自拍生成 v5 — SIPOC 优化版")
     smile_group = parser.add_mutually_exclusive_group()
     smile_group.add_argument("--expression", "-e", type=str, help="指定表情描述")
     smile_group.add_argument("--smile-level", "-sl", type=int, choices=SMILE_LEVELS.keys(), help="笑容等级 1-5")
     parser.add_argument("--expression-weight", "-ew", type=float, default=None, help="表情权重")
-    parser.add_argument("--faceid-weight", "-fw", type=float, default=0.80, help="FaceID weight_faceidv2")
-    parser.add_argument("--faceid-weight-0", "-fw0", type=float, default=1.0, help="FaceID weight")
+    parser.add_argument("--faceid-weight", "-fw", type=float, default=None, help="FaceID weight_faceidv2")
+    parser.add_argument("--faceid-weight-0", "-fw0", type=float, default=None, help="FaceID weight")
     parser.add_argument("--faceid-end-at", "-fea", type=float, default=1.0, help="FaceID end_at")
-    parser.add_argument("--cfg", "-c", type=float, default=4.0, help="CFG 值")
+    parser.add_argument("--cfg", "-c", type=float, default=None, help="CFG 值")
     parser.add_argument("--start-at", "-sa", type=float, default=0.0, help="FaceID start_at")
     parser.add_argument("--seed", "-s", type=int, help="指定种子（不从池中选）")
     parser.add_argument("--random-seed", action="store_true", help="完全随机，忽略种子池")
@@ -505,10 +718,21 @@ def main():
     parser.add_argument("--lora-strength", type=float, default=0.0, help="LoRA 权重（同时应用于 model 和 clip）")
     parser.add_argument("--lora-strength-model", type=float, default=None, help="LoRA model 权重（单独设置）")
     parser.add_argument("--lora-strength-clip", type=float, default=None, help="LoRA clip 权重（单独设置）")
+    parser.add_argument("--save-to-album", action="store_true", help="将生成的照片保存到 ~/.avatar/album/ 精选相册")
+    parser.add_argument("--album-notes", type=str, default="", help="添加到相册元数据的备注信息")
     args = parser.parse_args()
 
+    # 使用配置文件默认值
+    faceid_weight = args.faceid_weight if args.faceid_weight is not None else config["defaults"]["faceid_weight"]
+    faceid_weight_0 = args.faceid_weight_0 if args.faceid_weight_0 is not None else config["defaults"]["faceid_weight_0"]
+    cfg = args.cfg if args.cfg is not None else config["defaults"]["cfg"]
+    if not args.smile_level and config["defaults"]["smile_level"]:
+        args.smile_level = config["defaults"]["smile_level"]
+    if not args.scene and config["defaults"]["scene"]:
+        args.scene = config["defaults"]["scene"]
+    
     now = datetime.now()
-    print(f"[INFO] === 韩梅梅自拍 v5 {now.strftime('%Y-%m-%d %H:%M:%S')} ===", file=sys.stderr)
+    print(f"[INFO] === 韩梅梅自拍 v5 (SIPOC) {now.strftime('%Y-%m-%d %H:%M:%S')} ===", file=sys.stderr)
 
     # ── 表情处理 ──
     expression = args.expression
@@ -593,8 +817,8 @@ def main():
     print(f"[INFO] 正向提示词长度: {len(positive_text)} 字符", file=sys.stderr)
     print(f"[INFO] 负向提示词长度: {len(negative_text)} 字符", file=sys.stderr)
 
-    # ── 种子决策（v4 核心改动） ───────────────────────────────
-    seed, seed_reason = pick_seed(args)
+    # ── 种子决策 ───────────────────────────────────────
+    seed, seed_reason = pick_seed(args, config)
     print(f"[INFO] 种子来源: {seed_reason}", file=sys.stderr)
     print(f"[INFO] 最终种子值: {seed}", file=sys.stderr)
 
@@ -631,11 +855,11 @@ def main():
     # ── 写入参数 ──
     workflow = update_workflow_params(
         workflow, 
-        faceid_weight=args.faceid_weight, 
-        cfg=args.cfg, 
+        faceid_weight=faceid_weight, 
+        cfg=cfg, 
         start_at=args.start_at, 
         faceid_end_at=args.faceid_end_at, 
-        faceid_weight_0=args.faceid_weight_0,
+        faceid_weight_0=faceid_weight_0,
         lora_name=args.lora,
         lora_strength_model=lora_strength_model,
         lora_strength_clip=lora_strength_clip
@@ -654,14 +878,23 @@ def main():
                 node["inputs"]["image"] = face_filename
                 node["inputs"]["upload"] = face_filename
 
+    # ── 获取输出目录 ──
+    output_dir = get_output_dir(config)
+    version = config["output"]["version"]
+    filename_prefix = config["output"]["filename_prefix"]
+
     # ── 执行生成 ──
     try:
-        client = ComfyUIClient()
+        # SIPOC: 更新 ComfyUI 客户端配置
+        client = ComfyUIClient(
+            host=config["comfyui"]["host"]
+        )
+        
         input_images = None
         if face_reference:
             input_images = {face_filename: face_reference}
 
-        result = client.run_workflow(workflow=workflow, output_dir=str(DEFAULT_OUTPUT_DIR), input_images=input_images)
+        result = client.run_workflow(workflow=workflow, output_dir=str(output_dir), input_images=input_images)
         if not result.get("success"):
             print(f"[ERROR] 生成失败: {result.get('error', '未知错误')}", file=sys.stderr)
             sys.exit(1)
@@ -674,24 +907,47 @@ def main():
         size_kb = os.path.getsize(file_path) // 1024
         print(f"[INFO] 生成成功: {file_path} ({size_kb}KB)", file=sys.stderr)
 
-        # 编号规则：YYYYMMDDHHMMSS-种子号
+        # 编号规则：{prefix}-{timestamp}-{seed}.png
         photo_id = now.strftime('%Y%m%d%H%M%S') + "-" + str(seed)
         if args.experiment:
-            new_filename = f"HMM-v5-{args.experiment}-{photo_id}.png"
+            new_filename = f"{filename_prefix}-{args.experiment}-{photo_id}.png"
         else:
-            new_filename = f"HMM-v5-{photo_id}.png"
+            new_filename = f"{filename_prefix}-{photo_id}.png"
         new_path = Path(file_path).parent / new_filename
         os.rename(file_path, str(new_path))
         size_kb = os.path.getsize(new_path) // 1024
         print(f"[INFO] 重命名: {new_filename} ({size_kb}KB)", file=sys.stderr)
+
+        # ── 保存到相册（如果指定） ──
+        if args.save_to_album:
+            try:
+                album_image, album_json = save_to_album(
+                    image_path=new_path,
+                    seed=seed,
+                    scene=scene_config,
+                    positive=positive_text,
+                    negative=negative_text,
+                    cfg=cfg,
+                    faceid_weight=faceid_weight,
+                    faceid_weight_0=faceid_weight_0,
+                    notes=args.album_notes
+                )
+                print(f"[INFO] 已保存到相册: {album_image.name}", file=sys.stderr)
+            except Exception as e:
+                print(f"[WARN] 保存到相册失败: {e}", file=sys.stderr)
 
         # ── 构建消息（从模板文件读取） ──
         scene_cn = SCENE_NAMES.get(scene_config, scene_config)
         thought = random.choice(THOUGHTS.get(scene_config, THOUGHTS["bedroom"]))
         time_full = now.strftime("%Y-%m-%d %H:%M:%S")
 
+        # 生成图片链接（Markdown 格式）
+        image_path_abs = os.path.abspath(new_path).replace("\\", "/")
+        image_link = f"[{new_path.name}](file:///{image_path_abs})"
+
         template_vars = {
-            "image": f"MEDIA:{new_path}",
+            "image": image_link,
+            "image_filename": new_path.name,
             "time_full": time_full,
             "scene_cn": scene_cn,
             "seed": seed,
@@ -722,15 +978,16 @@ def main():
                 chosen = random.choice(list(sections.values()))
                 filled_lines = []
                 for raw_line in chosen:
-                    try:
-                        filled_lines.append(raw_line.format(**template_vars))
-                    except (KeyError, IndexError):
-                        filled_lines.append(raw_line)
+                    if raw_line:  # 跳过空行
+                        try:
+                            filled_lines.append(raw_line.format(**template_vars))
+                        except (KeyError, IndexError):
+                            filled_lines.append(raw_line)
                 msg_body = "\n".join(filled_lines)
 
         if not msg_body:
             # 回退：硬编码默认格式
-            msg_body = f"MEDIA:{new_path}\n时间：{time_full}\n地点：{scene_cn}\n种子：{seed}\n---\n{thought}"
+            msg_body = f"{image_link}\n时间：{time_full}\n地点：{scene_cn}\n种子：{seed}\n---\n{thought}"
 
         print(msg_body)
 
