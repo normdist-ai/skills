@@ -45,6 +45,7 @@ sys.path.insert(0, str(SCRIPT_DIR))
 # 动态导入 selfie-v5.py（带连字符的文件名无法直接 import）
 selfie_v5_spec = importlib.util.spec_from_file_location("selfie_v5", SCRIPT_DIR / "selfie-v5.py")
 selfie_v5 = importlib.util.module_from_spec(selfie_v5_spec)
+sys.modules["selfie_v5"] = selfie_v5  # 注册到 sys.modules，允许 from selfie_v5 import ...
 selfie_v5_spec.loader.exec_module(selfie_v5)
 
 WORKSPACE_ROOT = selfie_v5.WORKSPACE_ROOT

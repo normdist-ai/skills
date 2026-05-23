@@ -5,11 +5,12 @@
     或：python3 feishu_sender.py < /path/to/stdout_file
     或：python3 feishu_sender.py "/path/to/stdout_file"
 
-输入格式（selfie-v5.py 的 stdout）：
-    MEDIA:/path/to/image.png
-    > 📸 时间：2026-05-23 11:00:00
-    > 📍 地点：咖啡馆
-    > 🎲 种子：123456789
+输入格式（selfie-v5.py 的 stdout，兼容新旧两种格式）：
+    旧版：MEDIA:/path/to/image.png
+    新版：[HMM-xxx.png](file:///path/to/image.png)
+    时间：2026-05-23 11:00:00
+    地点：咖啡馆
+    种子：123456789
     ---
     想法文字
 
@@ -51,23 +52,49 @@ def load_feishu_config():
 
 
 def parse_stdin(text: str) -> dict:
-    """解析 selfie-v5.py 的 stdout，提取图片路径、信息行、想法"""
+    """解析 selfie-v5.py 的 stdout，提取图片路径、信息行、想法
+    
+    兼容两种图片行格式：
+    - 旧版：MEDIA:/path/to/image.png
+    - 新版：[HMM-xxx.png](file:///path/to/image.png)
+    
+    输入格式：
+        图片行
+        ---（可选分隔符）
+        信息行（时间/地点/种子）
+        ---
+        想法文字
+    """
+    import re
     lines = text.strip().split("\n")
     image_path = None
     info_lines = []
     thought_lines = []
-    in_thought = False
-
-    for line in lines:
+    
+    # 找最后一个 --- 作为 thought 分界线
+    last_sep_idx = -1
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].strip() == "---":
+            last_sep_idx = i
+            break
+    
+    for i, line in enumerate(lines):
         stripped = line.strip()
+        
+        # 图片路径：兼容 MEDIA: 和 [name](file:///path) 两种格式
         if stripped.startswith("MEDIA:"):
             image_path = stripped[6:]
-        elif stripped == "---":
-            in_thought = True
-        elif in_thought:
-            thought_lines.append(stripped)
-        else:
-            # MEDIA 和 --- 之间的所有非空行都是信息行
+        elif re.match(r'^\[.*\]\(file:///', stripped):
+            # 新版格式：[filename](file:///path) — 提取 file:/// 后的路径（保留前导 /）
+            m = re.match(r'^\[.*\]\(file:///*(/.+?)\)', stripped)
+            if m:
+                image_path = m.group(1)
+        elif i > last_sep_idx and last_sep_idx >= 0:
+            # 最后一个 --- 之后的内容是 thought
+            if stripped:
+                thought_lines.append(stripped)
+        elif stripped != "---":
+            # 图片行和最后一个 --- 之间的非空非分隔行是 info
             if stripped:
                 info_lines.append(stripped)
 
