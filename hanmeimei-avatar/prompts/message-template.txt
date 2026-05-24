@@ -1,5 +1,13 @@
-# 韩梅梅自拍消息模板（Trae 版）
+# 韩梅梅自拍消息模板
 # 变量：{image}, {time_full}, {scene_cn}, {seed}, {thought}
+# 输出格式：
+#   {image}                 → 图片行（[文件名](file:///路径) 格式）
+#   时间/地点/种子           → 元信息行
+#   ---                     → 分隔线
+#   {thought}               → 想法文字
+# 平台兼容：
+#   - feishu_sender.py（Hermes / 飞书 — 三气泡）：解析 [name](file:///path) 提取路径 → 上传图片 → 分气泡发送
+#   - trae_sender.py（Trae IDE — 单条消息）：直接渲染 Markdown 原文
 
 [default]
 {image}  

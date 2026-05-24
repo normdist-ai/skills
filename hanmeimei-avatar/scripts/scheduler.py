@@ -33,6 +33,7 @@
 """
 import sys
 import argparse
+import subprocess
 from pathlib import Path
 from datetime import datetime
 import json
@@ -41,6 +42,8 @@ import importlib.util
 # 添加 scripts 目录到路径
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
+
+from common import SCENE_NAMES
 
 # 动态导入 selfie-v5.py（带连字符的文件名无法直接 import）
 selfie_v5_spec = importlib.util.spec_from_file_location("selfie_v5", SCRIPT_DIR / "selfie-v5.py")
@@ -195,16 +198,6 @@ def task_feature():
         else:
             time_str = datetime.fromtimestamp(saved_at).strftime('%Y-%m-%d %H:%M:%S')
         
-        # 中文场景名映射
-        SCENE_NAMES = {
-            "bedroom": "卧室",
-            "boulevard": "林荫道",
-            "cafe": "咖啡馆",
-            "library": "图书馆",
-            "rooftop": "天台",
-            "park": "公园",
-            "travel": "旅行途中"
-        }
         scene_cn = SCENE_NAMES.get(scene, scene)
         
         message = f"""MEDIA:{selected}
@@ -300,6 +293,12 @@ def task_stats():
         recent_outputs = [img for img in outputs_images 
                           if datetime.fromtimestamp(img.stat().st_mtime) > seven_days_ago]
         
+        # 计算精选率（安全处理除零）
+        if len(outputs_images) > 0:
+            selection_rate = f"{len(album_images)/len(outputs_images)*100:.1f}%"
+        else:
+            selection_rate = "N/A"
+        
         report = f"""
 ========== 韩梅梅技能统计报告 ==========
 生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -314,7 +313,7 @@ def task_stats():
    - 总大小: {album_size:.2f} MB
 
 3. 质量指标
-   - 精选率: {len(album_images)/len(outputs_images)*100:.1f}% ({len(album_images)}/{len(outputs_images)})
+   - 精选率: {selection_rate} ({len(album_images)}/{len(outputs_images)})
    - 近期活跃度: {len(recent_outputs)} 张/周
 
 4. 存储占用
@@ -358,15 +357,27 @@ def main():
     # 执行任务
     if args.all:
         print("[INFO] 执行所有任务\n")
-        task_generate()
+        try:
+            task_generate()
+        except Exception as e:
+            print(f"[ERROR] 定时出图失败: {e}", file=sys.stderr)
         print()
-        task_cleanup()
+        try:
+            task_cleanup()
+        except Exception as e:
+            print(f"[ERROR] 清理过期图片失败: {e}", file=sys.stderr)
         print()
         # task_feature()  # 可选：是否定时推送精选照片
         # print()
-        task_maintain_seeds()
+        try:
+            task_maintain_seeds()
+        except Exception as e:
+            print(f"[ERROR] 种子池维护失败: {e}", file=sys.stderr)
         print()
-        task_stats()
+        try:
+            task_stats()
+        except Exception as e:
+            print(f"[ERROR] 生成统计报告失败: {e}", file=sys.stderr)
     
     if args.generate:
         task_generate()

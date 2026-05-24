@@ -23,7 +23,6 @@ import subprocess
 import sys
 import urllib.request
 import urllib.parse
-import base64
 from pathlib import Path
 from typing import Dict, Optional, List
 

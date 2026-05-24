@@ -21,7 +21,8 @@ from pathlib import Path
 from datetime import datetime
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-GOOD_SEEDS_FILE = SCRIPT_DIR / "good-seeds.txt"
+SKILL_DIR = SCRIPT_DIR.parent
+GOOD_SEEDS_FILE = SKILL_DIR / "good-seeds.txt"
 
 
 def load_seeds():

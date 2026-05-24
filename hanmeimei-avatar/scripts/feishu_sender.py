@@ -28,12 +28,29 @@ import sys
 import os
 import json
 import io
+import site
 import yaml
 
-# 走 hermes-agent 的 venv，里面有 lark_oapi
-_VENV = "/home/jarvis/.hermes/hermes-agent/venv/lib/python3.11/site-packages"
-if _VENV not in sys.path:
-    sys.path.insert(0, _VENV)
+# 探索 lark_oapi 的安装位置：优先级 HERMES_VENV > VIRTUAL_ENV > 当前 Python 的 site-packages
+_VENV = os.environ.get("HERMES_VENV") or os.environ.get("VIRTUAL_ENV")
+if _VENV:
+    # 尝试常见 site-packages 路径
+    import sysconfig
+    for candidate in [
+        os.path.join(_VENV, "lib", "python3.11", "site-packages"),
+        os.path.join(_VENV, "lib", "python3.10", "site-packages"),
+        os.path.join(_VENV, "lib", "python3.12", "site-packages"),
+        os.path.join(_VENV, "Lib", "site-packages"),  # Windows venv
+    ]:
+        if os.path.isdir(candidate) and candidate not in sys.path:
+            sys.path.insert(0, candidate)
+            break
+else:
+    # 没有 venv 环境变量，直接用当前 Python 的 site-packages
+    site_packages = site.getsitepackages()
+    for sp in site_packages:
+        if sp not in sys.path:
+            sys.path.insert(0, sp)
 
 from lark_oapi import Client
 from lark_oapi.api.im.v1 import CreateImageRequest, CreateMessageRequest
@@ -41,14 +58,39 @@ from lark_oapi.api.im.v1.model import CreateImageRequestBody, CreateMessageReque
 
 
 def load_feishu_config():
-    """从韩梅梅 profile 的 config.yaml 读飞书凭证"""
-    # 注意：hermes venv 里 $HOME 可能被覆写，不能用 expanduser
-    config_path = "/home/jarvis/.hermes/profiles/hanmeimei/config.yaml"
-    with open(config_path, "r", encoding="utf-8") as f:
-        cfg = yaml.safe_load(f)
-    platforms = cfg.get("platforms", {})
-    feishu = platforms.get("feishu", {})
-    return feishu.get("app_id", ""), feishu.get("app_secret", "")
+    """从配置文件中读取飞书凭证。
+    
+    优先级：
+    1. 环境变量 FEISHU_CONFIG 指定的配置文件路径
+    2. ~/.avatar/config.json 中的飞书配置段（与 selfie-v5.py 统一）
+    """
+    config_path = os.environ.get("FEISHU_CONFIG")
+    
+    if config_path:
+        with open(config_path, "r", encoding="utf-8") as f:
+            cfg = yaml.safe_load(f)
+        platforms = cfg.get("platforms", {})
+        feishu = platforms.get("feishu", {})
+        return feishu.get("app_id", ""), feishu.get("app_secret", "")
+    
+    # 回退：从 ~/.avatar/config.json 读取
+    avatar_config = os.path.join(os.path.expanduser("~"), ".avatar", "config.json")
+    if os.path.isfile(avatar_config):
+        with open(avatar_config, "r", encoding="utf-8") as f:
+            cfg = json.load(f)
+        feishu = cfg.get("feishu", {})
+        return feishu.get("app_id", ""), feishu.get("app_secret", "")
+    
+    # 旧路径兼容：hermes profiles 目录
+    legacy_path = os.path.join(os.path.expanduser("~"), ".hermes", "profiles", "hanmeimei", "config.yaml")
+    if os.path.isfile(legacy_path):
+        with open(legacy_path, "r", encoding="utf-8") as f:
+            cfg = yaml.safe_load(f)
+        platforms = cfg.get("platforms", {})
+        feishu = platforms.get("feishu", {})
+        return feishu.get("app_id", ""), feishu.get("app_secret", "")
+    
+    return "", ""
 
 
 def parse_stdin(text: str) -> dict:
@@ -201,7 +243,10 @@ def main():
         print("[sender] 飞书凭证缺失", file=sys.stderr)
         sys.exit(1)
 
-    chat_id = os.environ.get("FEISHU_CHAT_ID", "oc_1fac55adbc3e448aabcfc3839955e14a")
+    chat_id = os.environ.get("FEISHU_CHAT_ID")
+    if not chat_id:
+        print("[sender] 错误: 未设置环境变量 FEISHU_CHAT_ID", file=sys.stderr)
+        sys.exit(1)
 
     client = Client.builder().app_id(app_id).app_secret(app_secret).build()
 

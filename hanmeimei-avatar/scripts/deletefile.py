@@ -29,6 +29,7 @@
 import sys
 import json
 import argparse
+import shlex
 from pathlib import Path
 import subprocess
 
@@ -36,7 +37,7 @@ import subprocess
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
-from selfie_v5 import load_config
+from common import load_config
 
 
 def delete_file(filename: str, ssh_config: dict) -> dict:
@@ -62,7 +63,7 @@ def delete_file(filename: str, ssh_config: dict) -> dict:
         cmd = [
             "ssh",
             f"{user}@{host}",
-            f"rm -f {remote_file}"
+            f"rm -f {shlex.quote(remote_file)}"
         ]
         
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
@@ -100,7 +101,7 @@ def list_files(pattern: str, ssh_config: dict) -> list:
         cmd = [
             "ssh",
             f"{user}@{host}",
-            f"ls -lh {output_dir}/{pattern}"
+            f"ls -lh {shlex.quote(output_dir)}/{shlex.quote(pattern)}"
         ]
         
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
@@ -139,7 +140,7 @@ def cleanup_files(pattern: str, retention_days: int, ssh_config: dict) -> dict:
         cmd = [
             "ssh",
             f"{user}@{host}",
-            f"find {output_dir} -name '{pattern}' -mtime +{retention_days} -delete -print"
+            f"find {shlex.quote(output_dir)} -name {shlex.quote(pattern)} -mtime +{retention_days} -delete -print"
         ]
         
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
